@@ -1,6 +1,11 @@
 ---
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
+# Force HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
 @charset "utf-8";
 
 // Our variables
