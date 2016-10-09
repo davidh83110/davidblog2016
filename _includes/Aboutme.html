@@ -1,0 +1,29 @@
+<div class="sidebar-module about">
+  <h4>{{ site.locales[site.default_locale].Aboutme }}</h4>
+  <img title="{{site.author}}" src="{{site.aboutme_photo}}" alt="{{site.author}}"/>
+ <center>
+	 <br />
+  <span>{{site.aboutme}}</span>
+  <br />
+
+  {% if site.ShowContactInfo == "True" %}
+
+  You can contact me via: <br/>
+
+  {% if site.email != empty %}
+  <a href="Mail To:{{site.email}}" title="Mail To: {{site.email}}">Email</a> /
+  {% endif %}
+  {% if site.github_username != empty %}
+  <a href="https://github.com/{{site.github_username}}" title="GithubID: {{site.github_username}}">Github</a> /
+  {% endif %}
+  {% if site.facebook_username != empty %}
+  <a href="https://www.facebook.com/{{site.facebook_username}}" title="FacebookID: {{site.facebook_username}}">Facebook</a> /
+  {% endif %}
+  {% if site.instagram_username != empty %}
+  <a href="https://instagram.com/{{site.instagram_username}}" title="InstagramID: {{site.instagram_username}}">Instagram</a>
+  {% endif %}
+
+{% endif %}
+
+</center>
+</div>
