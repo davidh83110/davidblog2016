@@ -4,11 +4,10 @@ layout: default
 
 <div class="home">
   <div class="post" itemscope itemtype="http://schema.org/BlogPosting" >
-    
+    <head http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     {% for post in paginator.posts %}
   <br />
     <header class="post-header">
-	    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       <h1 itemprop="name" class="post-title">
         <a itemprop="url" class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
       </h1>
