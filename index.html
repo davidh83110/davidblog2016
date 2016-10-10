@@ -43,9 +43,9 @@ layout: default
 
     <article class="post-content" itemprop="articleBody">
 	  {{ post.content | truncatewords: 20  }}
+	  <br />
 	  <div class="post__button">
 	       <a href="{{ post.url | prepend: site.baseurl }}" class="button" >
-			   <br />
 	         Read More >>
 	       </a>
 	     </div>
