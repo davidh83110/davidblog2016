@@ -8,10 +8,15 @@ layout: default
   <br />
     <header class="post-header">
 <meta name="google-site-verification" content="9eGvqZdBeupGYrAka0nsUS4_gVvnLy_YuVrbgmHp8JE" />
+	  <time itemprop="datePublished" datetime="{{ post.date | date: '%Y-%m-%d' }}">
+		  <h5>
+      &nbsp; &nbsp; &nbsp; &nbsp;{{ site.locales[site.default_locale].PostDate }}{{ post.date | date: "%b %-d, %Y" }}
+	  	  </h5>
+      </time>
       <h1 itemprop="name" class="post-title">
         <a itemprop="url" class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
       </h1>
-	  <meta name="google-site-verification" content="9eGvqZdBeupGYrAka0nsUS4_gVvnLy_YuVrbgmHp8JE" />
+	  
  <!--     <meta itemprop="keywords" content="{{ post.tags | join: ',' }}" />
       <p class="post-meta">
       {{ site.locales[site.default_locale].PostedInCategories }}
@@ -26,13 +31,13 @@ layout: default
       {% endif %}
       <br />
 	  </p>
--->
+
 	  <time itemprop="datePublished" datetime="{{ post.date | date: '%Y-%m-%d' }}">
-		  <h4>
+		  <h5>
       &nbsp; &nbsp; &nbsp; &nbsp;{{ site.locales[site.default_locale].PostDate }}{{ post.date | date: "%b %-d, %Y" }}
-	  	  </h4>
+	  	  </h5>
       </time>
-	 
+-->	 
     </header>
 
     <article class="post-content" itemprop="articleBody">
