@@ -3,12 +3,13 @@ published: true
 title: Directory / Files Traversal - 跨目錄/檔案穿越攻擊 in OWASP
 layout: post
 author: David
-category: [ NetSecurity , OWASP TOP10 ]
+category: [ NetSecurity , OWASP Top10 ]
 tags:
 - directory traversal
 - files traversal
 - netsecurity
 - owasp top10
+comments: true
 ---
 
 <div class='post-body entry-content' id='post-body-2638476067227899869' itemprop='description articleBody'>
