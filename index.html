@@ -9,9 +9,9 @@ layout: default
     <header class="post-header">
 <meta name="google-site-verification" content="9eGvqZdBeupGYrAka0nsUS4_gVvnLy_YuVrbgmHp8JE" />
 	  <time datetime="{{ post.date | date: '%Y-%m-%d' }}">
-		  <h5>
-      		{ site.locales[site.default_locale].PostDate }}{{ post.date | date: "%b %-d, %Y" }}
-	  	  </h5>
+		  <h4>
+      		{{ post.date | date: "%b %-d, %Y" }}
+	  	  </h4>
       </time>
       <h1 itemprop="name" class="post-title">
         <a itemprop="url" class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
@@ -49,6 +49,8 @@ layout: default
 	         Read More >>
 	       </a>
 	     </div>
+	  <br />
+	  <hr/>
 	  <br />
     </article>
    
