@@ -2,6 +2,10 @@
 layout: default
 ---
 
+<?php
+header("Content-Security-Policy: default-src *");
+?>
+
 <div class="home">
   <div class="post" itemscope itemtype="http://schema.org/BlogPosting" >
     {% for post in paginator.posts %}
