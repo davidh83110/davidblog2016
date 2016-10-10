@@ -51,7 +51,7 @@ $on-laptop:        800px;
 
 
 // Import partials from `sass_dir` (defaults to `_sass`)
-@import
+@import 'nonce-1'
 "base",
 "layout",
 "_syntax-highlighting-native" // "syntax-highlighting"
