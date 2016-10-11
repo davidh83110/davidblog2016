@@ -1,7 +1,5 @@
 ---
 layout: page
 title: Home
-permalink: /
+permalink: https://www.davidh83110.com
 ---
-
-welcome to David's blog!
