@@ -1,6 +1,6 @@
 ---
 layout: page
 title: Home
-permalink: https://davidh83110.com
+permalink: /
 ---
-Welcome.
+<meta http-equiv="refresh" content="0;url=https://davidh83110.com">

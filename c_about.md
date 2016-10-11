@@ -6,7 +6,7 @@ permalink: /about/
 ---
 
 
-<img src="https://scontent.ftpe1-2.fna.fbcdn.net/v/t1.0-9/12191527_1000637583292360_8916598258503445339_n.jpg?oh=db25594da253b569489fd9f524d4c0dd&oe=589F2BCC">
+<img src="/images/avator.png">
 
 <h3 style="text-align: center;">
 	David Hsu</h3>
@@ -44,6 +44,10 @@ permalink: /about/
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Squid Proxy / Reverse Proxy</b></div>
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Bind DNS&nbsp;</b></div>
+<div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Git&nbsp;</b></div>
+<div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - AxureRP&nbsp;</b></div>
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Google Apps (G Suite)</b></div>
 <div>
