@@ -17,7 +17,7 @@ instagram_username: ben12567
 disqus_shortname: davidh83110
 favicon:     "/images/favicon.ico"
 aboutme: Hi, I am David from Taiwan. # these are shown on aboutme-sidebar.
-aboutme_photo: "/images/avator.jpeg" # your photo.
+aboutme_photo: "/images/avator.jpg" # your photo.
 google_analytics_key: UA-85468802-1 # put YOUR key here to enable tracking! (blank to disable)
 
 
@@ -41,7 +41,8 @@ locales:
       Taggedwith: "｜ 標籤"
       PostDate: "發佈時間："
       Google_search: "Site Search"
-      Home: "Home"
+      Home: "Blog"
+      Homepage: "Home"
       About: "About"
       #Guestbook: "Guestbook"
       Subscribe: "RSS"
