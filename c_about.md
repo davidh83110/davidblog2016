@@ -6,7 +6,7 @@ permalink: /about/
 ---
 
 
-<img src="/images/avator.png">
+<img src="/images/avator.jpeg">
 
 <h3 style="text-align: center;">
 	David Hsu</h3>
