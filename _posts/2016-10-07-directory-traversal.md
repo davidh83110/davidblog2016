@@ -1,8 +1,9 @@
 ---
 published: true
-title: Directory / Files Traversal - 跨目錄/檔案穿越攻擊 in OWASP
+title: Directory Traversal - 跨目錄/檔案穿越攻擊 in OWASP
 layout: post
 author: David
+modified: 2016-10-02
 category: [ NetSecurity , OWASP Top10 ]
 tags:
 - directory traversal
