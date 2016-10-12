@@ -10,7 +10,7 @@ Freshman21 is a Jekyll blog theme, base on theme [Freshman](http://github.com/yu
 
 [My Website](https://www.davidh83110.com)
 
-[David's Blog](https://blog.davidh83110.com)
+[My Blog](https://blog.davidh83110.com)
 
 
 
