@@ -20,9 +20,6 @@ permalink: /about/
 	這裡用來紀錄我的成長過程及經驗</div><br />
 <div style="text-align: center;">
 	"Choose your Love , Love your Choice ." - ThomasS. Monson</div><br />
-<div style="text-align: center;">
-	"Life is a Crontab , But we're not the root user ."</div><br />
-	
 <h4 style="margin-left: 35px;">Contact</h4>
 <div style="margin-left: 70px;">
 <a href="https://davidh83110.com" target="_blank">HomePage</a> / <a href="mailto:davidh83110@gmail.com" target="_blank">Email</a> / <a href="https://github.com/davidh83110/" target="_blank">Github</a> / <a href="https://www.facebook.com/ben12567" target="_blank">Facebook</a> / <a href="https://instagram.com/ben12567/" target="_blank">Instagram</a> / <a href="https://tw.linkedin.com/in/david-hsu-b1136112b" target="_blank">Linkedin</a>&nbsp;</div>
@@ -108,6 +105,8 @@ permalink: /about/
 <div style="clear: both;">
 </div>
 </div>
-
+<br /><br />
+<div style="text-align: center;">
+	"Life is a Crontab , But we're not the root user ."</div>
 <br/><br/><br/>
 <h5 style="text-align: right;"> Copyright |  <a href="http://yulijia.net">This blog Modified by Freshman21 Theme Design by LijiaYu.</a>  </h5>
