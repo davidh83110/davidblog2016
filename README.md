@@ -4,10 +4,10 @@ This blog created by David and clone from yulijia [Freshman21].
 
 Freshman21 is a Jekyll blog theme, base on theme [Freshman](http://github.com/yulijia/freshman).
 
+
 ### Website
 
 [My Website](https://www.davidh83110.com)
-
 [David's Blog](https://blog.davidh83110.com)
 
 
