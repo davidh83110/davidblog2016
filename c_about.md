@@ -19,10 +19,14 @@ permalink: /about/
 <div style="text-align: center;">
 	這裡用來紀錄我的成長過程及經驗</div>
 <div style="text-align: center;">
-	"Choose your Love , Love your Choice." - ThomasS. Monson</div><br />
+	"Choose your Love , Love your Choice ." - ThomasS. Monson</div><br />
+<div style"text-algin: center;">
+	"Life is a Crontab , But we're not the root user ."<br />
+	[david@Life : ~] # echo  30 21 * * * root /bin/sleep.sh   >>  /var/spool/cron/root <br />
+	-bash: /var/spool/cron/root: Permission denied<br />
 <h4 style="margin-left: 35px;">Contact</h4>
 <div style="margin-left: 70px;">
-<a href="mailto:davidh83110@gmail.com" target="_blank">Email</a> / <a href="https://github.com/davidh83110/" target="_blank">Github</a> / <a href="https://www.facebook.com/ben12567" target="_blank">Facebook</a> / <a href="https://instagram.com/ben12567/" target="_blank">Instagram</a>&nbsp;</div>
+<a href="https://davidh83110.com" target="_blank">HomePage</a> / <a href="mailto:davidh83110@gmail.com" target="_blank">Email</a> / <a href="https://github.com/davidh83110/" target="_blank">Github</a> / <a href="https://www.facebook.com/ben12567" target="_blank">Facebook</a> / <a href="https://instagram.com/ben12567/" target="_blank">Instagram</a><a href="https://tw.linkedin.com/in/david-hsu-b1136112b" target="_blank">Linkedin</a> / &nbsp;</div>
 <br />
 <h4 style="margin-left: 35px;">Degree</h4>
 <div>
@@ -43,11 +47,11 @@ permalink: /about/
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Squid Proxy / Reverse Proxy</b></div>
 <div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Bind DNS&nbsp;</b></div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Bind DNS / CDN Management&nbsp;</b></div>
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Git&nbsp;</b></div>
 <div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - AxureRP&nbsp;</b></div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - AxureRP / HTML / CSS&nbsp;</b></div>
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Google Apps (G Suite)</b></div>
 <div>
@@ -107,4 +111,4 @@ permalink: /about/
 </div>
 
 <br/><br/><br/>
-<h5 style="text-align: right;"> Copyright|  <a href="http://yulijia.net">This blog Modified by Freshman21 Theme Design by LijiaYu.</a>  </h5>
+<h5 style="text-align: right;"> Copyright |  <a href="http://yulijia.net">This blog Modified by Freshman21 Theme Design by LijiaYu.</a>  </h5>
