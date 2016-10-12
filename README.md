@@ -1,9 +1,14 @@
 David Hsu
 ==========
-This is a blog created by David and clone from yulijia[Freshman21].
+This blog created by David and clone from yulijia [Freshman21].
 
-Freshman21 is a Jekyll blog theme, base on theme [Freshman](http://github.com/yulijia/freshman). 
+Freshman21 is a Jekyll blog theme, base on theme [Freshman](http://github.com/yulijia/freshman).
 
+[My Website](https://www.davidh83110.com)
+[David's Blog](https://blog.davidh83110.com)
+
+
+### Demo
 
 ![Screen](http://i.imgur.com/oSp7kacl.png)
 
@@ -18,11 +23,5 @@ $ git clone https://github.com/yulijia/freshman21.git
 $ mv freshman21/ yourblogname.github.io/
 
 ```
-
-### Demo
-
-Single column, please see [my own blog](http://yulijia.net/en/)
-
-Two columns, please see the [theme website](http://yulijia.net/freshman21/)
 
 
