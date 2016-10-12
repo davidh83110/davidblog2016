@@ -20,7 +20,7 @@ permalink: /about/
 	這裡用來紀錄我的成長過程及經驗</div>
 <div style="text-align: center;">
 	"Choose your Love , Love your Choice ." - ThomasS. Monson</div><br />
-<div style"text-algin: center;">
+<div style="text-align: center;">
 	"Life is a Crontab , But we're not the root user ."<br />
 	[david@Life : ~] # echo  30 21 * * * root /bin/sleep.sh   >>  /var/spool/cron/root <br />
 	-bash: /var/spool/cron/root: Permission denied</div><br />
