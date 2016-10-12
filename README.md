@@ -1,6 +1,6 @@
 David Hsu
 ==========
-This blog created by David and clone from yulijia [Freshman21].
+This blog modified by David and cloned from yulijia [Freshman21].
 
 Freshman21 is a Jekyll blog theme, base on theme [Freshman](http://github.com/yulijia/freshman).
 
