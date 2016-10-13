@@ -4,7 +4,7 @@ title: Directory Traversal - 跨目錄/檔案穿越攻擊 in OWASP
 layout: post
 author: David
 modified: 2016-10-02
-category: [ NetSecurity , OWASP Top10 ]
+category: [ 資訊安全 , OWASP Top10 ]
 tags:
 - directory traversal
 - files traversal
