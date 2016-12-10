@@ -5171,11 +5171,8 @@ table.MsoNormalTable
 -rp pure-ftpd-1.0.29/pureftpd-mysql.conf /opt/</span><span style="font-family: 微軟正黑體; font-size: 12pt; text-indent: -24pt;">pureftpd1029</span><span style="font-family: 微軟正黑體; font-size: 12pt; text-indent: -24pt;">/etc/</span></span></div>
 <div>
 <span style="background-color: white; font-family: inherit; font-size: 12pt; text-indent: -24pt;"><br /></span></div>
-<div style="text-indent: -32px;">
-<span style="background-color: white; font-family: inherit;">etc資料夾記得自己mkdir建</span></div>
-<div style="text-indent: -32px;">
-<span style="background-color: white; font-family: inherit; font-size: 12pt; text-indent: -24pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
-<div style="text-indent: -32px;">
+<div>
+<span style="background-color: white; font-family: inherit;"><span style="font-family: 微軟正黑體; font-size: 12pt; text-indent: -24pt;">etc資料夾請自己mkdir建立</span><span style="font-family: 微軟正黑體; font-size: 12pt; text-indent: -24pt;"></span><span style="font-family: 微軟正黑體; font-size: 12pt; text-indent: -24pt;"></span></span></div>
 <span style="background-color: white; font-family: inherit;"><span style="font-family: 微軟正黑體; text-indent: -24pt;">&nbsp; &nbsp; &nbsp; &nbsp; 接著</span><span style="font-family: 微軟正黑體; font-size: 12pt; text-indent: -24pt;">建立</span><span lang="EN-US" style="font-family: 微軟正黑體; font-size: 12pt; text-indent: -24pt;">mysql.sock</span><span style="font-family: 微軟正黑體; font-size: 12pt; text-indent: -24pt;">軟連結</span></span></div>
 <div style="text-indent: -32px;">
 <span style="background-color: white; font-family: inherit; font-size: 12pt; text-indent: -24pt;"><br /></span></div>
