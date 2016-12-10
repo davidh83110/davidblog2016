@@ -2642,7 +2642,7 @@ table.MsoTableGrid
 </td>
  </tr>
 </tbody></table>
-<code style="background-color: white; background-position: 0px 0px; border: none; box-sizing: border-box; direction: ltr; display: inline; font-size: 0.85em; line-height: inherit; margin: 0px; padding: 0px; white-space: pre;"><span style="font-family: inherit;">openssl genrsa -des3 -out server.key 2048</span></code></div>
+<code style="background-color: white; background-position: 0px 0px; border: none; box-sizing: border-box; direction: ltr; display: inline; font-size: 0.85em; line-height: inherit; margin: 0px; padding: 0px; white-space: pre;"><span style="font-family: inherit;"></span></code></div>
 <!--EndFragment-->
 
 
@@ -3405,7 +3405,7 @@ table.MsoNormalTable
 
 <!--StartFragment--><!--EndFragment--><br />
 <div style="text-indent: -32px;">
-<span style="background-color: white; font-family: inherit;">#</span></div>
+<span style="background-color: white; font-family: inherit;"></span></div>
 <div>
 <div class="MsoListParagraph" style="layout-grid-mode: char; margin-left: 42.0pt; mso-list: l0 level1 lfo1; mso-pagination: widow-orphan; mso-para-margin-left: 0gd; text-indent: -18.0pt;">
 <span style="background-color: white; font-family: inherit;"><span lang="EN-US" style="font-family: 微軟正黑體;">Ctrl+C(</span><span style="font-family: 微軟正黑體;">離開<span lang="EN-US">)</span></span></span></div>
@@ -5172,7 +5172,7 @@ table.MsoNormalTable
 <div>
 <span style="background-color: white; font-family: inherit; font-size: 12pt; text-indent: -24pt;"><br /></span></div>
 <div style="text-indent: -32px;">
-<span style="background-color: white; font-family: inherit;">et &nbsp; &nbsp;etc資料夾記得自己mkdir建</span></div>
+<span style="background-color: white; font-family: inherit;">etc資料夾記得自己mkdir建</span></div>
 <div style="text-indent: -32px;">
 <span style="background-color: white; font-family: inherit; font-size: 12pt; text-indent: -24pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
 <div style="text-indent: -32px;">
