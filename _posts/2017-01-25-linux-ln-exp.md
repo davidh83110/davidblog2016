@@ -184,7 +184,10 @@ CentOS 5的版本如果你加上/會提示你無法刪除<br />
 <br />
 <br />
 <div style="text-align: right;">
-2017-01-25 &nbsp;11:25 &nbsp;David in Tainan</div>
+2017-01-25 &nbsp;11:25 &nbsp;David in Tainan<br />
+<br />
+<br />
+<br /></div>
 <style type="text/css">
 p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #f4f4f4; background-color: #000000; background-color: rgba(0, 0, 0, 0.85)}
 span.s1 {font-variant-ligatures: no-common-ligatures}
