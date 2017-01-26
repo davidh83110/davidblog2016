@@ -12,7 +12,7 @@ locale: en_US
 ### Personal info and site tools info:
 twitter_username: davidh83110
 github_username:  davidh83110
-facebook_username: 徐維澤
+facebook_username: ben12567
 instagram_username: ben12567
 disqus_shortname: davidh83110
 favicon:     "/images/favicon.ico"
@@ -35,8 +35,8 @@ locales:
       #Copyright_Notice: "Copyright Notice"
       Recent_Posts: "Recent Posts"
       Tags: "Tags"
-      Previous: "上一頁"
-      Next: "下一頁"
+      Previous: "下一頁"
+      Next: "上一頁"
       PostedInCategories: "目錄："
       Taggedwith: "｜ 標籤"
       PostDate: "發佈時間："
