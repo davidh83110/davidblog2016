@@ -49,6 +49,10 @@ permalink: /about/
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - AxureRP / HTML / CSS&nbsp;</b></div>
 <div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Python&nbsp;</b></div>
+<div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Splunk&nbsp;</b></div>
+<div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Google Apps (G Suite)</b></div>
 <div>
 </div>
@@ -109,4 +113,4 @@ permalink: /about/
 <div style="text-align: center;">
 	"Life is a Crontab , But we're not the root user ."</div>
 <br/><br/><br/>
-<h5 style="text-align: right;"> Copyright |  <a href="http://yulijia.net">This blog Modified by Freshman21 Theme Design by LijiaYu.</a>  </h5>
+<h5 style="text-align: right;"> Copyright |  <a href="https://www.davidh83110.com">This blog Modified by David Hsu </a>  </h5>
