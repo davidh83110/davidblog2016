@@ -20,11 +20,9 @@ comments: true
 ---
 <div>
 新年快樂，雞年行大運。</div>
+快當兵了趕緊來寫文章，以免當完兵變笨全忘光光<br />
 <div>
-<br /></div>
-快當兵了趕緊來寫文章<div>
-以免當完兵變笨全忘光光</div>
-<div>
+<br />
 <br /></div>
 <div>
 今天補一下一直沒時間寫的後端工程</div>
@@ -55,7 +53,7 @@ comments: true
 <div>
 <br /></div>
 <h4 style="text-align: center;">
-<b><u>後端工程(Back-End)</u></b></h4>
+<b>後端工程(Back-End)</b></h4>
 <div>
 顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到</div>
 <div>
@@ -139,12 +137,14 @@ PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈</div
 <div>
 <br /></div>
 <div>
-新年就不講太多了</div>
+新年快樂就不講太多了<br />
+祝大家新年快樂，新的一年工作都能順利</div>
 <div>
-祝福我自己當兵順利，剩餘不到兩個禮拜了</div>
+也祝福我自己當兵順利，距離入伍剩餘不到兩個禮拜了</div>
 <div>
 <br /></div>
 <div>
+<br />
 <br /></div>
 <div>
 <br /></div>
