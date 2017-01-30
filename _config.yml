@@ -18,7 +18,7 @@ disqus_shortname: davidh83110
 favicon:     "/images/favicon.ico"
 aboutme: Hi, I am David from Taiwan. # these are shown on aboutme-sidebar.
 aboutme_photo: "/images/avator.jpg" # your photo.
-google_analytics_key: UA-85468802-1 # put YOUR key here to enable tracking! (blank to disable)
+google_analytics_key: UA-85468802-3 # put YOUR key here to enable tracking! (blank to disable)
 
 
 ### Site setting:
