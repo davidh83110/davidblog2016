@@ -4,7 +4,7 @@ layout: post
 title: Python套件urllib2簡介
 author: David
 modified: 2017-02-05
-categories: [技術簡介 , 雜七雜八]
+categories: [技術簡介 , 雜七雜八 , python]
 tags: 
   - python2
   - python
