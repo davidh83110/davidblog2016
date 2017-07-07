@@ -1,7 +1,7 @@
 ---
 published: true
 layout: post
-title: Python發送警告訊息(Nagios&Dingtalk)
+title: Python發送警告訊息(Nagios & Dingtalk)
 author: David
 modified: 2017-07-08
 categories: [技術簡介 , 雜七雜八 , Python]
