@@ -27,7 +27,7 @@ permalink: /about/
 <h4 style="margin-left: 35px;">Degree</h4>
 <div>
 <div style="margin-left: 70px;">
-	<b> 2015 - 2016 &nbsp; &nbsp;</b>PayEasy - Linux System Engineer.</div>
+	<b> 2015 - 2017 &nbsp; &nbsp;</b>PayEasy - Linux System Engineer.</div>
 <div style="margin-left: 70px;">
 	<b> 2012 - 2016 &nbsp; &nbsp;</b>Yuan Ze University - Information Management Dept.</div>
 </div>
@@ -47,11 +47,17 @@ permalink: /about/
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Git&nbsp;</b></div>
 <div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Docker&nbsp;</b></div>
+<div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - AxureRP / HTML / CSS&nbsp;</b></div>
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Python&nbsp;</b></div>
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Splunk&nbsp;</b></div>
+<div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Ansible&nbsp;</b></div>
+<div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Pure-ftpd&nbsp;</b></div>
 <div>
 	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Google Apps (G Suite)</b></div>
 <div>
@@ -110,7 +116,5 @@ permalink: /about/
 </div>
 </div>
 <br /><br />
-<div style="text-align: center;">
-	"Life is a Crontab , But we're not the root user ."</div>
 <br/><br/><br/>
 <h5 style="text-align: right;"> Copyright |  <a href="https://www.davidh83110.com">This blog Modified by David Hsu </a>  </h5>
