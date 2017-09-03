@@ -15,26 +15,26 @@ tags:
 comments: true
 ---
 嗚 感冒好痛苦
-
+</br>
 心力交瘁的最近還是寫寫技術
-
+</br>
 Python實作爬蟲(crawler)
-
+</br>
 何謂爬蟲？ 其實就是擷取網頁而已
-
+</br>
 網頁擷取之後我們必須要過濾出我們要的資訊才算成功的爬蟲
-
+</br>
 這邊以 https://dinbendon.net 來作為範例
 目的為取出店家菜單
-
+</br>
 Step1. 抓取網頁
 一般來說會使用requests的get方式來抓取網頁
 再以BeautifulSoup去抓取特定段落
-
-
-
-
-
+</br>
+</br>
+</br>
+</br>
+</br>
 
 ```
 url = 'https://dinbendon.net/do/idine?shop=209534'
@@ -42,13 +42,13 @@ r = requests.get(url)
 soup = BeautifulSoup(r.text, 'lxml')
 print(soup)
 ```
-
-會得到結果是網頁的前端code (省略)
-那前端前端code這麼多如何去找到我要的呢
-請善用瀏覽器 開發人員工具
-這邊我們找到價錢以及商品名稱是在tr裡的class=even以及class=odd這兩個段落
-
-將他抓取出來並放到MSSQL DB裡
+</br>
+會得到結果是網頁的前端code (省略)</br>
+那前端前端code這麼多如何去找到我要的呢</br>
+請善用瀏覽器 開發人員工具</br>
+這邊我們找到價錢以及商品名稱是在tr裡的class=even以及class=odd這兩個段落</br>
+</br>
+將他抓取出來並放到MSSQL DB裡</br>
 ```
 a = 0
     for i in soup.find_all('tr', {'class': 'even'}):
@@ -82,10 +82,10 @@ a = 0
     print('ok')
 ```
 
-那抓取結果成功並存到DB的話就會print ok
-
-那店家資訊以此類推去抓取，重點依舊放在抓回來的資料處理
-可以發現大部分的動作都在處理資料切割
+那抓取結果成功並存到DB的話就會print ok</br>
+</br>
+那店家資訊以此類推去抓取，重點依舊放在抓回來的資料處理</br>
+可以發現大部分的動作都在處理資料切割</br>
 
 ```
 def shop_info(url):
@@ -107,10 +107,10 @@ def shop_info(url):
     #print(info[3])
     print("ok")
 ```
-
-如果正確存到DB，會print ok 
-
-附上完整code github上也有：
+</br>
+如果正確存到DB，會print ok </br>
+</br>
+附上完整code github上也有：</br>
 ```
 
 import requests
@@ -197,5 +197,5 @@ if __name__ == '__main__':
     shop_info(url)
 
 ```
-
-<div style="text-align:right">2017-09-03 19:50 , David in Taipei</div>
+</br>
+<div style="text-align:right">2017-09-03 19:50 , David in Taipei</div></br>
