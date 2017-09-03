@@ -31,6 +31,11 @@ Step1. 抓取網頁
 一般來說會使用requests的get方式來抓取網頁
 再以BeautifulSoup去抓取特定段落
 
+
+
+
+
+
 ```
 url = 'https://dinbendon.net/do/idine?shop=209534'
 r = requests.get(url)
