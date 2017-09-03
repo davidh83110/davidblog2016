@@ -1,7 +1,7 @@
 ---
 published: true
 layout: post
-title: Docker Note (Nginx+uwsgi+Letsencrypt)
+title: Python3 實作爬蟲
 author: David
 modified: 2017-09-03
 categories: [技術簡介 , Python , 雜七雜八]
