@@ -196,7 +196,6 @@ if __name__ == '__main__':
     # product_name_price(url)
     shop_info(url)
 
-
-
-
 ```
+
+<div style="text-align:right">2017-09-03 19:50 , David in Taipei</div>
