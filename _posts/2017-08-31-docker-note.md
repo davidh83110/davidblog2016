@@ -72,10 +72,38 @@ certbot-auto可單一clone此檔案就好</div>
 <div>
 <span style="background-color: #f4cccc;">/bin/bash/uwsgi --socket 0.0.0.0:8080 --protocol=http -w PROGRAM_NAME</span></div>
 <div>
-<span style="background-color: #f4cccc;">/etc/init.d/nginx start</span></div>
+<span style="background-color: #f4cccc;">/etc/init.d/nginx start</span><br />
+<span style="background-color: #f4cccc;"><br /></span>
+<span style="background-color: #f4cccc;"><br /></span>
+<span style="background-color: #f4cccc;">Nginx Config:</span><br />
+<span style="background-color: #f4cccc;"><br /></span>
+原理是使用proxy_pass來串接uwsgi<br />
+而我強制轉換為HTTPS，配置方式如下，只列出重點配置<br />
+<br />
+<br />
+server {<br />
+&nbsp; listen 80;<br />
+&nbsp; server_name DOMAIN.COM.TW;<br />
+&nbsp;<br />
+&nbsp; return 301 https://$server_name$request_uri;<br />
+&nbsp; }<br />
+<br />
+server {<br />
+&nbsp; listen 443;<br />
+&nbsp; server_name DOMAIN.COM.TW;<br />
+&nbsp; ssl_certificate /etc/letsencrypt/live/blog.gtwang.org/fullchain.pem;<br />
+&nbsp; ssl_certificate_key /etc/letsencrypt/live/blog.gtwang.org/privkey.pem;<br />
+&nbsp; ssl_protocols TLSv1 TLSv1.1 TLSv1.2; <br />
+<br />
+&nbsp; proxy_pass http://127.0.0.1:8080;<br />
+&nbsp; }</div>
 <div>
-<br /></div>
-<div>
+<br />
+<br />
+這邊只使用到TLSv1.2而不使用最新的1.3原因是因為1.3存在漏洞<br />
+我們使用proxy_pass代理uwsgi的服務<br />
+<br />
+使用letsencrypt前別忘了在nginx根目錄裡建立.well-known的資料夾以作為webroot認證<br />
 <br /></div>
 <div>
 備註：</div>
@@ -116,7 +144,7 @@ docker delete container:</div>
 <div>
 <br /></div>
 <div>
-未完</div>
+<br /></div>
 <div>
 <br /></div>
 <div style="text-align: right;">
@@ -125,3 +153,4 @@ docker delete container:</div>
 <br /></div>
 <div style="text-align: right;">
 <br /></div>
+
