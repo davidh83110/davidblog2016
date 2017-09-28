@@ -148,6 +148,14 @@ And close your stupid fucking Facebook、Instagram、PTT、WhatsApp、Line<br />
 <br />
 停止被社群媒體綁架，你需要認識的是真實的對方。
 <br />
+當你停止被社群媒體所控制，或許會不習慣
+<br />
+或許會有朋友問為什麼你最近都沒有post動態，為什麼消失
+<br />
+但你會發現，走出網路世界，你已經過得更好。
+<br />
+人與人的連結，不該只透過網路。
+<br />
 <br />
 <br />
 <div style="text-align: right;">
