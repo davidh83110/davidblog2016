@@ -1,7 +1,7 @@
 ---
 published: true
 layout: post
-title: 20180329 - Serverless event NOTE
+title: 20180329 Serverless event NOTE
 author: David
 modified: 2018-04-21
 categories: [技術簡介 , AWS , Serverless]
@@ -17,13 +17,13 @@ comments: true
 **Serverless for Monitoring**
 -
 
-how to debug on serverless ?
-how's the security for using serverless ?
-hoe's the latency ?
-how's the cost ?
+how to debug on serverless ? <br />
+how's the security for using serverless ? <br />
+hoe's the latency ? <br />
+how's the cost ? <br />
 
 
-**_"Less is More"_**
+**_"Less is More"_** <br />
 we have to focus on other things not just only code when using serverless
 
 <br />
@@ -32,7 +32,7 @@ Structure is Changing
 -
 
 During the application structure is changing to CaaS, we have to reduce the instances which are not for application layer as possible as we can, to avoid launching more and more instances which unnecessary to save cost.
-
+<br />
 **"Switching those instances to serverless is a good solution"**
 
 <br />
@@ -62,7 +62,7 @@ What is the shortcomings for using Serverless
 - How to test, debug and collect log ?
 - How to monitor your Lambda monitoring functions ?
 - How to CI/CD and version control ?
-- Should not launch for long 
+- Should not launch for long time
 - Depends on third party services (e.g. It's too difficult from using AWS Lambda to Azure Functions)
 - Performance (high cold start time)
 
@@ -80,11 +80,11 @@ When should we using Serverless
 (In EC2 case, we need to scale out first or auto scaling, but auto scaling is not fast at all to againest short time traffic)
 
 
--> Push notification to user
--> IoT
--> Data Analyze
--> Chatbot
--> Monitoring
+-> Push notification to user <br />
+-> IoT <br />
+-> Data Analyze <br />
+-> Chatbot <br />
+-> Monitoring <br />
 
 <br />
 
@@ -145,23 +145,25 @@ What can we do or improve something ?
 <br />
 
 
-**Reference**
+Reference
 -
 https://day.ithome.com.tw/serverless/
 https://serverless.com/
 
+<br />
 
-Cliff
+Cliff <br />
 https://github.com/clifflu?tab=repositories
 
-Poga - Built his own serverless called Spacer
+Poga - Built his own serverless called Spacer <br />
 https://github.com/poga/spacer
 
-Rick Huang - 91APP tech manager
+Rick Huang - 91APP tech manager <br />
 https://rickhw.github.io/
 
 
-
+<br />
+<br />
 <div style="text-align: right;">
 2018-04-21 17:32 , David in Taipei</div>
 
