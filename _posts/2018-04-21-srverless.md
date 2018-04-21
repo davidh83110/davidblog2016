@@ -147,10 +147,9 @@ What can we do or improve something ?
 
 Reference
 -
-https://day.ithome.com.tw/serverless/
-https://serverless.com/
+https://day.ithome.com.tw/serverless/ <br />
 
-<br />
+https://serverless.com/ <br />
 
 Cliff <br />
 https://github.com/clifflu?tab=repositories
