@@ -10,8 +10,6 @@ categories: [技術簡介 , 系統建置, AWS , Python]
 comments: true
 ---
 
-## How to Import data to Elasticsearch (Nginx Access logs)
----
 
 ![Alt text](http://obj-cache.cloud.ruanbekker.com/elasticsearch-2.jpg)
 
@@ -21,7 +19,7 @@ comments: true
 
 <br />
 
-#### Preparation
+## Preparation
 
 - Elasticsearch Server == 6.3.0 (host by AWS)
 - Python == 3.6
@@ -30,7 +28,7 @@ comments: true
 <br />
 <br />
 
-#### Step 1. Install Elasticsearch
+## Step 1. Install Elasticsearch
 
 Because we use ELS which is host by AWS, <br />
 so basically we just need to take care of instance type and count.<br />
@@ -42,7 +40,7 @@ Because I just wanna get the rid of instance management lol<br />
 <br />
 
 
-#### Intruction Elasticsearch Architecture
+### Intruction Elasticsearch Architecture
 
 
 ELS is totally using JAVA to develop and of course it's open source<br />
@@ -59,7 +57,7 @@ This is simple ELS structure and those Shard/Replica is ELS `node`. <br />
 <br />
 <br />
 
-#### Architecture
+### Architecture
 - Index <br />
   index is some kind of `Table` on RDBMS <br />
 
@@ -73,7 +71,7 @@ okay, lets talk about what we should notice about AWS ELS
 <br />
 <br />
 
-#### - AWS instance type 
+### - AWS instance type 
   default type is `m4.large`, the smallest type is `t2.small` <br />
   but I think using `m4.large` for store about 1G data is too waste cuz `m4` really very expensive<br />
 <br />
@@ -84,7 +82,7 @@ okay, lets talk about what we should notice about AWS ELS
   <br />
   <br />
 
-#### -  Node count
+### -  Node count
   ELS is composed of a lot of nodes<br />
   And the `volume size` is decide of your node is `REPLICA` or `SHARD` <br />
   <br />
@@ -98,7 +96,7 @@ okay, lets talk about what we should notice about AWS ELS
   <br />
   <br />
 
-#### - Notes
+### - Notes
 <br />
   AWS will install not only ELS but also `Kibana` into. <br />
   So we can query data from kibana without any additional setting. <br />
@@ -106,7 +104,7 @@ okay, lets talk about what we should notice about AWS ELS
 <br />
 <br />
 
-#### Step 2. Import Access log in Python
+## Step 2. Import Access log in Python
 <br />
 ```
 data_es = { 
