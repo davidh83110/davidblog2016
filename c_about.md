@@ -23,6 +23,8 @@ permalink: /about/
 <h4 style="margin-left: 35px;">Degree</h4>
 <div>
 <div style="margin-left: 70px;">
+	<b> 2017 - NOW  &nbsp; &nbsp;</b>Shopline - DevOps Engineer.</div>
+<div style="margin-left: 70px;">
 	<b> 2015 - 2017 &nbsp; &nbsp;</b>PayEasy - Linux System Engineer.</div>
 <div style="margin-left: 70px;">
 	<b> 2012 - 2016 &nbsp; &nbsp;</b>Yuan Ze University - Information Management Dept.</div>
