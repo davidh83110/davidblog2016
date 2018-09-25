@@ -75,13 +75,13 @@ git 就會復活了！！<br /><br />
 
 4.bashrc清空
 
-    眼尖的朋友就會發現，我的command line提示列是default狀態，因為被他媽的清空了
+眼尖的朋友就會發現，我的command line提示列是default狀態，因為被他媽的清空了
     
-    幹，還我alias阿～～～
+幹，還我alias阿～～～
     
-    這問題我記得每次大改版都會清掉，就只能重寫囉
+這問題我記得每次大改版都會清掉，就只能重寫囉
     
-    用zshrc / iTerm的朋友應該不會遇到這問題，所以不用擔心
+用zshrc / iTerm的朋友應該不會遇到這問題，所以不用擔心
     
 <br />
 <br />
@@ -113,7 +113,7 @@ git 就會復活了！！<br /><br />
 
 3.螢幕錄影，截圖工具 (CMD + Shift + 5)<br />
 
-    這個其實也挺不錯的，有點像iPhone的截圖方式。<br />
+這個其實也挺不錯的，有點像iPhone的截圖方式。<br />
     
 ![Alt text](http://farm2.staticflickr.com/1919/44186640124_c3ab396e0e_b.jpg)
 <br />
