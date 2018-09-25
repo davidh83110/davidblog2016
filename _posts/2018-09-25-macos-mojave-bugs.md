@@ -10,17 +10,19 @@ categories: [技術簡介]
 comments: true
 ---
 
-
-
+<br />
 ![Alt text](http://farm2.staticflickr.com/1913/43093400610_b4941d7a83_b.jpg)
-
+<br />
+<br />
+<br />
+<br />
+<br />
 MacOS Mojave 於今日2018/09/25正式上線提供正式版給全球用戶下載
 
 我就打了頭陣搶先更新，沒想到更新完遇到一連串的問題
 
 慶幸的是有找到解決的方法，就讓我來分享一下吧！
 <br />
----
 <br />
 先說整個更新的過程，花費約30min。
 
@@ -35,36 +37,40 @@ MacOS Mojave 於今日2018/09/25正式上線提供正式版給全球用戶下載
 大概就是這樣
 
 而更新後出現的問題我整理一下，大概如下面幾點。
+<br />
+<br />
+<br />
 
-1. 系統字體渲染效果很模糊也很細，中文更加嚴重，很像windows的字體
+1. 系統字體渲染效果很模糊也很細，中文更加嚴重，很像windows的字體<br />
     
-    是真的會模糊到看不清楚那種，解法如下：
-    打開終端機(Option+Space打開Spotlight搜尋 -> 輸入Terminal -> Enter)，輸入下列指令：
+    是真的會模糊到看不清楚那種，解法如下：<br />
+    打開終端機(Option+Space打開Spotlight搜尋 -> 輸入Terminal -> Enter)，輸入下列指令：<br />
     `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
-
+<br />
     輸入完按Enter後把終端機關掉，登出系統再登入，字體就會恢復正常。
-    
+    <br />
+    <br />
     
 2. git 會壞掉
 
-![Alt text](http://farm2.staticflickr.com/1958/44186441644_ddf0de2b4c_b.jpg)
+![Alt text](http://farm2.staticflickr.com/1958/44186441644_ddf0de2b4c_b.jpg)<br />
 
-    原因是xcode需要安裝一些東西，在Terminal執行下列指令即可：
+原因是xcode需要安裝一些東西，在Terminal執行下列指令即可：<br />
 
-    `xcode-select --install`
+`xcode-select --install`<br />
 
-    git 就會復活了！！
+git 就會復活了！！<br /><br />
 
 
 3. homebrew也壞掉
 
-![Alt text](http://farm2.staticflickr.com/1951/44906414701_416be9819a_b.jpg)
+![Alt text](http://farm2.staticflickr.com/1951/44906414701_416be9819a_b.jpg)<br />
 
-    因為在MacOS裡，xcode是很重要的東西，dependency很重，所以連帶會有問題
+因為在MacOS裡，xcode是很重要的東西，dependency很重，所以連帶會有問題<br />
 
-    解答他也給你了，權限問題，執行下列指令即可
+解答他也給你了，權限問題，執行下列指令即可<br />
 
-    `sudo xcodebuild -license accept`
+`sudo xcodebuild -license accept`<br /><br />
 
 
 4. bashrc清空
@@ -77,30 +83,43 @@ MacOS Mojave 於今日2018/09/25正式上線提供正式版給全球用戶下載
     
     用zshrc/iTerm的朋友應該不會遇到這問題，所以不用擔心
     
-    
+<br />
+<br />
+<br />
     
 目前已知的問題大概是這樣，如果有遇到其他問題可以在下方留言幫忙補充。
-
+<br />
+<br />
 ---
-
+<br />
+<br />
 問題講完了，講講這次改版的特色
-
+<br />
+<br />
+<br />
 1. 當然是暗色主題，習慣後其實還挺不錯的，對眼睛也比較舒服
 
     基本上只有系統內建的會是暗色，像是Chrome/Line這一些額外安裝的就沒有了。
 
 ![Alt text](http://farm2.staticflickr.com/1945/31033483818_45bdf34624_b.jpg)
 
-
+<br />
+<br />
+<br />
 2. 桌面堆疊整理，這個其實滿實用的，看起來乾淨很多 (桌面點右鍵 -> 堆疊整理)
+<br />
+<br />
+<br />
 
+3. 螢幕錄影，截圖工具 (CMD + Shift + 5)<br />
 
-3. 螢幕錄影，截圖工具 (CMD + Shift + 5)
-
-    這個其實也挺不錯的，有點像iPhone的截圖方式。
+    這個其實也挺不錯的，有點像iPhone的截圖方式。<br />
     
 ![Alt text](http://farm2.staticflickr.com/1919/44186640124_c3ab396e0e_b.jpg)
-
+<br />
+<br />
+<br />
+<br />
 
 其他就是AppStore變得更快了，介面也更新。
 
@@ -110,7 +129,8 @@ MacOS Mojave 於今日2018/09/25正式上線提供正式版給全球用戶下載
 
 順帶一提，軟體相容性也不錯，沒有太大問題。
 
-
+<br />
+<br />
 因為弄了一整個下午，所以久違發文紀念過程，幹。
 
 
