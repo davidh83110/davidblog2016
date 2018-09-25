@@ -20,7 +20,7 @@ permalink: /about/
 <div style="margin-left: 70px;">
 <a href="https://davidh83110.com" target="_blank">HomePage</a> / <a href="mailto:davidh83110@gmail.com" target="_blank">Email</a> / <a href="https://github.com/davidh83110/" target="_blank">Github</a> / <a href="https://www.facebook.com/ben12567" target="_blank">Facebook</a> / <a href="https://instagram.com/davidh.110/" target="_blank">Instagram</a> / <a href="https://tw.linkedin.com/in/david-hsu-b1136112b" target="_blank">Linkedin</a>&nbsp;</div>
 <br />
-<h4 style="margin-left: 35px;">Degree</h4>
+<h4 style="margin-left: 35px;">Degree / Experiences</h4>
 <div>
 <div style="margin-left: 70px;">
 	<b> 2017 - NOW  &nbsp; &nbsp;</b>Shopline - DevOps Engineer.</div>
