@@ -54,7 +54,7 @@ Amazon Linux 1
 
 `Shard`: The place where is to store data. 
 
-`Replica Set`: Normally it will be a primary, secondary and a arbiter in a replica set, whatever shard server or config server.
+`Replica Set`: Normally it will have a primary, a secondary and a arbiter in a replica set, whatever shard server or config server.
 
 `Config Server`: The bridge which is mongos router communicate with shard server.
 
@@ -73,9 +73,9 @@ MongoDB 主要的架構大概就是這樣，會有Shard/Configsvr/mongos
 
 ![Alt text](https://www.simplilearn.com/ice9/free_resources_article_thumb/Replica-Sets-Members.JPG)
 
-`Primary`: The controller of a Shard, receive all requests to a database when writing and reading, it is the only one can be read and write node in a normal situation. Also has the responsibility to store data into a database.
+`Primary`: The controller of a Shard cluster, receive all requests to a database when writing and reading, it is the only one can be read and write node in a normal situation. Also has the responsibility to store data into a database.
 
-`Secondary`: Normally secondary doesn't allow to receive any request, the only job is to replicate primary's data to store in another place. And can be promoted to a primary node when the original primary is down in unexpected or necessary.
+`Secondary`: Normally secondary doesn't allow to receive any request, the only job is to replicate primary's data to store in another place. And can be promoted to a primary node when the original primary is down in unexpected or necessary. Aka Backup.
 
 `Arbiter`: The main function is to allocate primary and secondary nodes, it will use "vote" to decide which secondary will be promoted to primary when needed. Arbiter won't store any data inside.
 
@@ -135,7 +135,7 @@ If we wanna change to another version, just modify the value on repo file.
 `Configsvr` : 3 mongod servers, usually use `27019` port<br />
 `mongos `: 1 mongo-shell, usually use `27017` mongodb default route port<br />
 <br />
-Please use the same version, mongodb-org 3.0 in all servers.<br />
+Please use the same version, `mongodb-org 3.0` in all servers.<br />
 <br />
 <br />
 <br />
@@ -187,7 +187,7 @@ sharding:
 ## Start your mongod
 <br />
 
-`service mongod start` or `mongod -f /etc/mongod.conf` to start mongod servers.<br />
+Use `service mongod start` or `mongod -f /etc/mongod.conf` to start mongod servers.<br />
 <br />
 <br />
 
@@ -196,7 +196,7 @@ Feel free to use `ps aux | grep mongo` or `service mongod status` to check if yo
 If you get any issues when starting mongod, please go to `/var/log/mongod.log` to check error messages. <br />
 <br />
 
-** And please notice the permissions of those directories which is define in mongod.conf.<br />
+** And please notice the permissions of those directories which are define in mongod.conf.<br />
 <br />
 <br />
 請使用上述啟動指令來啟動你的 mongodb，並檢查他是否真的被啟動了。如果再啟動過程出現 Failed，請到 log 目錄檢查錯誤。常常因為目錄權限問題而失敗，或者是目錄不存在。請小心檢查，若不存在請建立目錄並給予權限。
@@ -269,8 +269,8 @@ shard1:PRIMARY> rs.status()
 ## Set up a mongos client agent
 <br />
 
-Actually, mongos is mongo-shell, one of a package of mongodb-org.
-So when we install mongodb-org, mongos was be install as well.
+Actually, mongos is equal to mongo-shell, one of a package of mongodb-org.
+So when we install mongodb-org, mongos was be installed as well.
 <br />
 
 mongos.conf
@@ -320,12 +320,12 @@ dbpath=/mnt/mongo
 pidfilepath=/var/run/mongodb/mongod.pid
 ```
 
-Please running 3 configsvr with the same config file.
+Please running 3 configsvr with the same config file and `mongod -f /etc/mongod.conf`.
 <br />
 <br />
 
 And go inside with mongo-shell into `mongos` which we just set up.
-`> mongo` // default use 27017, so no need to assign port.
+`> mongo` // default use 27019
 <br />
 
 The steps are as following: 
