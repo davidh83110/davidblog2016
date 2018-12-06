@@ -32,7 +32,8 @@ Replica Set is a is a new structure of databases, using Primary and Secondary in
 
 <br />
 <br />
-<br />
+
+---
 
 ## Environment
 
@@ -41,7 +42,9 @@ Amazon Linux 1
 
 <br />
 <br />
-<br />
+
+---
+
 ## MongoDB Introduction
 <br />
 <br />
@@ -263,7 +266,7 @@ shard1:PRIMARY> rs.status()
 
 ---
 
-#### Set up a mongos client agent
+## Set up a mongos client agent
 <br />
 
 Actually, mongos is mongo-shell, one of a package of mongodb-org.
@@ -295,7 +298,7 @@ we will use mongos to configure configsvr later.
 
 ---
 
-#### Set up configsvr 
+## Set up configsvr 
 <br />
 
 The steps of installation configsvr are the same with shards.<br />
@@ -360,18 +363,20 @@ And please insert another data to test whether succeed.
 
 If wanna upgrade configsvr to 3.2, we have some notes to be remember.<br /><br />
 
-1. 3.0 and 3.2 use different `storage engine`<br />
-        3.0 -> MMAPv1<br />
-        3.2 -> wiredTiger<br />
+3.0 and 3.2 use different `storage engine`<br />
+    3.0 -> MMAPv1<br />
+    3.2 -> wiredTiger<br />
 <br />
 <br />
-2. Cluster mode and Replica set<br />
-        3.0 -> cluster mode, sccc<br />
-        3.2 -> replica set, csrs<br />
+Cluster mode and Replica set<br />
+    3.0 -> cluster mode, sccc<br />
+    3.2 -> replica set, csrs<br />
 <br />
 <br />
+
 So, the step is as following below.<br />
 <br />
+
 a. disable balancer with `sh.stopBalancer()` and change one of three 3.0 configsvr version to 3.2 and set `configsvrMode: sccc` and `storage engine: mmapv1`
 <br />
 
@@ -381,7 +386,6 @@ a. disable balancer with `sh.stopBalancer()` and change one of three 3.0 configs
 
 b. use mongo-shell into 3.2 that one to initiate rs mode. `rs.initiate()`<br />
 <br />
-
 => waiting for the data synced to 3.2 that one.<br />
 <br />
 <br />
@@ -392,7 +396,6 @@ c. launch another 3 configsvr with 3.2 mongod and start with `wiredTiger` storag
 
 d. go into the `mmapv1` that one and `rs.add("config1/IP")` to add those 3 new servers.<br />
 <br />
-
 => now we have four 3.2 configsvr and two 3.0.<br />
 <br />
 <br />
