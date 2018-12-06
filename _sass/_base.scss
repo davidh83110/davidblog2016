@@ -197,7 +197,7 @@ blockquote{
 pre,code {
   font-size: 15px;
   border-radius: 3px;
-  background-color: #f6f6f6;
+  background-color: #cccccc;
   color: #cc0000;
 }
 
@@ -210,6 +210,8 @@ pre {
   overflow: auto; 
 
   > code {
+    background-color: #cccccc;
+    color: #000000;
     border: 0;
     padding-right: 0;
     padding-left: 0;
