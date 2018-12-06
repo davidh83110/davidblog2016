@@ -10,9 +10,6 @@ categories: [系統建置, 技術簡介]
 comments: true
 ---
 
-## MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions
----
-
 ![Alt text](https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png)
 <br />
 由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.
@@ -36,8 +33,8 @@ Replica Set is a is a new structure of databases, using Primary and Secondary in
 <br />
 <br />
 <br />
----
-#### Environment
+
+## Environment
 
 Mongodb-org 3.0 -> 3.2 <br />
 Amazon Linux 1 
@@ -45,12 +42,11 @@ Amazon Linux 1
 <br />
 <br />
 <br />
----
-#### MongoDB Introduction
+## MongoDB Introduction
 <br />
 <br />
 
-##### Main Structure
+### Main Structure
 ![Alt text](http://blogs.bmc.com/wp-content/uploads/2017/10/shard-cluster-full.png)
 
 `Shard`: The place where is to store data. 
@@ -70,7 +66,7 @@ MongoDB 主要的架構大概就是這樣，會有Shard/Configsvr/mongos
 <br />
 <br />
 
-##### Shard / Configsvr Replica Set
+### Shard / Configsvr Replica Set
 
 ![Alt text](https://www.simplilearn.com/ice9/free_resources_article_thumb/Replica-Sets-Members.JPG)
 
@@ -93,7 +89,7 @@ Primary 主要接收所有讀與寫的請求以及儲存資料，Secondary 一�
 <br />
 <br />
 
-This is the Configsvr replica set structure.
+### This is the Configsvr replica set structure.
 ![Alt text](https://docs.mongodb.com/manual/_images/replica-set-primary-with-two-secondaries.bakedsvg.svg)
 
 In confinsvr replica set, the only difference is no Arbiter.
@@ -103,8 +99,7 @@ In confinsvr replica set, the only difference is no Arbiter.
 
 ---
 
-#### Install MongoDB-org 3.0 on Amazon Linux
-<br />
+## Install MongoDB-org 3.0 on Amazon Linux
 <br />
 
 `yum` doesn't have mongodb-org inside the package pools, we have to add repo manually.
@@ -130,24 +125,25 @@ If we wanna change to another version, just modify the value on repo file.
 
 ---
 
-#### Setup a Replica Set of a complete MongoDB
-<br />
+## Setup a Replica Set of a complete MongoDB
 <br />
 
-Shard : 3 mongod servers, usually use `27018` port (version 3.2)<br />
-Configsvr : 3 mongod servers, usually use `27019` port<br />
-mongos : 1 mongo-shell, usually use `27017` mongodb default route port<br />
+`Shard` : 3 mongod servers, usually use `27018` port (version 3.2)<br />
+`Configsvr` : 3 mongod servers, usually use `27019` port<br />
+`mongos `: 1 mongo-shell, usually use `27017` mongodb default route port<br />
 <br />
 Please use the same version, mongodb-org 3.0 in all servers.<br />
 <br />
 <br />
 <br />
 
-#### Shard Servers config
-<br />
+---
+
+## Shard Servers config
 <br />
 
 In 3 shard servers, please use the same config file.
+
 
 mongod-32.conf
 ```
@@ -180,12 +176,17 @@ replication:
 sharding:
   clusterRole: shardsvr
 ```
-
-#### Start your mongod
 <br />
+<br />
+
+---
+
+## Start your mongod
 <br />
 
 `service mongod start` or `mongod -f /etc/mongod.conf` to start mongod servers.<br />
+<br />
+<br />
 
 Feel free to use `ps aux | grep mongo` or `service mongod status` to check if your mongod really started.<br />
 
@@ -200,8 +201,10 @@ If you get any issues when starting mongod, please go to `/var/log/mongod.log` t
 <br />
 <br />
 
+---
 
-#### Setup Shard Replica mode
+
+## Setup Shard Replica mode
 <br />
 <br />
 
@@ -258,13 +261,14 @@ shard1:PRIMARY> rs.status()
 <br />
 <br />
 
+---
 
 #### Set up a mongos client agent
-<br />
 <br />
 
 Actually, mongos is mongo-shell, one of a package of mongodb-org.
 So when we install mongodb-org, mongos was be install as well.
+<br />
 
 mongos.conf
 ```
@@ -289,8 +293,9 @@ we will use mongos to configure configsvr later.
 <br />
 <br />
 
+---
+
 #### Set up configsvr 
-<br />
 <br />
 
 The steps of installation configsvr are the same with shards.<br />
@@ -318,8 +323,9 @@ Please running 3 configsvr with the same config file.
 
 And go inside with mongo-shell into `mongos` which we just set up.
 `> mongo` // default use 27017, so no need to assign port.
+<br />
 
-The process is 
+The steps are as following: 
 1. add shard with primary
 2. create db and collection
 3. insert data to database.collection
@@ -341,7 +347,6 @@ mongo> sh.shardCollection("test.users", {_id: "hashed"})   //use hashed to shard
 mongo> sh.status()   //to check if sharding enabled
 ```
 <br />
-<br />
 
 Then `mongo> db.users.find()` to find data if exist
 And please insert another data to test whether succeed.
@@ -351,7 +356,7 @@ And please insert another data to test whether succeed.
 
 ---
 
-#### Upgrade MongoDB from 3.0 to 3.2
+## Upgrade MongoDB from 3.0 to 3.2
 
 If wanna upgrade configsvr to 3.2, we have some notes to be remember.<br /><br />
 
@@ -365,51 +370,46 @@ If wanna upgrade configsvr to 3.2, we have some notes to be remember.<br /><br /
         3.2 -> replica set, csrs<br />
 <br />
 <br />
-<br />
 So, the step is as following below.<br />
 <br />
-<br />
-1. disable balancer with `sh.stopBalancer()` and change one of three 3.0 configsvr version to 3.2 and set `configsvrMode: sccc` and `storage engine: mmapv1`
-<br />
+a. disable balancer with `sh.stopBalancer()` and change one of three 3.0 configsvr version to 3.2 and set `configsvrMode: sccc` and `storage engine: mmapv1`
 <br />
 
 => now 3 configsvr, one for 3.2 and two for 3.0<br />
 <br />
 <br />
 
-2. use mongo-shell into 3.2 that one to initiate rs mode. `rs.initiate()`<br />
-<br />
+b. use mongo-shell into 3.2 that one to initiate rs mode. `rs.initiate()`<br />
 <br />
 
 => waiting for the data synced to 3.2 that one.<br />
 <br />
 <br />
 
-3. launch another 3 configsvr with 3.2 mongod and start with `wiredTiger` storagr engine.<br />
+c. launch another 3 configsvr with 3.2 mongod and start with `wiredTiger` storagr engine.<br />
 <br />
 <br />
 
-4. go into the `mmapv1` that one and `rs.add("config1/IP")` to add those 3 new servers.<br />
-<br />
+d. go into the `mmapv1` that one and `rs.add("config1/IP")` to add those 3 new servers.<br />
 <br />
 
 => now we have four 3.2 configsvr and two 3.0.<br />
 <br />
 <br />
 
-5. `rs.stepDown()` in `mmapv1` that 3.2 one and primary node will change to another server.<br />
+e. `rs.stepDown()` in `mmapv1` that 3.2 one and primary node will change to another server.<br />
 <br />
 <br />
 
-6. go to new primary and `rs.remove("NNAPv1-OLD-PRIMARY")` and enable balancer back with `rs.enableBalancer()`<br />
+f. go to new primary and `rs.remove("NNAPv1-OLD-PRIMARY")` and enable balancer back with `rs.enableBalancer()`<br />
 <br />
 <br />
 
-7. shut down old two 3.0 configsvr<br />
+g. shut down old two 3.0 configsvr<br />
 <br />
 <br />
 
-8. using 3.2 mongos to connect to new replica set configsvr and check status.<br />
+h. using 3.2 mongos to connect to new replica set configsvr and check status.<br />
 <br />
 <br />
 <br />
@@ -418,21 +418,17 @@ So, the step is as following below.<br />
 ---
 
 
-#### The Errors I Encountered when Upgrading to 3.2
-<br />
-<br />
+## The Errors I Encountered when Upgrading to 3.2
 <br />
 
-1. `Can 3.0 mongos connect to 3.2 configsvr ?`<br />
+a. `Can 3.0 mongos connect to 3.2 configsvr ?`<br />
     Absolutely not, 3.0 doesn't support replica mode<br />
-    <br />
     <br />
     mongos 3.0 是不允許連接到 3.2 或以上版本的 configsvr的。<br />
     <br />
     <br />
-    <br />
 
-2. `"setShardVersion failed" when mongos configDB endpoint has been changed`<br />
+b. `"setShardVersion failed" when mongos configDB endpoint has been changed`<br />
 ```
 mongos> db.users.find()
 Error: error: {
@@ -445,55 +441,40 @@ Error: error: {
 cause the shard servers will cache mongos `configDB string`.<br />
 If you wanna solve this issue, just `restart shard servers` then everything works well.<br />
 <br />
-<br />
-
 因為 shard server 會 cache mongos 的 configDB string，所以如果遇到這個問題，重啟 Shard servers 就可以解決了。（記得先 StepDown Primary 再重啟）<br />
 <br />
 <br />
-<br />
 
-
-3. `Can 3.0 configsvr connect to 3.2 or 3.4up shard servers ?`<br />
+c. `Can 3.0 configsvr connect to 3.2 or 3.4up shard servers ?`<br />
     Absolutely the answer is NO.<br />
 <br />
-<br />
-
     3.0 的 configsvr 是不能連接到 3.0 以上版本的 Shard Server 的，因為不支援 Replica Mode。<br />
 <br />
 <br />
-<br />
 
-4. `How to separate data to two shards equally ?`<br />
+d. `How to separate data to two shards equally ?`<br />
     when `shardCollection()`, please use "hashed" on index, then will be equally separated.<br />
     <br />
-    <br />
-
     使用 hashed 雜湊就能使資料平均分配在不同的 Shard Server。<br />
     <br />
     <br />
-    <br />
 
-5. `Can 3.0 mongod upgrade to 3.4 and skip 3.2 directly ?`<br />
+e. `Can 3.0 mongod upgrade to 3.4 and skip 3.2 directly ?`<br />
     Sorry, the answer is NO, you must to upgrade to 3.2 first then go to 3.4.<br />
     <br />
-    <br />
-
     mongodb 不允許跳版本升級，3.0 只允許升級到 3.2 再到 3.4。<br />
     <br />
     <br />
-    <br />
 
-6. `How to STOP a shard server safely ?`<br />
+f. `How to STOP a shard server safely ?`<br />
     Please use `rs.stepDown(120)` and `db.shutdownServer()` in mongo-shell.<br />
     Then exit mongo-shell and stop or kill mongod process.<br />
-<br />
-<br />
+    <br />
     使用正確的指令停止一台 mongodb server。<br />
     <br />
     <br />
-    <br />
 
-7. `How to change priority on Shard server ?`<br />
+g. `How to change priority on Shard server ?`<br />
     ```
     var cfg = rs.conf()
     cfg.members[ID].priority = 0.5
@@ -501,33 +482,25 @@ If you wanna solve this issue, just `restart shard servers` then everything work
     ```
     // The ID can use `rs.status()` to lookup
     <br />
-    <br />
-    
     使用上列指令去更改 mongodb 的優先度。<br />
     <br />
     <br />
-    <br />
     
-8. `How to failover the primary temporary ?`<br />
+h. `How to failover the primary temporary ?`<br />
     `rs.stepDown(120)` on Primary node // The 120 is the Time by second
     Then it will auto failover to another node.<br />
     <br />
-    <br />
-
     暫時的停止一台 Shard Server 的運作，也可以運來測試主副節點切換是否正常運作。<br />
     <br />
     <br />
-    <br />
     
-    <br />
 ---
-<br />
+
 <br />
 <br />
 
 以上就寫到這裡了，如果遇到其他的問題歡迎在下面留言或來信發問。<br />
 對於過程也歡迎提出意見，謝謝。<br />
-<br />
 <br />
 <br />
 
