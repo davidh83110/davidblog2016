@@ -11,7 +11,7 @@ permalink: /about/
 <h3 style="text-align: center;">
 	David Hsu</h3>
 <div style="text-align: center;">
-	Junior SE</div>
+	Devops Engineer</div>
 <div>
 	<b><br /></b></div>
 <div style="text-align: center;">
@@ -35,81 +35,37 @@ permalink: /about/
 <h4 style="margin-left: 35px;">Technology  Skills</h4>
 <div style="margin-left: 50px;">
 <div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - TCP/IP、WAN / LAN、NAT</b></div>
+	Mainly focus on AWS services.</div>
 <div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Amazon Web Services (AWS)</b></div>
+	<b>&nbsp; &nbsp; &nbsp; &nbsp;EC2 / VPC / ECS / Lambda / Cloudwatch / Opsworks / AutoScaling / boto3 / AWS cli</b></div>
+<br />
 <div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Squid Proxy / Reverse Proxy</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Bind DNS / CDN Management&nbsp;</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Git&nbsp;</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Docker&nbsp;</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - AxureRP / HTML / CSS&nbsp;</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Python&nbsp;</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Splunk&nbsp;</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Ansible&nbsp;</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Pure-ftpd&nbsp;</b></div>
-<div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Google Apps (G Suite)</b></div>
-<div>
+	And familiar with MySQL / MSSQL / mongoDB / RDS
 </div>
+<br />
 <div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Penetration Tools</b></div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- nmap、Burp-Suite、NetCAT、John the Ripper、Metasploit</div>
-<div>
+	As well as Python / Django / Flask 
 </div>
+<br />
 <div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp; - Linux Operation System</b></div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Bash / Shell Script</div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Web Server</div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Apache</div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Nginx</div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - IIS</div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Application Server</div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Jboss / Wildfly&nbsp;</div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Weblogic&nbsp;</div>
-<div>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Cacti 、Nagios&nbsp;</div>
-<div>
+	Also has experiences on GCP / GKE / AliCloud / Azure
 </div>
+<br />
 <div>
-	<b>&nbsp; &nbsp; &nbsp; &nbsp;- Virtualization</b></div>
-<div>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - VMware ESXi、vCenter&nbsp;</div>
-<div>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Cirtix</div>
-<div>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Virtualbox</div>
-<div>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Xen</div>
-<div>
+	Wildfly / Weblogic / Jboss JAVA Server also has experiences on set up
 </div>
+<br />
 <div>
-<b>&nbsp; &nbsp; &nbsp; &nbsp; - Windows Operation System</b></div>
+	I also can build a complete CI / CD environment with good flow
+</div>
+<br />
 <div>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Script</div>
+	Like to join with a team which is running Scrum or Agile develop
+</div>
+<br />
 <div>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Windows Server</div>
-<div>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Activity Directory</div>
-<div>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Exchange Mail Server</div>
+	Of course has strong use on Linux / TCP / LoadBalancer / DNS / CDN / Proxy / Nginx
+</div>
 <div style="clear: both;">
 </div>
 </div>
