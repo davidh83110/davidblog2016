@@ -13,13 +13,13 @@ comments: true
 ## Terraform Module Private Registries - Bitbucket
 ---
 
-![Alt text](https://image.slidesharecdn.com/reusablecomposablebattle-testedterraformmodules-170919144930/95/reusable-composable-battletested-terraform-modules-1-638.jpg?cb=1507901802)
+![Alt text](https://flic.kr/p/2dJ1XRw)
 <br />
 
 
 在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。
 
-Due to less informations on the internet when I am searching `how terraform module access remote private registry`, so I decide to share this.
+Due to less information on the internet when I am searching `how terraform module access remote private registry`, so I decide to share this.
 <br />
 <br />
 
@@ -48,10 +48,16 @@ module "base" {
 For SSH Protocol:
 ```
 module "base" {
-    git::ssh://git@bitbucket.org/davidh83110/terraform_modules.git//ec2
+    source = "git::ssh://git@bitbucket.org/davidh83110/terraform_modules.git//ec2"
 }
 
 ```
+
+* 在 SSH clone 方式裡，請使用 `//` 雙斜線來表示目錄 (i.e. //ec2)
+  
+  Please use a double slash (`//`) to clone a directory (i.e. //ec2).
+
+
 
 That's all.
 
