@@ -53,9 +53,9 @@ module "base" {
 
 ```
 
-* 在 SSH clone 方式裡，請使用 `//` 雙斜線來表示目錄 (i.e. //ec2)
-  
-  Please use a double slash (`//`) to clone a directory (i.e. //ec2).
+  > 在 SSH clone 方式裡，請使用 `//` 雙斜線來表示目錄 (i.e. //ec2)
+  >
+  > Please use a double slash (`//`) to clone a directory (i.e. //ec2).
 
 
 
