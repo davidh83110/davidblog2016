@@ -13,7 +13,7 @@ comments: true
 ## Terraform Module Private Registries - Bitbucket
 ---
 
-![Alt text](https://flic.kr/p/2dJ1XRw)
+![Alt text](https://farm8.staticflickr.com/7824/46420454484_fa00ae8615_h.jpg)
 <br />
 
 
