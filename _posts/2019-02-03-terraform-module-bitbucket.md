@@ -39,7 +39,6 @@ For HTTP(S) Protocol:
 ```
 module "base" {
     source = "git::https://bitbucket.org/davidh83110/terraform_modules.git/ec2"
-
 }
 
 ```
