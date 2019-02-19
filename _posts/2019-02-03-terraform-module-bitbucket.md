@@ -15,7 +15,6 @@ comments: true
 
 ![Alt text](https://image.slidesharecdn.com/reusablecomposablebattle-testedterraformmodules-170919144930/95/reusable-composable-battletested-terraform-modules-1-638.jpg?cb=1507901802)
 <br />
-<br />
 
 
 在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。
@@ -39,7 +38,7 @@ And we know that you can clone a git repo by `HTTP(S)` and `SSH`, so I will also
 For HTTP(S) Protocol:
 ```
 module "base" {
-    source = "git::https://bitbucket.com/dacidh83110/terraform_modules.git/modeules"
+    source = "git::https://bitbucket.org/davidh83110/terraform_modules.git/ec2"
 
 }
 
@@ -50,9 +49,8 @@ module "base" {
 For SSH Protocol:
 ```
 module "base" {
-    git::ssh://git@bitbucket.org/starlinglabs/ecs_modules_template.git//ec2
+    git::ssh://git@bitbucket.org/davidh83110/terraform_modules.git//ec2
 }
-
 
 ```
 
