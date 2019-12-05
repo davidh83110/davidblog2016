@@ -11,7 +11,7 @@ comments: true
 ---
 
 
-![Alt text](http://obj-cache.cloud.ruanbekker.com/elasticsearch-2.jpg)
+![Alt text](https://static001.infoq.cn/resource/image/48/06/48fb5f5d37a9efd331763e97c5368306.png)
 
 因為統計流量的需求，需要將nginx access log放進elasticsearch方便做統計。 <br />
 對ELS不是很熟的我，也花了一點時間釐清觀念，就寫進來當作notes吧。 <br />
