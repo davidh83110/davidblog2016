@@ -15,7 +15,7 @@ github_username:  davidh83110
 facebook_username: ben12567
 instagram_username: davidh.110
 disqus_shortname: davidh83110
-favicon:     ""
+favicon: "/images/favicon.ico"
 aboutme: Hi, I am David from Taiwan. # these are shown on aboutme-sidebar.
 aboutme_photo: "/images/avator.jpg" # your photo.
 google_analytics_key: UA-85468802-3 # put YOUR key here to enable tracking! (blank to disable)
