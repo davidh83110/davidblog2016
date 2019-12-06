@@ -3,8 +3,8 @@ title: David's Blog
 tagline:  
 author: David Hsu
 email: davidh83110@gmail.com
-description: "Linux and NetSeurity." # You can edit this line in _config.yml. It will appear in your document head meta and in your feed.xml site description
-keywords: "Linux , NetSeurity , unix , owasp , bash , network"
+description: "DevOps, Cloud Native and AWS." # You can edit this line in _config.yml. It will appear in your document head meta and in your feed.xml site description
+keywords: "Linux , NetSeurity , unix , owasp , bash , network, aws, devops"
 baseurl: "//blog.davidh83110.com" # the subpath of your site, e.g. /blog/
 url: "//blog.davidh83110.com" # the base hostname & protocol for your site
 locale: en_US
