@@ -18,14 +18,17 @@ comments: true
 
 
 經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。
+
+With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.
   
 <br />
 <br />
 
-## 事前準備
+## 事前準備 Preparation
 ___
 
 先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
+The first time I use AWS was in 2016, those services I've been touching were below:
  - EC2 (EBS, EC2 RI), LB, ASG
  - VPC (subnet, Route Table, Peering connection)
  - ECS / OpsWorks / Beanstalk
@@ -33,9 +36,12 @@ ___
  - Lambda
  - Cloudwatch / CloudwatchLogs
 
+
 其餘沒有列出來的服務都只有接觸過並沒有很深入了解。
 
-一開始先閱讀 AWS 官方的考試指南是一定要的。
+一開始先閱讀 AWS 官方的考試指南是一定要的。 `但我建議閱讀FAQ就好`，因為白皮書太多東西了，有時間再看就好。
+
+First of all, you need to read the AWS official whitpapers. But I am not really recommend the read this, that is too much to read. If you don't wanna sepend too much time on it, you can read `AWS FAQ` is basically okay.
 
 [考試指南連結](https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS_Certified_Solutions_Architect_Associate-Exam_Guide_EN_1.8.pdf)
 
@@ -46,6 +52,8 @@ ___
 有這些知識之後再去做架構規劃會比每次都瞎Google一通好太多了。
 
 `那到底考試都考哪些？`
+
+`I think those services below will be in the real exam`, can be a reference. If you wanna know more detail, then you can scroll to the end of this page, I have a detail list for it.
 
 我個人認為必考的如下
  - EC2 (RI, Placement Group, EBS)
@@ -64,10 +72,12 @@ ___
 <br />
 <br />
 
-## Stage1. 線上課程
+## Stage1. 線上課程 Online Course
 ---
 
 我第一個使用的是 A Cloud Guru.
+
+The first course I bought was `A Cloud Guru` and it was very po
 
 [A Cloud Guru - Udemy](https://www.udemy.com/course/aws-certified-solutions-architect-associate/)
 
