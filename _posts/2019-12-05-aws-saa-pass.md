@@ -18,13 +18,17 @@ comments: true
 
 
 經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。
+
+With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.
   
+<br />
+<br />
 
-
-## 事前準備
+## 事前準備 Preparation
 ___
 
 先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
+The first time I use AWS was in 2016, those services I've been touching were below:
  - EC2 (EBS, EC2 RI), LB, ASG
  - VPC (subnet, Route Table, Peering connection)
  - ECS / OpsWorks / Beanstalk
@@ -32,9 +36,12 @@ ___
  - Lambda
  - Cloudwatch / CloudwatchLogs
 
+
 其餘沒有列出來的服務都只有接觸過並沒有很深入了解。
 
-一開始先閱讀 AWS 官方的考試指南是一定要的。
+一開始先閱讀 AWS 官方的考試指南是一定要的。 `但我建議閱讀FAQ就好`，因為白皮書太多東西了，有時間再看就好。
+
+First of all, you need to read the AWS official whitpapers. But I am not really recommend the read this, that is too much to read. If you don't wanna sepend too much time on it, you can read `AWS FAQ` is basically okay.
 
 [考試指南連結](https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS_Certified_Solutions_Architect_Associate-Exam_Guide_EN_1.8.pdf)
 
@@ -45,6 +52,8 @@ ___
 有這些知識之後再去做架構規劃會比每次都瞎Google一通好太多了。
 
 `那到底考試都考哪些？`
+
+`I think those services below will be in the real exam`, can be a reference. If you wanna know more detail, then you can scroll to the end of this page, I have a detail list for it.
 
 我個人認為必考的如下
  - EC2 (RI, Placement Group, EBS)
@@ -60,12 +69,15 @@ ___
 
 講了這麼多廢話，下面開始介紹我如何準備這個考試。
 
+<br />
+<br />
 
-
-## Stage1. 線上課程
+## Stage1. 線上課程 Online Course
 ---
 
 我第一個使用的是 A Cloud Guru.
+
+The first course I bought was `A Cloud Guru` and it was very po
 
 [A Cloud Guru - Udemy](https://www.udemy.com/course/aws-certified-solutions-architect-associate/)
 
@@ -79,7 +91,8 @@ A Cloud Guru 好用嗎？
 
 最後會有 Mega Test，也就是 120min 模擬真實考試的60題測驗，`A Cloud Guru 的難度比真實測驗要高得太多。` 如果想挫挫自己銳氣或是想完整掌握知識，非常建議去做，但是會有點崩潰。
 
-
+<br />
+<br />
 
 ## Stage2. AWS FAQ
 ---
@@ -90,7 +103,8 @@ A Cloud Guru 好用嗎？
 
 [AWS FAQ](https://aws.amazon.com/tw/faqs/)
 
-
+<br />
+<br />
 
 ## Stage3. WhizLabs
 ---
@@ -103,9 +117,13 @@ A Cloud Guru 好用嗎？
 
 特別要說的是， `Whizlabs 的題目詳解，真的寫得很好`，清楚的告訴你正確觀念，以及你選的為什麼會是錯的。 我覺得大推！
 
+我每次測驗分數大概落在 73 - 90 之間，最後通過正式考試是 82，可以當做個參考囉。
+
 [Whizlabs - AWS SAA C01](https://www.whizlabs.com/aws-solutions-architect-associate/)
 
 
+<br />
+<br />
 
 ## 正式考試
 ---
@@ -164,6 +182,8 @@ A Cloud Guru 好用嗎？
   - Lambda & APIGW
   - Cloudwatch & CloudwatchLogs
 
+<br />
+<br />
 
 ## Conclusion 總結
 ---
@@ -172,9 +192,12 @@ A Cloud Guru 好用嗎？
 
 雖說是考試，但在工作上不難發現用到的也都是這些。 有時候一個Bug解不出來也很可能是因為在某個服務的某個關鍵觀念不熟，所以說考試反映出的題目，跟工作上遇到的難題其實是很雷同的。
 
-祝福大家考試都能過關。
+我在備考的時候，習慣把一直看到我又一直做錯的題目寫在筆記本裡，製作自己的cheat sheet。睡前看一下，每次寫題目前看一下，都是非常有幫助的，看久了也就記得了。
 
+最後，祝福大家考試都能過關。
 
+<br />
+<br />
 
 ## References & Links
 ---
