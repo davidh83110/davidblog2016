@@ -38,7 +38,6 @@ permalink: /about/
 <div style="margin-left: 50px;">
 
 <br />
-<br />
 David is a Site Reliability Engineer aka DevOps Engineer in the software industry. Mainly focus on cloud solutions such as AWS (Amazon Web Service). Provided highly availability production infrastructures and experienced high concurrency applications architecture (100k RPM) which are based on Dockerized. Developed a micro-services application with Elasticsearch, Flask Restful-API and Django for a media marketing company. Interested in cloud-native solutions, DevOps culture, crypto-currency market, and e-commerce.
 <br />
 <br />
