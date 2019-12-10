@@ -28,7 +28,9 @@ With a few weeks of preparation, I passed the AWS SAA certificate exam with an 8
 ___
 
 先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
-The first time I use AWS was in 2016, those services I've been touching were below:
+
+The first time I use AWS was in 2016, those services below are I've been touching:
+
  - EC2 (EBS, EC2 RI), LB, ASG
  - VPC (subnet, Route Table, Peering connection)
  - ECS / OpsWorks / Beanstalk
@@ -69,6 +71,8 @@ First of all, you need to read the AWS official whitpapers. But I am not really 
 
 講了這麼多廢話，下面開始介紹我如何準備這個考試。
 
+OK -- Let's see how I prepare this exam.
+
 <br />
 <br />
 
@@ -77,7 +81,7 @@ First of all, you need to read the AWS official whitpapers. But I am not really 
 
 我第一個使用的是 A Cloud Guru.
 
-The first course I bought was `A Cloud Guru` and it was very po
+The first course I bought was `A Cloud Guru` and it was very helpful, but the mega tests might be a little bit difficult to a new guy on AWS. I will suggest you to purchase this course but don't feel frustrating if you get a bad score. That's pretty noraml. But I will recommend you to do the section tests, that will let you know what's the point of the service.
 
 [A Cloud Guru - Udemy](https://www.udemy.com/course/aws-certified-solutions-architect-associate/)
 
@@ -91,6 +95,10 @@ A Cloud Guru 好用嗎？
 
 最後會有 Mega Test，也就是 120min 模擬真實考試的60題測驗，`A Cloud Guru 的難度比真實測驗要高得太多。` 如果想挫挫自己銳氣或是想完整掌握知識，非常建議去做，但是會有點崩潰。
 
+我第一次做 Mega Test 的時候拿到 46% 的分數而已，第二次 68% ， 但最後我還是 82% 通過了，可見這題庫有點太過難。
+
+And I got a 46% when I first did the Mega Test, second time got 68%, that's really bad but I passed the real exam with 82%. I think the Mega Test really might be difficult.
+
 <br />
 <br />
 
@@ -102,6 +110,8 @@ A Cloud Guru 好用嗎？
 這邊不多說，大家都知道哪些特別需要看。 請見上面前情提要。
 
 [AWS FAQ](https://aws.amazon.com/tw/faqs/)
+
+As I said, A Cloud Guru doesn't mention too much details on each services and the official whitpapers are really too much to read. So I read `AWS FAQ` to dig deeply on each services and I felt it was very helpful.
 
 <br />
 <br />
@@ -121,6 +131,12 @@ A Cloud Guru 好用嗎？
 
 [Whizlabs - AWS SAA C01](https://www.whizlabs.com/aws-solutions-architect-associate/)
 
+Whizlabs has 8-10 sets of exam mock and `it was very close to the real exam`, truly recommend this.
+
+Not only this, it also provide very clear explaination with every single question. That's very important because you will know why your answer is wrong without read too much AWS documents.
+
+The score I got was between 73 to 90, and I got 82 in real exam, so it's very close to real one. And `Some questions were very similar to real exam's questions`.
+
 
 <br />
 <br />
@@ -132,29 +148,35 @@ A Cloud Guru 好用嗎？
 
 要掌握的觀念就跟題目做久了一樣，就會發現就是那些東西在重複而已。
 
+OK -- Let's go to the real exam.
+
+I have to say the real exam was simple than any practices I've done. So if you have already read FAQ and also bought some mock exams to did, I think you should be more confident to go in the real exam.
+
+And I also have a list can help you to recall what you've learned and tell you what's the point of exam. Let's see.
+
 - EC2
   - Reserved Instances (RI)
   - Placement Group
-  - AMI (跨Region如何使用？ 搬過去！)
-  - EIP 如何收費 (綁定ENI後不收費)
-  - EBS (各種情境Type怎麼選)
+  - AMI (Can it Cross Region？ No, you need to copy it to another Region.)
+  - EIP Pricing (`For Free` if your EIP are attaching to an ENI.)
+  - EBS (All kinds of types you all need to know)
   - ASG (Scaling Policies / Terminated Policy / ASG Config)
   - `Use IAM Role instead of insert Access Key`
 
 - VPC
-  - Subnets & AZ 的關係 (一個subnet會在一個AZ)
-  - Security v.s. Network ACL (`Stateful v.s. Stateless`) (服務之間做Port限制都是SG, ACL不能做Port限制，因為所在的OSI Network Layer不同(Layer6 v.s. Layer4))
+  - Subnets & AZ (One Subnet, One AZ)
+  - Security v.s. Network ACL (`Stateful v.s. Stateless`) (Service Level like RDS and EC2, you should use SG, because you will need to control `PORTS which you wanna public`)
   - Routing Table
   - Public Subnet v.s. Private Subnet (`Attched IGW v.s. NAT`)
-  - NAT (`要放在Public Subnet, 但是Private Subnet Attach.`，在Private Subnet內的都透過NAT跟外網溝通，NAT內的網路流量`只出不進`)
+  - NAT (`Put it IN PUBLIC Subnet, but need to attach to PRIVATE Subnet.`)(`要放在Public Subnet, 但是Private Subnet Attach.`，在Private Subnet內的都透過NAT跟外網溝通，NAT內的網路流量`只出不進`)
   - IGW (Public Subent Attach，直接與外網溝通，網路可進可出)
-  - Peering Connection (可跨Account)
-  - VPN (如何與On Premise溝通)
+  - Peering Connection (Can Cross Account)
+  - VPN (How to communicate with On Premise Networking)
   - VPC Endpoints
 
 - S3
   - S3 IA / Single IA / Glacier (`Lifecycle`)
-  - S3 Policy & IAM 使用情境
+  - S3 Policy & IAM 
   - Cross Region Replication (CORS) & Versioning
   - VPC Endpoints for using internal networking
 
@@ -174,7 +196,7 @@ A Cloud Guru 好用嗎？
   - Cross Account & sts Roles
 
 - Others
-  - 合規類型的 (VPC Flow logs / API Call要去CloudTrails查詢)
+  - For Compliance (VPC -> Flow logs / API Call -> CloudTrails)
   - AWS EMR
   - SSM Parameter Store & Secret Manager
   - Beanstalk & Opsworks
@@ -195,6 +217,14 @@ A Cloud Guru 好用嗎？
 我在備考的時候，習慣把一直看到我又一直做錯的題目寫在筆記本裡，製作自己的cheat sheet。睡前看一下，每次寫題目前看一下，都是非常有幫助的，看久了也就記得了。
 
 最後，祝福大家考試都能過關。
+
+Feel so good to pass the exam and I will suggest you be more confidence to go in the real exam. It's not that hard to do.
+
+If you really don't know how to prepare, you can follow my steps and I believe you will pass it. Remember to make some notes and read them when you are free, even if you are in toilet.
+
+Also feel free to send me messages or reply this article if you got any problems.
+
+Cheers.
 
 <br />
 <br />
