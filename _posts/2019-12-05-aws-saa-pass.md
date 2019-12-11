@@ -29,7 +29,7 @@ ___
 
 先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
 
-The first time I use AWS was in 2016, those services below are I've been touching:
+The first time I use AWS was in 2016, those services below are I've been studying:
 
  - EC2 (EBS, EC2 RI), LB, ASG
  - VPC (subnet, Route Table, Peering connection)
@@ -43,7 +43,7 @@ The first time I use AWS was in 2016, those services below are I've been touchin
 
 一開始先閱讀 AWS 官方的考試指南是一定要的。 `但我建議閱讀FAQ就好`，因為白皮書太多東西了，有時間再看就好。
 
-First of all, you need to read the AWS official whitpapers. But I am not really recommend the read this, that is too much to read. If you don't wanna sepend too much time on it, you can read `AWS FAQ` is basically okay.
+First of all, you need to read the AWS official whitpapers. But I do not really recommend the read this, that is too much to read. If you don't wanna sepend too much time on it, you can read `AWS FAQ` is basically okay.
 
 [考試指南連結](https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS_Certified_Solutions_Architect_Associate-Exam_Guide_EN_1.8.pdf)
 
