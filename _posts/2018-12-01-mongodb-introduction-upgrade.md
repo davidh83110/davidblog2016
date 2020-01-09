@@ -95,7 +95,7 @@ Primary 主要接收所有讀與寫的請求以及儲存資料，Secondary 一�
 ### This is the Configsvr replica set structure.
 ![Alt text](https://docs.mongodb.com/manual/_images/replica-set-primary-with-two-secondaries.bakedsvg.svg)
 
-In confinsvr replica set, the only difference is no Arbiter.
+In configsvr replica set, the only difference is no Arbiter.
 <br />
 <br />
 <br />
