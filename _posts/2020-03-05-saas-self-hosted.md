@@ -10,6 +10,8 @@ categories: [ 技術簡介 ]
 comments: true
 ---
 
+![Maslow](https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg)
+
 
 ## Let's talk about SaaS and Self-Hosted today!
 
@@ -242,11 +244,9 @@ EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master
 ```
 
 <br />
-<br />
 
 管理者的角色必須轉變，你必須思考你使用了哪些服務，而他們是不是真的Cloud-Native? 
 
-<br />
 <br />
 
 ```
@@ -254,13 +254,11 @@ EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master
 ```
 
 <br />
-<br />
 
 你該思考的是該怎麼做，你要付出的代價最少？
 
-可以讓你專心去發揮你的才華，給你滿滿的大平台，`進而滿足心裡的成就感`（馬斯洛需求 - 自我實現的需要）。
+可以讓你專心去發揮你的才華，給你滿滿的大平台，`進而滿足心裡的成就感`（馬斯洛需求 - 自我實現的需要），也正因應文章一開始的圖片。
 
-<br />
 <br />
 
 ```
@@ -268,9 +266,6 @@ EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master
 ```
 
 <br />
-<br />
-
-
 <br />
 <br />
 
