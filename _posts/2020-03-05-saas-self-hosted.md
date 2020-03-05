@@ -1,7 +1,7 @@
 ---
 published: true
 layout: post
-title: SaaS & Self-Hosted 衍伸思考
+title: SaaS/Managed Services & Self-Hosted 衍伸思考
 author: David
 modified: 2020-03-05
 categories: [ 技術簡介 ]
@@ -13,11 +13,40 @@ comments: true
 ![Maslow](https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg)
 
 
-## Let's talk about SaaS and Self-Hosted today!
+## Let's talk about SaaS/Managed Services and Self-Hosted today!
 
-SaaS派的人會說，我不想管機器。  
+SaaS/Managed Services派的人會說，我不想管機器。  
 自架派的會說，我喜歡掌握所有東西的感覺。  
 但到底哪個好？  
+
+<br />
+<br />
+
+### 名詞解釋
+---
+<br />
+
+```
+感謝社團大大指出，AWS不算是全SaaS服務，它包含了SaaS/PaaS/IaaS，所以應該屬於Cloud Provider，提供Managed Services
+```
+
+<br />
+
+- SaaS  
+`SaaS` 全名是 Software as a Service ，軟體即服務。 通常為直接面對客戶的應用程式，像是 Office365/Slack/LastPass/Splunk。   
+
+
+- Managed Service  
+`Managed Service` 是指託管在雲上的服務。 像是 EKS/Elasticache/Elasticsearch。  
+
+
+- 所以我要講的是什麼？  
+~~因為我太懶的關係~~  本文以下所稱 `SaaS` 或是 `Managed Services` 即代表 SaaS 或是 Managed Service 兩者互相通用的意思。  
+但更準確的說我要表達的是 `XXXX AS A SERVICE` 的這種商業與開發模式。  
+
+- SaaS = Managed Services ?  
+其實他們是不一樣的意思，所以特別在這邊解釋。  
+不過本文並非名詞探討，就不多就不多寫了，怕會離題歪樓。   
 
 <br />
 <br />
@@ -49,7 +78,8 @@ AWS，幫你把你常用的東西全部做成服務，讓你想用的時候就�
 你常用的Word/Powerpoint也可變成SaaS (Google文件/簡報, Office365)、  
 甚至是你的代碼儲存庫也可以(GitHub)、  
 連Adobe都變成Adobe Cloud並採用訂閱制了、  
-電商開店平台也變成SaaS (Shopline/91APP)。  
+電商開店平台也變成SaaS (Shopline/91APP)、
+資安居然也有SaaS的方案了。  
 
 
 就連工程師的世界也發生很多改變，開始出現Kubernetes as a Service, Logging as a Service, Instance as a Service等等的這些東西，連DevOps as a Service都出現了。
@@ -126,9 +156,9 @@ Oh, 你有Auto-Scaling. 那恭喜你，`但你知道Auto-Scaling要應付瞬間�
 <br />
 <br />
 
-### SaaS 的缺點
+### Managed Services / SaaS 的缺點
 ---
-唬爛了這麼多，SaaS真的沒有缺點？ 有啊，當然有。  
+唬爛了這麼多，Managed Services / SaaS 真的沒有缺點？ 有啊，當然有。  
 
 
 都交給別人做很方便，但是萬一你選到很爛的廠商，那也很難置身其外。  
@@ -145,13 +175,13 @@ Oh, 你有Auto-Scaling. 那恭喜你，`但你知道Auto-Scaling要應付瞬間�
 ### 轉換思考角度
 ---
 ```
-SaaS改變的不只是軟體發展，更改變了這個世界，管理者必須要轉換角度去思考。
+Managed Services 改變的不只是軟體發展，更改變了這個世界，管理者必須要轉換角度去思考。
 ```
 <br />
 <br />
 
 你不可以說：   
-「喔我自架的時候我都可以控制整個Config調參數，現在都不行了。 SaaS really sucks!!」  
+「喔我自架的時候我都可以控制整個Config調參數，現在都不行了。 Managed Services really sucks!!」  
 
 
 這世界是需要你`等價交換`的，你不能魚跟熊掌你都要，除非你很有錢。  
@@ -201,7 +231,7 @@ EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master
 
 ### 自架真的不流行了嗎？
 ---
-當然SaaS不是什麼萬靈丹，在你取捨之下你發現自架帶給你的好處更多，那你為何不自架？  
+當然Managed Services不是什麼萬靈丹，在你取捨之下你發現自架帶給你的好處更多，那你為何不自架？  
 
 
 - Google 為什麼都自己架？  
@@ -225,7 +255,7 @@ EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master
 <br />
 <br />
 
-良好的運用SaaS，可以使風險減少到最低，至少接手的人如果熟悉你用的平台，像是AWS，他至少不會做出太偏離你當初設計想法的路徑。
+良好的運用第三方托管服務，可以使風險減少到最低，至少接手的人如果熟悉你用的平台，像是AWS，他至少不會做出太偏離你當初設計想法的路徑。
 
 <br />
 <br />
@@ -239,7 +269,7 @@ EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master
 
 
 但從以上的案例應該可以看出我想表達的是我們要`轉換思考模式`。  
-<br />
+
 <br />
 
 ```
@@ -256,7 +286,7 @@ EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master
 <br />
 
 ```
-你必須要站在SaaS的角度去理解SaaS，不能一昧地拿自架跟SaaS相比，那是沒有意義的事。
+你必須要站在Managed Services的角度去理解Managed Services，不能一昧地拿自架跟Managed Services相比，那是沒有意義的事。
 ```
 
 <br />
@@ -275,7 +305,7 @@ EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master
 <br />
 <br />
 
-走入SaaS的時代，你準備好改變你的思維了嗎？
+走入XXXaaS的時代，你準備好改變你的思維了嗎？
 
 
 
