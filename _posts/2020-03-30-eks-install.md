@@ -11,20 +11,18 @@ comments: true
 
 ![eks](https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg)
 
-Full Map of EKS and add-ons.
-
+This is the full map of EKS and we'll go through how to install EKS and plugins in this post, as well as the troubles I got. Let's go!
+<br />
 
 ---
+
 ## Quick Start an EKS with ADD-ONs
 
 
-```bash
+```
 git clone https://github.com/davidh83110/eks-quickstart
-
 cd terraform && make plan && make apply
-
 cd ansible-playbooks
-
 ansible-playbook ./
 ```
 
@@ -32,18 +30,20 @@ ansible-playbook ./
 You will get an `EKS cluster` and `Node Group`, also has 
 `metrics-server` / `k8s-dashboard` / `ALB-Ingress controller` / `Cluster-Autoscaler (CA)` / `Prometheus` / `Grafana` / `Weave`.  
 
-
-
+<br />
+<br />
+<br />
 
 ## Pre-Create Cluster
 
-What EKS Cluster needs:
+**What EKS Cluster needs:**  
 - `eksServiceRole`
 - Subnets (Including Public and Private Subnets)
 - Additional Security Groups
 - Endpoint Access 
 - Secrets Encryption
 
+<br />
 
 最容易有疑問的大概是上述這幾個參數了，一一詳細記錄下來，其他沒有寫的應該都能很輕易的選擇。
 
@@ -89,10 +89,11 @@ For instance: 如果你希望要開VPN才可以使用，你就只需要勾選`Pr
 之前會需要apply `aws-auth.yaml` 這個ConfigMap, 但現在(1.15)似乎EKS已經自己幫我們Apply了。  
 如果要修改或新增 IAM User/Roles, 可以再去編輯這個 ConfigMap 就好。  
 
+<br />
+<br />
+<br />
 
-
-
-## 建立了，然後呢？
+## What else do I need to do after create an EKS cluster ?
 
 先進到EKS Console, 來看看有什麼相關資訊。 以下列舉幾個比較可能有疑問的。
 
@@ -119,24 +120,27 @@ OIDC. 這是讓EKS可以結合IAM使用做授權管理的關鍵，會需要拿�
 Fargate with EKS是沒有Node(worker)的概念的。就像ECS沒有ECS Instance一樣。  
 所以這邊會去指定Fargate所在的Subnets和Role，提供給Pod在上面跑的資訊而已。  
 
-```
-比較值得說的是Fargate的使用模式  
+<br />
 
-Fargate with EKS是有限制的，請以Serverless的角度來思考。  
-- No Daemonset
-- No statefulset that require PV or File Systems (EFS also no supported)
-- Maximum 4vCPU and 30G Memory per pod
-- No CLB/NLB (cuz no NodePort in Fargate)
-```
+> 比較值得說的是Fargate的使用模式  
+> 
+> Fargate with EKS是有限制的，請以Serverless的角度來思考。  
+> - No Daemonset
+> - No statefulset that require PV or File Systems (EFS also no supported)
+> - Maximum 4vCPU and 30G Memory per pod
+> - No CLB/NLB (cuz no NodePort in Fargate)
+
 [More Information: AWS Blog - Fargate with EKS](https://aws.amazon.com/blogs/aws/amazon-eks-on-aws-fargate-now-generally-available/)
 
-
+<br />
+<br />
+<br />
 
 ## 第一件要做的事 - TAGGING
 
 由於EKS繼承了Kops的模式，大量使用Tags來控制EKS的相關資源，也很容易被忽略，一定要做好這部分的控制。
 
-`kubernetes.io/cluster/${CLUSTER_NAME}` 是最廣泛使用的Tag, 會需要Tag在Subnets, Instances上。  
+`kubernetes.io/cluster/${CLUSTER_NAME} ` 是最廣泛使用的Tag, 會需要Tag在Subnets, Instances上。  
 可以Assign的值有兩個 - `owned` OR `shared`.  
 一般來說在Subnets都會給`owned`, 因為會需要與其他EKS Cluster共用, 除非你希望這個Subnet是給某個cluster專用。
 `shared` 顧名思義就是共用subnet。  
@@ -145,12 +149,13 @@ Fargate with EKS是有限制的，請以Serverless的角度來思考。
 `elb` OR `internal-elb` 這個分別要Tag在Public & Private Subnet上面，讓EKS知道他們是什麼類型的子網，
 這樣ALB-Ingress才能根據Tag放到正確的子網。
 
+<br />
 
 需要被Tag的有以下資源：
 
 - Public Subnets  
 
-```yaml
+```
 kubernetes.io/cluster/${CLUSTER_NAME} = shared
  
 kubernetes.io/role/elb = 1
@@ -158,7 +163,7 @@ kubernetes.io/role/elb = 1
 
 - Private Subnets  
 
-```yaml
+```
 kubernetes.io/cluster/${CLUSTER_NAME} = shared
  
 kubernetes.io/role/internal-elb = 1
@@ -168,7 +173,9 @@ kubernetes.io/role/internal-elb = 1
 這些理論上EKS會自動去檢查，然後幫我們tag上去，不要手賤去刪都行。
 而我相信EKS也是往這個方向努力，之後會自己幫我們檢查TAG並自動做掉這部分，讓我們拭目以待。
 
-
+<br />
+<br />
+<br />
 
 ## Create Nodes
 
@@ -176,9 +183,11 @@ kubernetes.io/role/internal-elb = 1
 - 自行建立Auto Scaling Group(ASG) & ASG Configuration & Register to EKS
 - 使用EKS Node Group
 
+<br />
 
 過去通常都要自行註冊與建立ASG, 是有點麻煩。 現在可以使用Node Group來幫我們`半代管`這個Nodes.  
 
+<br />
 
 為什麼是`半代管`？
 
@@ -186,6 +195,9 @@ kubernetes.io/role/internal-elb = 1
 當Node Group出現註冊問題或是有錯誤時，你還是得要進去這台機器手動排除錯誤。
 ```
 
+<br />
+<br />
+<br />
 
 #### 建立Node Group的注意事項
 
@@ -211,7 +223,9 @@ kubernetes.io/role/internal-elb = 1
 - Labels  
     這邊指的是 `Node Group的TAG, 不是Instance的TAG`
     
-    
+<br />
+<br />
+<br />
 
 ## Kubectl
 
@@ -224,9 +238,11 @@ kubernetes.io/role/internal-elb = 1
 
 然後需要建立相對應的 `kubeconfig`, EKS 會使用 `aws-iam-authenticator` 來幫我們完成這部分。
 
+<br />
+
 過程如下：  
 
-```bash
+```
 ➜  ~ aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER_NAME}                                                                                                                                                           <aws:dev>
 Updated context arn:aws:eks:ap-northeast-1:34323434:cluster/development in /Users/davidhsu/.kube/config
 ➜  ~                                                                                                                                                                                                                                <aws:dev>
@@ -246,23 +262,29 @@ ip-10-10-12-203.ap-northeast-1.compute.internal   Ready    <none>   126m   v1.15
 
 ---
 
+<br />
+<br />
+<br />
 
 ## ADD-ONs of EKS
 
 這邊詳列要裝的 Add-ons 並附上官方的資料來源（官方怎不幫我裝一裝就好？）  
 
+<br />
 
 - Metrics-Server  
 收集 kubernetes cluster 內各項指標，以便提供給 Prometheus/K8s Dashboard 收集使用，或做圖表的呈現。
 
 [安裝 Kubernetes 指標伺服器](https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/metrics-server.html)
 
+<br />
 
 - Kubernetes Dashboard  
 Kubernetes Web UI, 提供視覺化的操作以及資源的監控，必須要先建立 `eks-admin` 這個 ServiceAccount。
 
 [部署 Kubernetes Web UI (儀表板)](https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/dashboard-tutorial.html)
 
+<br />
 
 - Cluster Autoscaler (CA)  
 用來自動擴展 Node 數量的套件，當有資源需要 Node 而 Node 不夠的時候會自動加開新的 Nodes。 
@@ -271,6 +293,7 @@ Kubernetes Web UI, 提供視覺化的操作以及資源的監控，必須要先�
 
 [EKS - Cluster Autoscaler](https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/cluster-autoscaler.html)
 
+<br />
 
 - ALB Ingress Controller  
 與ALB連接的Ingress Controller，可以直接在 ingress yaml 裡直接定義 ALB 的參數。
@@ -286,19 +309,21 @@ alb.ingress.kubernetes.io/security-group-inbound-cidrs: 61.67.11.22/32
 [Amazon EKS 上的 ALB 傳入控制器](https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/alb-ingress.html)  
 [ALB Ingress Security Group's Issue](https://github.com/kubernetes-sigs/aws-alb-ingress-controller/issues/691)
 
-
+<br />
 
 - Prometheus
 
 [控制平面指標與 Prometheus](https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/prometheus.html)
 
-
+<br />
 
 - Grafana
 
 [EKS Workshop - DEPLOY GRAFANA](https://eksworkshop.com/intermediate/240_monitoring/deploy-grafana/)
 
-
+<br />
+<br />
+<br />
 
 ## Troubleshooting
 
@@ -312,21 +337,23 @@ so what you need to check is the resources about VPC and Subnets.
 - Subnets tags
     - `kubernetes.io/role/elb` = `1` (For Public Subnets (Ingress Subnets))  
     - `kubernetes.io/role/internal-elb` = `1` (For Private Subnets (Nodes Subnets))  
-    - `kubernetes.io/cluster/${CLUSTER_NAME}` = `shared` (ALL Subnets including for ingress and nodes)  
+    - `kubernetes.io/cluster/${CLUSTER_NAME} ` = `shared` (ALL Subnets including for ingress and nodes)  
 - You must selected `PUBLIC & PRIVATE` subnets in EKS control plane.
 - VPC DNS Hostname `enabled`
 - VPC DNS Support `enabled`
 
+<br />
 
 Also, you can use `journalctl -u kubelet` on nodes to check the logs.
 
-
+<br />
+<br />
 
 Q: error: You must be logged in to the server (Unauthorized)
 
 A: Your identity might be wrong. Please check the current identity by the following command.
 
-```bash
+```
 - $ aws sts get-caller-identity
 {
     "Account": "000012345",
@@ -337,12 +364,13 @@ A: Your identity might be wrong. Please check the current identity by the follow
 
 Then rerun the kubeconfig setup.
 
-```bash
+```
 - $ aws eks --region ap-northeast-1 update-kubeconfig --name test-cluster                                                                                                                                                           <aws:dev>
 Updated context arn:aws:eks:ap-northeast-1:000012345:cluster/test-cluster in /Users/davidhsu/.kube/config
 ```
 
-
+<br />
+<br />
 
 Q: Security Group on EKS Control Plane?
 
@@ -355,16 +383,16 @@ it will be automatically added to Master managed SG, so we don't have to worry a
 
 Additional SG is for other source you trust, you can add them to the SG so that they can access the EKS Master as well.
 
-
-
+<br />
+<br />
 
 Q: API server endpoint access?
 
 A: If you are using `private access` for the connectivity between nodes and master,   
 then you must `enable VPC DNS hostname and support`. Otherwise, it will still go with public route. 
 
-
-
+<br />
+<br />
 
 Q: Fargate with EKS
 
@@ -375,8 +403,8 @@ Only `10G` volume can be used per Fargate; and the maximum of vCPU and Memory ar
 
 To use Fargate on EKS, you need to create `Fargate Profile` first.
 
-
-
+<br />
+<br />
 
 Q: Can I specify Security Group for ALB-Ingress?
 
@@ -384,7 +412,7 @@ A: Yes. But the EKS Managed SG might not be changed and it means you have to cha
 The alternative way would be specify the SG rules for ALB Ingress.
 
 Example:  
-```yaml
+```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
