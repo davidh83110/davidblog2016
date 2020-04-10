@@ -15,7 +15,6 @@ This is the full map of EKS and we'll go through how to install EKS and plugins 
 <br />
 <br />
 
----
 
 ## Quick Start an EKS with ADD-ONs
 ---
@@ -189,7 +188,6 @@ kubernetes.io/role/internal-elb = 1
 - 自行建立Auto Scaling Group(ASG) & ASG Configuration & Register to EKS
 - 使用EKS Node Group
 
-<br />
 
 過去通常都要自行註冊與建立ASG, 是有點麻煩。 現在可以使用Node Group來幫我們`半代管`這個Nodes.  
 
@@ -209,25 +207,21 @@ kubernetes.io/role/internal-elb = 1
     - `MUST ENABLE enableDnsHostnames, enableDnsSupport`
     - [Check Documentation Here](https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/cluster-endpoint.html)
 
-<br />
 
 - **Subnets**  
     選擇Private Subnets
 
-<br />
 
 - **eksNodeRole**  
     Attach 3 Policies:
     - AmazonEC2ContainerRegistryReadOnly
     - AmazonEKS_CNI_Policy
     - AmazonEKSWorkerNodePolicy
-    
-<br />
+
 
 - **Remote Access Security Group**  
     要注意的是這裡指的是 `允許Remote Access` 的SG, 不是要掛在Instance上面的SG。
-    
-<br />
+
 
 - **Labels**  
     這邊指的是 `Node Group的TAG, 不是Instance的TAG`
@@ -338,7 +332,7 @@ alb.ingress.kubernetes.io/security-group-inbound-cidrs: 61.67.11.22/32
 ## Troubleshooting
 ---
 
-**Q: Node cannot join to cluster? ( `cni config uninitialized` )**  
+> **Q: Node cannot join to cluster? ( `cni config uninitialized` )**  
 
 A: Please make sure subnets are well-tagging and all selected in EKS cluster.  
 
@@ -359,7 +353,7 @@ Also, you can use `journalctl -u kubelet` on nodes to check the logs.
 <br />
 <br />
 
-**Q: error: You must be logged in to the server (Unauthorized)**  
+> **Q: error: You must be logged in to the server (Unauthorized)**  
 
 A: Your identity might be wrong. Please check the current identity by the following command.
 
@@ -382,7 +376,7 @@ Updated context arn:aws:eks:ap-northeast-1:000012345:cluster/test-cluster in /Us
 <br />
 <br />
 
-**Q: Security Group on EKS Control Plane?**  
+> **Q: Security Group on EKS Control Plane?**  
 
 A: EKS Control plane has 2 kinds of subnets.  
 - EKS Master Managed SG  
@@ -396,7 +390,7 @@ Additional SG is for other source you trust, you can add them to the SG so that 
 <br />
 <br />
 
-**Q: API server endpoint access?**  
+> **Q: API server endpoint access?**  
 
 A: If you are using `private access` for the connectivity between nodes and master,   
 then you must `enable VPC DNS hostname and support`. Otherwise, it will still go with public route. 
@@ -404,7 +398,7 @@ then you must `enable VPC DNS hostname and support`. Otherwise, it will still go
 <br />
 <br />
 
-**Q: Fargate with EKS**  
+> **Q: Fargate with EKS**  
 
 A: `Fargate is a serverless service.`
 
@@ -416,7 +410,7 @@ To use Fargate on EKS, you need to create `Fargate Profile` first.
 <br />
 <br />
 
-**Q: Can I specify Security Group for ALB-Ingress?** 
+> **Q: Can I specify Security Group for ALB-Ingress?** 
 
 A: Yes. But the EKS Managed SG might not be changed and it means you have to change by yourself.  
 The alternative way would be specify the SG rules for ALB Ingress.
@@ -439,7 +433,7 @@ metadata:
 <br />
 <br />
 
-**Q: Cluster Autoscler didn't trigger scale down**  
+> **Q: Cluster Autoscler didn't trigger scale down**  
 
 A: Don't worry, normally it would cost around 10min to let the CA calculate which Pods should be moved to which Node. It really takes time bus I can't really realize why, seems the calculation not complicated at all. 
 
