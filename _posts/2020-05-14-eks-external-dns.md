@@ -11,10 +11,7 @@ comments: true
 
 ![title](https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg)
 
-## Introduction
----
 
-<br />
 External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
 <br />
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
@@ -36,7 +33,6 @@ External-DNS 官方介紹：
 ## Prepare
 ---
 
-<br />
 - ALB Ingress Controller needs to be installed on EKS cluster.
 <br />
 
@@ -48,7 +44,6 @@ External-DNS 官方介紹：
 ## Setup with Single AWS Account
 ---
 
-<br />
 其實只有一個帳號的話，設定上很容易，按照官方的說明就可以了。
 <br />
 
@@ -97,7 +92,6 @@ External-DNS 官方介紹：
 ## Setup with Cross-Account (Route53 Zone and EKS in different account)
 ---
 
-<br />
 這邊就會比較複雜, 也是這篇要講的重點。 在 EKS 1.14 以上使用 OIDC 的部分，設定上會比較不一樣。
 <br />
 
