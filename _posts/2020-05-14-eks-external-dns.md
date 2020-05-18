@@ -12,6 +12,7 @@ comments: true
 ![title](https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg)
 
 # Introduction
+
 <br />
 External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
 <br />
@@ -25,11 +26,14 @@ External-DNS 官方介紹：
 > In a broader sense, ExternalDNS allows you to control DNS records dynamically via Kubernetes resources in a DNS provider-agnostic way.
 > 
 <br />
+
 [官方 Github Repository](https://github.com/kubernetes-sigs/external-dns)
+
 <br />
 <br />
 
 # Prepare
+
 <br />
 - ALB Ingress Controller needs to be installed on EKS cluster.
 <br />
@@ -40,12 +44,15 @@ External-DNS 官方介紹：
 <br />
 
 # Setup with Single AWS Account
+
 <br />
 其實只有一個帳號的話，設定上很容易，按照官方的說明就可以了。
 <br />
 
+
 - 建立授權給 Route53 的 IAM Policy, 並指配給 EKS Service Role  
-```
+
+```yaml
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -74,11 +81,10 @@ External-DNS 官方介紹：
 
 <br />
 - 安裝 External-DNS 在 EKS / 驗證安裝  
-<br />
 
 [參考官方安裝教學](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md)
 <br />
-或參考附錄我的 YAML, 修改帳號及 Role Name, 再 Apply to cluster 就可以。 [附錄](#附錄)  
+或參考附錄我的 YAML, 修改帳號及 Role Name, 再 Apply to cluster 就可以。 [附錄](#附錄)
 <br />
 也可以 `--domain-filter` 指定要控制的 Domain, 避免影響到其他 Domain.
 
@@ -86,27 +92,26 @@ External-DNS 官方介紹：
 <br />
 
 # Setup with Cross-Account (Route53 Zone and EKS in different account)
+
 <br />
 這邊就會比較複雜, 也是這篇要講的重點。 在 EKS 1.14 以上使用 OIDC 的部分，設定上會比較不一樣。
 <br />
-<br />
 
-### 環境假設
+
+### **環境假設**
 <br />
 有兩個 AWS Accounts, 分別是 Root Account & EKS Account.
-<br />
 
 `Root Account`: 管理 Route53 Hosted Zone  
 `EKS Account`: 管理 EKS Cluster
 
 <br />
 
-### 建立 Route53 Permission
-<br />
-我們需要建立這個授權建立 Record 的 IAM Policy 在 `Root Account`
-<br />
+### **建立 Route53 Permission**
 
-```
+我們需要建立這個授權建立 Record 的 IAM Policy 在 `Root Account`  
+
+```yaml
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -135,11 +140,12 @@ External-DNS 官方介紹：
 
 <br />
 
-### 建立 OIDC Identity Provider
+### **建立 OIDC Identity Provider**
 <br />
 建立 OIDC Identity Provider 要在 `Root Account` 做, 因為我們是要把 EKS Account 連結到 Root Account.
 <br />
-請在 `Root Account` 建立 IAM Identity Provider, 
+
+- 請在 `Root Account` 建立 IAM Identity Provider, 
 <br />
 
 **Provuder Type** - 請選擇 OpenID Connect  
@@ -150,17 +156,17 @@ External-DNS 官方介紹：
 
 <br />
 
-### 建立 IAM Role
+### **建立 IAM Role**
 <br />
 接下來需要在 `Root Account` 建立一個 IAM Role 給剛剛建立的 Identity Provider 套用。
 <br />
-請選擇 `Web Identity` 類型建立 IAM Role, 並選擇剛剛的 Identity Provider & Audience.
+請選擇 `Web Identity` 類型建立 IAM Role, 並選擇剛剛的 Identity Provider & Audience。
 
 ![text](https://live.staticflickr.com/65535/49908580392_88e700df71_k.jpg)
 
 <br />
 
-### 修改 Trusted Relationship (optional)
+### **修改 Trusted Relationship (optional)**
 <br />
 我們要對 trusted relationship 做一些修改。 (直接編輯 trusted relationship YAML)
 <br />
@@ -172,7 +178,7 @@ External-DNS 官方介紹：
 改完之後應該會像這樣  
 <br />
 
-```
+```yaml
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -193,8 +199,10 @@ External-DNS 官方介紹：
 ```
 
 <br />
+<br />
 
 ### 安裝 External-DNS
+
 <br />
 
 [參考官方安裝教學](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md)
@@ -204,17 +212,18 @@ External-DNS 官方介紹：
 也可以 `--domain-filter` 指定要控制的 Domain, 避免影響到其他 Domain.
 <br />
 
-**跟 Single Account的不同**: 在附錄裡的 YAML , Account ID & Role Name 請填入 `Root Account` 的 ID 跟 Role Name. (我們前幾步驟建立的那個 Role)
+> **跟 Single Account的不同**: 在附錄裡的 YAML , Account ID & Role Name 請填入 `Root Account` 的 ID 跟 Role Name. (我們前幾步驟建立的那個 Role)
 
 <br />
 <br />
 
 # 附錄
+
 <br />
 
 - External-DNS YAML  
 
-```
+```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
