@@ -52,7 +52,7 @@ External-DNS 官方介紹：
 
 - 建立授權給 Route53 的 IAM Policy, 並指配給 EKS Service Role  
 
-```yaml
+```
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -111,7 +111,7 @@ External-DNS 官方介紹：
 
 我們需要建立這個授權建立 Record 的 IAM Policy 在 `Root Account`  
 
-```yaml
+```
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -178,7 +178,7 @@ External-DNS 官方介紹：
 改完之後應該會像這樣  
 <br />
 
-```yaml
+```
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -223,7 +223,7 @@ External-DNS 官方介紹：
 
 - External-DNS YAML  
 
-```yaml
+```
 apiVersion: v1
 kind: ServiceAccount
 metadata:
