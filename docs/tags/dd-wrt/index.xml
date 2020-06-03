@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dd-wrt on Hugo Future Imperfect Slim</title>
+    <link>docs/tags/dd-wrt/</link>
+    <description>Recent content in dd-wrt on Hugo Future Imperfect Slim</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 31 Jul 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="docs/tags/dd-wrt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SQL Server 無固定IP架設教學(使用DDNS)</title>
+      <link>docs/blog/2015-07-31-ddns/</link>
+      <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>docs/blog/2015-07-31-ddns/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

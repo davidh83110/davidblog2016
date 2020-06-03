@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>人工智慧 on David&#39;s Blog</title>
+    <link>/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/</link>
+    <description>Recent content in 人工智慧 on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 23 Jul 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AI人工智慧講座筆記</title>
+      <link>/blog/2017-07-23-ai-venue/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-07-23-ai-venue/</guid>
+      <description>今天聽了願景工程主辦的AI講座
+最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗
+杜奕瑾是誰呢 相信各位鄉民應該不陌生
+他在1995年架設PTT這個到現在唯一存活的BBS
+此外他也架設蕃薯藤(小時候的回憶啊～)並成立公司
+蕃薯藤不為人知的是
+他是當時第一個做出中文搜尋的search engine
+之後杜奕瑾先生到了美國衛生研究院做基因分析研究
+然後到了微軟做Bing搜尋引擎
+直到最近熟為人之的微軟Cortana也是他一手策劃的 鄉民稱他為Cortana之父
+那正當AI如日中天的時候他居然選擇離開微軟回到台灣成立AI Lab
+傻了嗎？我也不知道
+原來是他覺得台灣在各方面都非常具有優勢
+但就是沒有人敢去整合 於是他決定要拋磚引玉
+回到台灣成立AI Lab 以國外的薪資邀請一等人才共同努力
+因為台灣對於軟體人才的薪資實在令人心酸
+所以他決定以國外的標準來留下人才
+當然也提到大家相當關注的軟體思維以及硬體思維
+如果大家有在follow國外的programmer應該不難發現國外沒有硬體
+不信的話列舉前幾大資訊產業 全都是軟體產業
+Microsoft , Google , Facebook &amp;hellip;等等
+唯獨台灣有軟體產業 也有硬體產業
+但要如何做一個完美結合，就有待時間證明了
+我反思的是他提到的國外都是軟體的世界
+流行的是Full stack engineer 全端工程師
+像我這種做系統管理的我想應該也很快會不再需要
+AWS已經推出Lamda 應該不難發現這個趨勢
+這大概也是我最近狂寫python的原因
+強迫自己拋棄bash shell
+當然Linux還是要懂 只是不在需要一個人專門管理
+應該走敏捷開發 一個人負責一小塊(cell)
+那一小塊裡包含所有東西
+從系統到後端程式到前端都由一個team負責
+以需求及系統來劃分部門而不是切割軟硬體
+part2.
+而AI對我們產業會帶來什麼衝擊？ 我在未來會被取代嗎？
+其實AI遠比我們想的要廣泛
+AI未來不只是AI，更是結合IoT成為AIoT進到我們的生活中
+你覺得只有專業攝影師拍得出來的照片
+AI經過學習(machine learning or deep learning)之後可以做得比人還好
+舉個例子
+出國要過海關為什麼自動通關可以被信賴？</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,26 @@
+<section id="site-intro" {{ if (and (.Site.Params.intro.hideWhenSingleColumn) (not (and .Page.IsHome .Site.Params.intro.alwaysOnHomepage))) }}class="hidden-single-column"{{ end }}>
+  {{ with .Site.Params.intro.pic }}<a href="{{ "/" | relLangURL}}"><img src="{{ .src | absURL }}" class="{{ .shape }}" width="{{ .width }}" alt="{{ .alt }}" /></a>{{ end }}
+  <header>
+    {{ with .Site.Params.intro.header }}<h1>{{ . | safeHTML }}</h1>{{ end }}
+  </header>
+  <main>
+    {{ with .Site.Params.intro.paragraph }}<p>{{ . | safeHTML }}</p>{{ end }}
+  </main>
+  {{ if or (.Site.Params.intro.rssIntro) (.Site.Params.intro.socialIntro) }}
+    <footer>
+      <ul class="socnet-icons">
+        {{ if .Site.Params.intro.rssIntro }}{{ partial "rss-icon" . }}{{ end }}
+        {{ if .Site.Params.intro.socialIntro }}{{ partial "socnet-icon" . }}{{ end }}
+      </ul>
+      <ul style="padding: 0;">
+        <p style="text-align: center;">
+          {{ .Site.Params.sidebar.about | safeHTML }}
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank"></a>
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px>
+        </p>
+      </ul>
+    </footer>
+  {{ end }}
+</section>

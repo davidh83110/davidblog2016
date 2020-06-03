@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>AI人工智慧講座筆記 - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="AI人工智慧講座筆記">
+<meta itemprop="description" content="今天聽了願景工程主辦的AI講座
+最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗
+杜奕瑾是誰呢 相信各位鄉民應該不陌生
+他在1995年架設PTT這個到現在唯一存活的BBS
+此外他也架設蕃薯藤(小時候的回憶啊～)並成立公司
+蕃薯藤不為人知的是
+他是當時第一個做出中文搜尋的search engine
+之後杜奕瑾先生到了美國衛生研究院做基因分析研究
+然後到了微軟做Bing搜尋引擎
+直到最近熟為人之的微軟Cortana也是他一手策劃的 鄉民稱他為Cortana之父
+那正當AI如日中天的時候他居然選擇離開微軟回到台灣成立AI Lab
+傻了嗎？我也不知道
+原來是他覺得台灣在各方面都非常具有優勢
+但就是沒有人敢去整合 於是他決定要拋磚引玉
+回到台灣成立AI Lab 以國外的薪資邀請一等人才共同努力
+因為台灣對於軟體人才的薪資實在令人心酸
+所以他決定以國外的標準來留下人才
+當然也提到大家相當關注的軟體思維以及硬體思維
+如果大家有在follow國外的programmer應該不難發現國外沒有硬體
+不信的話列舉前幾大資訊產業 全都是軟體產業
+Microsoft , Google , Facebook &hellip;等等
+唯獨台灣有軟體產業 也有硬體產業
+但要如何做一個完美結合，就有待時間證明了
+我反思的是他提到的國外都是軟體的世界
+流行的是Full stack engineer 全端工程師
+像我這種做系統管理的我想應該也很快會不再需要
+AWS已經推出Lamda 應該不難發現這個趨勢
+這大概也是我最近狂寫python的原因
+強迫自己拋棄bash shell
+當然Linux還是要懂 只是不在需要一個人專門管理
+應該走敏捷開發 一個人負責一小塊(cell)
+那一小塊裡包含所有東西
+從系統到後端程式到前端都由一個team負責
+以需求及系統來劃分部門而不是切割軟硬體
+part2.
+而AI對我們產業會帶來什麼衝擊？ 我在未來會被取代嗎？
+其實AI遠比我們想的要廣泛
+AI未來不只是AI，更是結合IoT成為AIoT進到我們的生活中
+你覺得只有專業攝影師拍得出來的照片
+AI經過學習(machine learning or deep learning)之後可以做得比人還好
+舉個例子
+出國要過海關為什麼自動通關可以被信賴？">
+<meta itemprop="datePublished" content="2017-07-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-07-23T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="123">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="AI人工智慧講座筆記" />
+<meta property="og:description" content="今天聽了願景工程主辦的AI講座
+最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗
+杜奕瑾是誰呢 相信各位鄉民應該不陌生
+他在1995年架設PTT這個到現在唯一存活的BBS
+此外他也架設蕃薯藤(小時候的回憶啊～)並成立公司
+蕃薯藤不為人知的是
+他是當時第一個做出中文搜尋的search engine
+之後杜奕瑾先生到了美國衛生研究院做基因分析研究
+然後到了微軟做Bing搜尋引擎
+直到最近熟為人之的微軟Cortana也是他一手策劃的 鄉民稱他為Cortana之父
+那正當AI如日中天的時候他居然選擇離開微軟回到台灣成立AI Lab
+傻了嗎？我也不知道
+原來是他覺得台灣在各方面都非常具有優勢
+但就是沒有人敢去整合 於是他決定要拋磚引玉
+回到台灣成立AI Lab 以國外的薪資邀請一等人才共同努力
+因為台灣對於軟體人才的薪資實在令人心酸
+所以他決定以國外的標準來留下人才
+當然也提到大家相當關注的軟體思維以及硬體思維
+如果大家有在follow國外的programmer應該不難發現國外沒有硬體
+不信的話列舉前幾大資訊產業 全都是軟體產業
+Microsoft , Google , Facebook &hellip;等等
+唯獨台灣有軟體產業 也有硬體產業
+但要如何做一個完美結合，就有待時間證明了
+我反思的是他提到的國外都是軟體的世界
+流行的是Full stack engineer 全端工程師
+像我這種做系統管理的我想應該也很快會不再需要
+AWS已經推出Lamda 應該不難發現這個趨勢
+這大概也是我最近狂寫python的原因
+強迫自己拋棄bash shell
+當然Linux還是要懂 只是不在需要一個人專門管理
+應該走敏捷開發 一個人負責一小塊(cell)
+那一小塊裡包含所有東西
+從系統到後端程式到前端都由一個team負責
+以需求及系統來劃分部門而不是切割軟硬體
+part2.
+而AI對我們產業會帶來什麼衝擊？ 我在未來會被取代嗎？
+其實AI遠比我們想的要廣泛
+AI未來不只是AI，更是結合IoT成為AIoT進到我們的生活中
+你覺得只有專業攝影師拍得出來的照片
+AI經過學習(machine learning or deep learning)之後可以做得比人還好
+舉個例子
+出國要過海關為什麼自動通關可以被信賴？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html" />
+<meta property="article:published_time" content="2017-07-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-07-23T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="AI人工智慧講座筆記"/>
+<meta name="twitter:description" content="今天聽了願景工程主辦的AI講座
+最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗
+杜奕瑾是誰呢 相信各位鄉民應該不陌生
+他在1995年架設PTT這個到現在唯一存活的BBS
+此外他也架設蕃薯藤(小時候的回憶啊～)並成立公司
+蕃薯藤不為人知的是
+他是當時第一個做出中文搜尋的search engine
+之後杜奕瑾先生到了美國衛生研究院做基因分析研究
+然後到了微軟做Bing搜尋引擎
+直到最近熟為人之的微軟Cortana也是他一手策劃的 鄉民稱他為Cortana之父
+那正當AI如日中天的時候他居然選擇離開微軟回到台灣成立AI Lab
+傻了嗎？我也不知道
+原來是他覺得台灣在各方面都非常具有優勢
+但就是沒有人敢去整合 於是他決定要拋磚引玉
+回到台灣成立AI Lab 以國外的薪資邀請一等人才共同努力
+因為台灣對於軟體人才的薪資實在令人心酸
+所以他決定以國外的標準來留下人才
+當然也提到大家相當關注的軟體思維以及硬體思維
+如果大家有在follow國外的programmer應該不難發現國外沒有硬體
+不信的話列舉前幾大資訊產業 全都是軟體產業
+Microsoft , Google , Facebook &hellip;等等
+唯獨台灣有軟體產業 也有硬體產業
+但要如何做一個完美結合，就有待時間證明了
+我反思的是他提到的國外都是軟體的世界
+流行的是Full stack engineer 全端工程師
+像我這種做系統管理的我想應該也很快會不再需要
+AWS已經推出Lamda 應該不難發現這個趨勢
+這大概也是我最近狂寫python的原因
+強迫自己拋棄bash shell
+當然Linux還是要懂 只是不在需要一個人專門管理
+應該走敏捷開發 一個人負責一小塊(cell)
+那一小塊裡包含所有東西
+從系統到後端程式到前端都由一個team負責
+以需求及系統來劃分部門而不是切割軟硬體
+part2.
+而AI對我們產業會帶來什麼衝擊？ 我在未來會被取代嗎？
+其實AI遠比我們想的要廣泛
+AI未來不只是AI，更是結合IoT成為AIoT進到我們的生活中
+你覺得只有專業攝影師拍得出來的照片
+AI經過學習(machine learning or deep learning)之後可以做得比人還好
+舉個例子
+出國要過海關為什麼自動通關可以被信賴？"/>
+<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f%25E9%259B%259C%25E4%25B8%2583%25E9%259B%259C%25E5%2585%25AB%2f%25E4%25BA%25BA%25E5%25B7%25A5%25E6%2599%25BA%25E6%2585%25A7%2f2017%2f07%2f23%2fai-venue.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f%25E9%259B%259C%25E4%25B8%2583%25E9%259B%259C%25E5%2585%25AB%2f%25E4%25BA%25BA%25E5%25B7%25A5%25E6%2599%25BA%25E6%2585%25A7%2f2017%2f07%2f23%2fai-venue.html&amp;title=AI%e4%ba%ba%e5%b7%a5%e6%99%ba%e6%85%a7%e8%ac%9b%e5%ba%a7%e7%ad%86%e8%a8%98" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f%25E9%259B%259C%25E4%25B8%2583%25E9%259B%259C%25E5%2585%25AB%2f%25E4%25BA%25BA%25E5%25B7%25A5%25E6%2599%25BA%25E6%2585%25A7%2f2017%2f07%2f23%2fai-venue.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+      <ul style="padding: 0;">
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank"></a>
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html">AI人工智慧講座筆記</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2017-07-23 00:00:00 &#43;0000 UTC">
+      July 23, 2017
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f%25E9%259B%259C%25E4%25B8%2583%25E9%259B%259C%25E5%2585%25AB%2f%25E4%25BA%25BA%25E5%25B7%25A5%25E6%2599%25BA%25E6%2585%25A7%2f2017%2f07%2f23%2fai-venue.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f%25E9%259B%259C%25E4%25B8%2583%25E9%259B%259C%25E5%2585%25AB%2f%25E4%25BA%25BA%25E5%25B7%25A5%25E6%2599%25BA%25E6%2585%25A7%2f2017%2f07%2f23%2fai-venue.html&amp;title=AI%e4%ba%ba%e5%b7%a5%e6%99%ba%e6%85%a7%e8%ac%9b%e5%ba%a7%e7%ad%86%e8%a8%98" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f%25E9%259B%259C%25E4%25B8%2583%25E9%259B%259C%25E5%2585%25AB%2f%25E4%25BA%25BA%25E5%25B7%25A5%25E6%2599%25BA%25E6%2585%25A7%2f2017%2f07%2f23%2fai-venue.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+
+  <div class="content">
+    <p>今天聽了願景工程主辦的AI講座<br />
+<br />
+最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗<br />
+<br />
+杜奕瑾是誰呢 相信各位鄉民應該不陌生<br />
+<br />
+他在1995年架設PTT這個到現在唯一存活的BBS<br />
+<br />
+此外他也架設蕃薯藤(小時候的回憶啊～)並成立公司<br />
+<br />
+蕃薯藤不為人知的是<br />
+<br />
+他是當時第一個做出中文搜尋的search engine<br />
+<br />
+之後杜奕瑾先生到了美國衛生研究院做基因分析研究<br />
+<br />
+然後到了微軟做Bing搜尋引擎<br />
+<br />
+直到最近熟為人之的微軟Cortana也是他一手策劃的 鄉民稱他為Cortana之父<br />
+<br />
+那正當AI如日中天的時候他居然選擇離開微軟回到台灣成立AI Lab<br />
+<br />
+傻了嗎？我也不知道<br />
+<br />
+原來是他覺得台灣在各方面都非常具有優勢<br />
+<br />
+但就是沒有人敢去整合 於是他決定要拋磚引玉<br />
+<br />
+回到台灣成立AI Lab 以國外的薪資邀請一等人才共同努力<br />
+<br />
+因為台灣對於軟體人才的薪資實在令人心酸<br />
+<br />
+所以他決定以國外的標準來留下人才<br />
+<br />
+當然也提到大家相當關注的軟體思維以及硬體思維<br />
+<br />
+如果大家有在follow國外的programmer應該不難發現國外沒有硬體<br />
+<br />
+不信的話列舉前幾大資訊產業 全都是軟體產業<br />
+<br />
+Microsoft , Google , Facebook &hellip;等等<br />
+<br />
+唯獨台灣有軟體產業 也有硬體產業<br />
+<br />
+但要如何做一個完美結合，就有待時間證明了<br />
+<br />
+我反思的是他提到的國外都是軟體的世界<br />
+<br />
+流行的是Full stack engineer 全端工程師<br />
+<br />
+像我這種做系統管理的我想應該也很快會不再需要<br />
+<br />
+AWS已經推出Lamda 應該不難發現這個趨勢<br />
+<br />
+這大概也是我最近狂寫python的原因<br />
+<br />
+強迫自己拋棄bash shell<br />
+<br />
+當然Linux還是要懂 只是不在需要一個人專門管理<br />
+<br />
+應該走敏捷開發 一個人負責一小塊(cell)<br />
+<br />
+那一小塊裡包含所有東西<br />
+<br />
+從系統到後端程式到前端都由一個team負責<br />
+<br />
+以需求及系統來劃分部門而不是切割軟硬體<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+part2.<br />
+<br />
+而AI對我們產業會帶來什麼衝擊？ 我在未來會被取代嗎？<br />
+<br />
+其實AI遠比我們想的要廣泛<br />
+<br />
+AI未來不只是AI，更是結合IoT成為AIoT進到我們的生活中<br />
+<br />
+你覺得只有專業攝影師拍得出來的照片<br />
+<br />
+AI經過學習(machine learning or deep learning)之後可以做得比人還好<br />
+<br />
+舉個例子<br />
+<br />
+出國要過海關為什麼自動通關可以被信賴？<br />
+<br />
+因為他的人臉辨識比我們的眼睛去看還要準確 也更少缺失<br />
+<br />
+這當然也是利用AI去學習，可以經由學習辨識真偽<br />
+<br />
+那現在有一位行銷人員提到很有趣的問題<br />
+<br />
+Facebook廣告投放一定要人去做嗎？<br />
+<br />
+利用AI去學習之後相信做出來的可以比人還準確<br />
+<br />
+而且機器不用休息，但是人需要<br />
+<br />
+未來越來越多產業會被取代<br />
+<br />
+不只是我們以為的藍領階級會被取代 白領也會 甚至是華爾街的會計師<br />
+<br />
+被我們忽略的是 AI抹殺了部分產業工作，是否延伸出其他工作機會呢？<br />
+<br />
+有的<br />
+<br />
+未來相信一定會很需要AI機器人管理師<br />
+<br />
+機器人的行為是需要被規範的 也需要訓練<br />
+<br />
+這部分的人才相信未來很搶手<br />
+<br />
+而另一個就是總要有人來教導大家如何使用AI機器人以及物聯網科技吧<br />
+<br />
+所以相信這在未來也是不可或缺的工作<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+part3.<br />
+<br />
+眾所期待的pepper機器人出來跟大家見面<br />
+<br />
+他的學習能力已經令人難以理解 非常聰明<br />
+<br />
+並且跟之前在報導中看到的一樣<br />
+<br />
+pepper已經在很多地方服務了<br />
+<br />
+甚至做上班門禁管理也可以<br />
+<br />
+會人臉辨識你幾點上班自動打卡<br />
+<br />
+並分析你大概都幾點到公司有什麼特徵<br />
+<br />
+簡直比人還細心<br />
+<br />
+未來產業革命相信非常直得令人期待<br />
+<br />
+在工業5.0正式來臨前我們也需要自行upgrade<br />
+<br />
+文組該怎麼辦？<br />
+<br />
+當然也要學會寫code 這是和電腦溝通的唯一管道 就跟你會講一點英文一樣重要<br />
+<br />
+只能期許自己在這波浪潮正式到達台灣前<br />
+<br />
+做好應該做的準備<br />
+<br />
+Go lang , Python ,ubuntu ,spark &hellip;等等，甚至是硬體都應該要熟練<br />
+<br />
+否則很輕易會追不上浪潮 被淘汰掉。<br />
+<br />
+<br />
+<br />
+<br />
+<br /></p>
+<div style="text-align: right;">
+2017-07-23 10:51 , David in Taipei</div>
+<br />
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/jibber-jabber">jibber-jabber</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+    <a href="/blog/2017-07-08-python-nagios-dingtalk/" class="button"><div class="previous"><div>Python發送警告訊息(Nagios &amp; Dingtalk)</div></div></a>
+  
+  
+    <a href="/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html" class="button"><div class="next"><div>Docker Note (Nginx&#43;uwsgi&#43;Letsencrypt)</div></div></a>
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">6</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp/">owasp<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/security/">security<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/architecture/">architecture<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linux/">linux<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/mongodb/">mongodb<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <time class="published" datetime="">December 5, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html">Terraform Module Private Registries - Bitbucket</a></h4>
+          <time class="published" datetime="">February 3, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2020
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

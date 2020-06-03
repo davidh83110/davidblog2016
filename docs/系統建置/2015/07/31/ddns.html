@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>SQL Server 無固定IP架設教學(使用DDNS) - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="SQL Server 無固定IP架設教學(使用DDNS)">
+<meta itemprop="description" content="以SQL Server 2008 及no-ip為範例
+1.上no-ip註冊一個帳號
+&nbsp; &nbsp;&nbsp;http://www.noip.com/
+2.下載no-ip桌面管理程式,並讓他開機自動啟動
+&nbsp; &nbsp; &nbsp;如此一來,他就會自動偵測當前IP
+3.稍微講解一下網路架構
+&nbsp; &nbsp; &nbsp;家用網路線在最常見的都是使用中華的數據機&#43;無線AP
+&nbsp; &nbsp; &nbsp;而這種架構基本上就是中華給你一個實體對外IP,這是那台數據機的IP
+&nbsp; &nbsp; &nbsp;然後數據機建立一個內網,使用192.168.X.X分配IP給家裡免一個使用者
+&nbsp; &nbsp; &nbsp;這種IP是虛擬的,所以對我們要架設伺服器一點幫助也沒有
+&nbsp; &nbsp; &nbsp;你需要做的事就是進到數據機的管理模式
+&nbsp; &nbsp; &nbsp;將router mode 切換成 bridge mode
+&nbsp; &nbsp; &nbsp;如此一來,每一來電腦就會直接拿到實體IP,而不是192.168.X.X
+&nbsp; &nbsp; &nbsp;這樣的作法就是將你的IP暴露在外,方便架設伺服器
+&nbsp; &nbsp; &nbsp;當然,也方便駭客入侵,但是資安不再本篇的討論重點,所以先帶過.
+&nbsp; &nbsp; 如果說你的AP無法切換到bridge mode,或是你很懶,請直接去刷dd-wrt !
+&nbsp; &nbsp;&nbsp;http://www.dd-wrt.com/site/index
+4.然後安裝SQL server 2008
+&nbsp; &nbsp;安裝步驟就先帶過,如果有任何問題我之後會再開一板教學
+5.測試連線伺服器名稱請打 你的no-ip\SQLEXPRESS,應該就可以了
+此篇的重點就是使用DDNS來取代浮動IP的困擾
+那如果SQL無法連接請檢查:
+1.進到SQL 組態設定,查看SQL Server以及SQL Server Browser是否開啟及正常運作
+2.進到SQL組態設定,查看TCP/IP 及具名管道 以及 Share memory是否為開啟狀態
+&nbsp; &nbsp; 這邊開啟的用意就是讓外面的人可以連進來,因為SQL預設是不開放的">
+<meta itemprop="datePublished" content="2015-07-31T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2015-07-31T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="76">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="SQL Server 無固定IP架設教學(使用DDNS)" />
+<meta property="og:description" content="以SQL Server 2008 及no-ip為範例
+1.上no-ip註冊一個帳號
+&nbsp; &nbsp;&nbsp;http://www.noip.com/
+2.下載no-ip桌面管理程式,並讓他開機自動啟動
+&nbsp; &nbsp; &nbsp;如此一來,他就會自動偵測當前IP
+3.稍微講解一下網路架構
+&nbsp; &nbsp; &nbsp;家用網路線在最常見的都是使用中華的數據機&#43;無線AP
+&nbsp; &nbsp; &nbsp;而這種架構基本上就是中華給你一個實體對外IP,這是那台數據機的IP
+&nbsp; &nbsp; &nbsp;然後數據機建立一個內網,使用192.168.X.X分配IP給家裡免一個使用者
+&nbsp; &nbsp; &nbsp;這種IP是虛擬的,所以對我們要架設伺服器一點幫助也沒有
+&nbsp; &nbsp; &nbsp;你需要做的事就是進到數據機的管理模式
+&nbsp; &nbsp; &nbsp;將router mode 切換成 bridge mode
+&nbsp; &nbsp; &nbsp;如此一來,每一來電腦就會直接拿到實體IP,而不是192.168.X.X
+&nbsp; &nbsp; &nbsp;這樣的作法就是將你的IP暴露在外,方便架設伺服器
+&nbsp; &nbsp; &nbsp;當然,也方便駭客入侵,但是資安不再本篇的討論重點,所以先帶過.
+&nbsp; &nbsp; 如果說你的AP無法切換到bridge mode,或是你很懶,請直接去刷dd-wrt !
+&nbsp; &nbsp;&nbsp;http://www.dd-wrt.com/site/index
+4.然後安裝SQL server 2008
+&nbsp; &nbsp;安裝步驟就先帶過,如果有任何問題我之後會再開一板教學
+5.測試連線伺服器名稱請打 你的no-ip\SQLEXPRESS,應該就可以了
+此篇的重點就是使用DDNS來取代浮動IP的困擾
+那如果SQL無法連接請檢查:
+1.進到SQL 組態設定,查看SQL Server以及SQL Server Browser是否開啟及正常運作
+2.進到SQL組態設定,查看TCP/IP 及具名管道 以及 Share memory是否為開啟狀態
+&nbsp; &nbsp; 這邊開啟的用意就是讓外面的人可以連進來,因為SQL預設是不開放的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html" />
+<meta property="article:published_time" content="2015-07-31T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-07-31T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SQL Server 無固定IP架設教學(使用DDNS)"/>
+<meta name="twitter:description" content="以SQL Server 2008 及no-ip為範例
+1.上no-ip註冊一個帳號
+&nbsp; &nbsp;&nbsp;http://www.noip.com/
+2.下載no-ip桌面管理程式,並讓他開機自動啟動
+&nbsp; &nbsp; &nbsp;如此一來,他就會自動偵測當前IP
+3.稍微講解一下網路架構
+&nbsp; &nbsp; &nbsp;家用網路線在最常見的都是使用中華的數據機&#43;無線AP
+&nbsp; &nbsp; &nbsp;而這種架構基本上就是中華給你一個實體對外IP,這是那台數據機的IP
+&nbsp; &nbsp; &nbsp;然後數據機建立一個內網,使用192.168.X.X分配IP給家裡免一個使用者
+&nbsp; &nbsp; &nbsp;這種IP是虛擬的,所以對我們要架設伺服器一點幫助也沒有
+&nbsp; &nbsp; &nbsp;你需要做的事就是進到數據機的管理模式
+&nbsp; &nbsp; &nbsp;將router mode 切換成 bridge mode
+&nbsp; &nbsp; &nbsp;如此一來,每一來電腦就會直接拿到實體IP,而不是192.168.X.X
+&nbsp; &nbsp; &nbsp;這樣的作法就是將你的IP暴露在外,方便架設伺服器
+&nbsp; &nbsp; &nbsp;當然,也方便駭客入侵,但是資安不再本篇的討論重點,所以先帶過.
+&nbsp; &nbsp; 如果說你的AP無法切換到bridge mode,或是你很懶,請直接去刷dd-wrt !
+&nbsp; &nbsp;&nbsp;http://www.dd-wrt.com/site/index
+4.然後安裝SQL server 2008
+&nbsp; &nbsp;安裝步驟就先帶過,如果有任何問題我之後會再開一板教學
+5.測試連線伺服器名稱請打 你的no-ip\SQLEXPRESS,應該就可以了
+此篇的重點就是使用DDNS來取代浮動IP的困擾
+那如果SQL無法連接請檢查:
+1.進到SQL 組態設定,查看SQL Server以及SQL Server Browser是否開啟及正常運作
+2.進到SQL組態設定,查看TCP/IP 及具名管道 以及 Share memory是否為開啟狀態
+&nbsp; &nbsp; 這邊開啟的用意就是讓外面的人可以連進來,因為SQL預設是不開放的"/>
+<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f2015%2f07%2f31%2fddns.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f2015%2f07%2f31%2fddns.html&amp;title=SQL%20Server%20%e7%84%a1%e5%9b%ba%e5%ae%9aIP%e6%9e%b6%e8%a8%ad%e6%95%99%e5%ad%b8%28%e4%bd%bf%e7%94%a8DDNS%29" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f2015%2f07%2f31%2fddns.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+      <ul style="padding: 0;">
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank"></a>
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html">SQL Server 無固定IP架設教學(使用DDNS)</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2015-07-31 00:00:00 &#43;0000 UTC">
+      July 31, 2015
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f2015%2f07%2f31%2fddns.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f2015%2f07%2f31%2fddns.html&amp;title=SQL%20Server%20%e7%84%a1%e5%9b%ba%e5%ae%9aIP%e6%9e%b6%e8%a8%ad%e6%95%99%e5%ad%b8%28%e4%bd%bf%e7%94%a8DDNS%29" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f2015%2f07%2f31%2fddns.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+
+  <div class="content">
+    <div class='post-body entry-content' id='post-body-1525287509922689066' itemprop='description articleBody'>
+以SQL Server 2008 及no-ip為範例<br />
+<br />
+1.上no-ip註冊一個帳號<br />
+&nbsp; &nbsp;&nbsp;h<a href="ttp://www.noip.com/">ttp://www.noip.com/</a><br />
+<br />
+2.下載no-ip桌面管理程式,並讓他開機自動啟動<br />
+&nbsp; &nbsp; &nbsp;如此一來,他就會自動偵測當前IP<br />
+<br />
+3.稍微講解一下網路架構<br />
+&nbsp; &nbsp; &nbsp;家用網路線在最常見的都是使用中華的數據機+無線AP<br />
+&nbsp; &nbsp; &nbsp;而這種架構基本上就是中華給你一個實體對外IP,這是那台數據機的IP<br />
+&nbsp; &nbsp; &nbsp;然後數據機建立一個內網,使用192.168.X.X分配IP給家裡免一個使用者<br />
+&nbsp; &nbsp; &nbsp;這種IP是虛擬的,所以對我們要架設伺服器一點幫助也沒有<br />
+&nbsp; &nbsp; &nbsp;你需要做的事就是進到數據機的管理模式<br />
+&nbsp; &nbsp; &nbsp;將router mode 切換成 bridge mode<br />
+&nbsp; &nbsp; &nbsp;如此一來,每一來電腦就會直接拿到實體IP,而不是192.168.X.X<br />
+&nbsp; &nbsp; &nbsp;這樣的作法就是將你的IP暴露在外,方便架設伺服器<br />
+&nbsp; &nbsp; &nbsp;當然,也方便駭客入侵,但是資安不再本篇的討論重點,所以先帶過.<br />
+<br />
+&nbsp; &nbsp; 如果說你的AP無法切換到bridge mode,或是你很懶,請直接去刷dd-wrt !<br />
+&nbsp; &nbsp;<a href="http://www.dd-wrt.com/site/index"> &nbsp;http://www.dd-wrt.com/site/index</a><br />
+<br />
+4.然後安裝SQL server 2008<br />
+&nbsp; &nbsp;安裝步驟就先帶過,如果有任何問題我之後會再開一板教學<br />
+<br />
+5.測試連線伺服器名稱請打 你的no-ip\SQLEXPRESS,應該就可以了<br />
+<br />
+此篇的重點就是使用DDNS來取代浮動IP的困擾<br />
+<br />
+那如果SQL無法連接請檢查:<br />
+<br />
+1.進到SQL 組態設定,查看SQL Server以及SQL Server Browser是否開啟及正常運作<br />
+<br />
+2.進到SQL組態設定,查看TCP/IP 及具名管道 以及 Share memory是否為開啟狀態<br />
+&nbsp; &nbsp; 這邊開啟的用意就是讓外面的人可以連進來,因為SQL預設是不開放的<br />
+<br />
+3.檢查防火牆是否有設定讓1433 port 通過,如果不會設定就先把防火牆全關試試看<br />
+<br />
+4.如果是找不到伺服器,請開cmd,ping一下你的ddns看看是否正常運作
+<div style='clear: both;'></div>
+</div>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/jibber-jabber">jibber-jabber</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+  
+    <a href="/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html" class="button"><div class="next"><div>CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP</div></div></a>
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">6</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp/">owasp<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/security/">security<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/architecture/">architecture<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linux/">linux<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/mongodb/">mongodb<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <time class="published" datetime="">December 5, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html">Terraform Module Private Registries - Bitbucket</a></h4>
+          <time class="published" datetime="">February 3, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2020
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

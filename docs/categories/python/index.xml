@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on David&#39;s Blog</title>
+    <link>/categories/python/</link>
+    <description>Recent content in Python on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 21 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to Import data to Elasticsearch (Nginx Access logs)</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</link>
+      <pubDate>Sat, 21 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</guid>
+      <description>因為統計流量的需求，需要將nginx access log放進elasticsearch方便做統計。 對ELS不是很熟的我，也花了一點時間釐清觀念，就寫進來當作notes吧。 也希望對剛接觸ELS的朋友有一些幫助。
+
+Preparation  Elasticsearch Server == 6.3.0 (host by AWS) Python == 3.6 elasticsearch python module == 6.3.0  
+Step 1. Install Elasticsearch  Because we use ELS which is host by AWS, so basically we just need to take care of instance type and count.
+And why I use AWS ELS ?
+Because I just wanna get the rid of instance management lol</description>
+    </item>
+    
+    <item>
+      <title>Python發送警告訊息(Nagios &amp; Dingtalk)</title>
+      <link>/blog/2017-07-08-python-nagios-dingtalk/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-07-08-python-nagios-dingtalk/</guid>
+      <description>退伍已經過了一個多月，生活漸漸步入軌道
+狂寫python練技術，卻有點不知道目標是什麼
+為了技術，有的人願意放棄80k月薪
+不禁讓我思考，出社會後如此庸庸碌碌真的是我要的生活嗎
+每天沈浸在程式海中，最後想得到什麼呢？
+我想得到的到底是技術還是高薪，如果兩者取其重，我會選哪個？
+人生真難阿
+因應最近公司SAP簡訊系統故障，業務又不回信
+只好利用原本Nagios發警告簡訊的機制去寫一個新程式發送警告訊息
+雖然還是不懂為何公司要用釘釘，既不安全也不可靠，或許這就是cost down的副作用吧
+程式放在github上
+原理是透過原本簡訊的log去抓關鍵字來發送訊息
+然後透過釘釘oapi用POST去發送消息
+或許將來哪天Nagios不用了，這程式也就失效了，未來可能需要再修正。
+&#34;&#34;&#34; * Nagios Alert Message SMS to Dingtalk *  * @author David * Version 1.0 , 2017-06-23 &#34;&#34;&#34; # !/usr/bin/env python3 import re import time , datetime import requests import json  由於nagios admin可以收到全部alert SMS，為了不重複發送訊息，只取這一筆num # nagios admin&#39;s phone number nagios_admin_num = &#34;09&#34; # David  # read sms_service log file f = open(&#39;D:\david_hsu\Desktop\message.txt&#39;,&#39;r&#39;) line = f.</description>
+    </item>
+    
+    <item>
+      <title>Python套件urllib2簡介</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</guid>
+      <description>這裡就像哈利波特裡的儲思盆
+趁著我在當兵前還沒完全放空的時候
+把這些東西倒出來
+還以為我會很緊張要當兵了
+沒想到居然心如止水 來講講一個小套件
+今天講Python的一個小小小小套件 , urllib2
+基本上不需要額外安裝任何新的module就可以使用，所以用來救急很方便
+當有時候需要使用程式對某一網頁做POST或GET並獲得response時
+使用urllib2就非常方便
+簡單的幾行程式碼就可以搞定
+範例程式如下：
+我們對google首頁做GET
+# /usr/bin/env python # encoding: utf-8 import urllib2 request = urllib2.Request(&amp;#34;http://www.google.com.tw/&amp;#34;) response = urllib2.urlopen(request) html = response.read() print html 
+去執行python 程式名稱就可以看到GET網頁的內容了
+非常簡單且快速
+用來撈取資料或做POST、GET都很方便
+當然，你也可以使用linux環境下的wget、curl等套件來達成。
+因為腦袋放太空不適合一次寫太多東西
+就先這樣好了
+2017-02-05 12:46 , Davin in Taipei  </description>
+    </item>
+    
+  </channel>
+</rss>

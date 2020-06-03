@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AWS on David&#39;s Blog</title>
+    <link>/categories/aws/</link>
+    <description>Recent content in AWS on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/aws/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>EKS External-DNS Cross Account Route53 Setup</title>
+      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</link>
+      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</guid>
+      <description>External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
+當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
+External-DNS 官方介紹：
+ Inspired by Kubernetes DNS, Kubernetes&amp;rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.</description>
+    </item>
+    
+    <item>
+      <title>EKS Building &amp; Troubleshooting</title>
+      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</link>
+      <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</guid>
+      <description>This is the full map of EKS and we&amp;rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&amp;rsquo;s go!
+Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;amp;&amp;amp; make plan &amp;amp;&amp;amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave.</description>
+    </item>
+    
+    <item>
+      <title>Cloud-Native LOG 儲存以及分析方案</title>
+      <link>/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html</link>
+      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html</guid>
+      <description>隨著 Microservices 的蓬勃發展，從以前的一體式架構慢慢演變成了現今的動輒數十數百個服務同時在線，Log 的量也以很可怕的速度成長中，面對巨量的 Log ，要存在哪裡、要怎麼去利用這些資料反而是現今架構上的難題。
+利用這些 Log 我們可以輕易的去提早發現服務的異常，也可以拿來做分析，產出更珍貴的資源，像是 BI。 最重要的是可以協助 Debug, 除錯, 還有做 Audit.
+ 我認為 Logging 就是一件很容易被大家認為不重要的事，但他其實很重要，也是很珍貴的資產，絕對值得我們花時間好好處理以及規劃。
+ 
+格式問題  一般來說都會是 JSON, 不管你要存存什麼格式 統一就好 然後避免直接存 Raw Data。
+Log Level 也是要注意，盡量把 CRITICAL / ERROR / WARNING / INFO &amp;hellip;這些分出來。
+
+要存在哪裡  這是一個很難的問題，市面是常見的方案有以下幾種
+A. Elasticsearch + Fluentd(Logstash) + Kibana (ELK) B. CloudwatchLogs C. S3 D. Database E. Splunk F. Graylog 
+A. ELK 這套適合成長中的組織，有足夠人力也有足夠彈性可以去維護。
+但是他是 Near-Real-Time 的服務（畢竟中間還要經過 Fluentd），所以會有一定的延遲。</description>
+    </item>
+    
+    <item>
+      <title>AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</title>
+      <link>/aws/2019/12/05/aws-saa-pass.html</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/2019/12/05/aws-saa-pass.html</guid>
+      <description>AWS Solutions Architect Associate (SAA) - [PASSED]  經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。
+With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.
+
+事前準備 Preparation  先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
+The first time I use AWS was in 2016, those services below are I&amp;rsquo;ve been studying:
+ EC2 (EBS, EC2 RI), LB, ASG VPC (subnet, Route Table, Peering connection) ECS / OpsWorks / Beanstalk S3 Lambda Cloudwatch / CloudwatchLogs  其餘沒有列出來的服務都只有接觸過並沒有很深入了解。</description>
+    </item>
+    
+    <item>
+      <title>20180329 Serverless event NOTE</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/serverless/2018/04/21/srverless.html</link>
+      <pubDate>Sat, 21 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/serverless/2018/04/21/srverless.html</guid>
+      <description>Serverless for Monitoring how to debug on serverless ? how&amp;rsquo;s the security for using serverless ? hoe&amp;rsquo;s the latency ? how&amp;rsquo;s the cost ? &amp;ldquo;Less is More&amp;rdquo; we have to focus on other things not just only code when using serverless
+
+Structure is Changing During the application structure is changing to CaaS, we have to reduce the instances which are not for application layer as possible as we can, to avoid launching more and more instances which unnecessary to save cost.</description>
+    </item>
+    
+    <item>
+      <title>AWS EC2 Container Service (ECS) Note</title>
+      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/2017/10/27/aws-ecs.html</link>
+      <pubDate>Fri, 27 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/2017/10/27/aws-ecs.html</guid>
+      <description>AWS EC2 Container Service (ECS) Note
+There are three way to create a cluster and instance, via ecs-cli and aws cli as well as AWS Console. And ecs-cli via CloudFormation Stack to create, so I will use aws cli to create it.
+First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back-End Service
+# aws ecs create-cluster --cluster-name $CLUSTER_FLASK Step2. Create an instance for Cluster a. Create user-data.</description>
+    </item>
+    
+  </channel>
+</rss>

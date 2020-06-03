@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OWASP Top10 on David&#39;s Blog</title>
+    <link>/categories/owasp-top10/</link>
+    <description>Recent content in OWASP Top10 on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 10 Oct 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/owasp-top10/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>XSS (Cross-Site Scripting) 跨站腳本攻擊簡介和實作</title>
+      <link>/blog/2016-10-10-xss/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2016-10-10-xss/</guid>
+      <description>XSS (Cross-Site Scripting) 跨站腳本攻擊&amp;#65292;目前在網路上仍非常常見&amp;#12290;
+何謂XSS&amp;#65311; 所謂XSS泛指惡意攻擊者在Web網頁上插入惡意html代碼&amp;#65292;以達到特殊目的&amp;#65288;控制網站元素&amp;#12289;取走cookies&amp;#65289;&amp;#12290;
+很多人會說XSS就是能在Web上跳出警告視窗並修改其內容&amp;#65292;其實是不完全正確的&amp;#12290;
+正確來說&amp;#65292;XSS是利用惡意程式碼&amp;#65292;常見是Javascript&amp;#65292;將惡意code輸入到網頁&amp;#65292;再誘使user連線到已被攻擊的網頁&amp;#65292;並不只是show message視窗&amp;#12290;
+你發現了嗎&amp;#65311; XSS只是修改網頁資料傳給其他使用者&amp;#65292;並不會回傳到Server&amp;#65292;所以其實不難察覺有異常&amp;#12290;
+XSS介紹&amp;#65306;
+XSS漏洞一般來說最常見的是網站可以被插入惡意字元&amp;#65292;像是&amp;lt; &amp;gt; / &#34; &#39; ; ....等等&amp;#12290;
+現今網站都會防禦使用者動作&amp;#65292;像是禁止你回傳惡意字元到server或是直接將其去除&amp;#65292;這是所謂server端的防禦&amp;#65292;通常會藉由code或Firewall等設備去防禦&amp;#65292;通常是有效的&amp;#12290;
+有些網站在server端並沒有做任何防禦&amp;#65292;認為只要在使用者端(Client)做防禦即可&amp;#65292;像是使用語法檢查輸入格式&amp;#12289;跳出警告視窗...等等&amp;#65292;其實這都是無效的&amp;#12290;只能防君子&amp;#65292;難防小人&amp;#12290;
+上完Allen Own大神的課之後我學得最透徹的大概就是他的口頭禪&amp;#65306;
+任何在Client端的防禦都是無效的&amp;#12290;
+XSS攻擊非常氾濫&amp;#65292;但是屬於被動式的攻擊手法&amp;#12290;
+XSS的攻擊流程最普遍來說是惡意人士會在第三方網站&amp;#65292;如pchome&amp;#12289;google進行XSS攻擊&amp;#65292;再利用社交工程誘使受害者點擊URL連線到已受到XSS攻擊的網頁&amp;#65292;惡意人士便可以利用此漏洞show出cookies以偽造使用者的身份&amp;#65292;最終目的就是將使用者資料傳回惡意人士電腦&amp;#12290;
+這麼說可能不是很清楚XSS到底在做什麼事&amp;#65292;簡單來說就是駭客修改網頁內容&amp;#65292;讓user去點擊並回傳資料&amp;#12290;
+日本有一個網站可以提供XSS練習&amp;#65292;共有30個stage可以打&amp;#65292;每個層級的防禦手段都不一樣&amp;#65292;我們來實作到stage8&amp;#12290;
+http://xss-quiz.int21h.jp/
+上面寫說只要能讓網頁彈出警告視窗並寫document.domain即算成功&amp;#12290;
+Stage1.
+做XSS攻擊&amp;#65292;首先要知道目標網頁有哪些防禦&amp;#65292;我們可以插入特殊字元進行測試
+例如&amp;#65306; aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh
+然後查看原始碼&amp;#65292;看哪些字元被屏蔽&amp;#65292;哪些字元可以被利用&amp;#12290;
+
+我們可以發現&amp;#65292;stage1並沒有對任何字元進行屏蔽&amp;#65292;所以我們只要簡單的javascript即可成功&amp;#12290;
+&amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt;
+插入以上惡意javascript即可發現成功進到第二關&amp;#12290;
+Stage2.
+我們故技重施&amp;#65292;使用aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh來檢查網站的防禦&amp;#12290;
+
+可以發現老招無效&amp;#65292;但是原始碼也告訴你&amp;#65292;這段語法出錯了&amp;#65292;難道是結束字元出錯&amp;#65311;
+讓我們再試試aaa&#34;&amp;gt;&amp;#65292;嘗試以&#34;&amp;gt;來結束value並利用其中空隙插入語法&amp;#12290;
+
+看起來好像可行&amp;#65292;那我們試著插入javascript&amp;#65292;並在前面加上&#34;&amp;gt;試試&amp;#12290;
+&#34;&amp;gt;&amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt;
+順利過關&amp;#65292;可以發現跟stage1差別只是需要將上一段語法先結束掉&amp;#65292;再利用空間插入語法而已&amp;#12290;
+Stage3.
+
+試試老方法&amp;#65292;可以發現我們的aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh被變成
+&#34;aaa&amp;amp;lt;bbb&amp;amp;gt;ccc/ddd&amp;amp;#039;eee&amp;amp;quot;fff;ggg:hhh&#34; 惡意字元會變自動轉換成其他字元組合&amp;#12290;
+但旁邊還有個dropdownlist&amp;#65292;似乎是個可以運用的弱點&amp;#65311;
+想要修改DropDownList的回傳值我們需要利用Brup-Suite來修改&amp;#12290;
+將proxy設為Brup-Suite來攔截封包並修改&amp;#12290;
+
+會發現網頁一直送不出去直到你在Brup-Suite按下Forward&amp;#65292;因為你的封包正被攔截&amp;#12290;
+我們來試著插入 &amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt; 在japan那個欄位試試&amp;#12290;
+
+按下Forward&amp;#65292;成功過關&amp;#65281;可以發現stage3只防禦了一個欄位&amp;#65292;在下拉式選單沒有做防禦&amp;#65292;是個只能防新手的防禦方式&amp;#12290;
+Stage4.</description>
+    </item>
+    
+  </channel>
+</rss>

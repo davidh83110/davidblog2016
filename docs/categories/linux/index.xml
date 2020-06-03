@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on David&#39;s Blog</title>
+    <link>/categories/linux/</link>
+    <description>Recent content in Linux on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 25 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux指令 - ln 慘痛的教訓</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</guid>
+      <description>用慘痛教訓換來經驗
+常常使用Linux做為系統的工程師應該都不陌生ln這個指令
+ln是對資料夾建立超連結的指令
+以下範例 root@David-MacBook: $ cd /tmp root@David-MacBook: tmp $ ln -s /opt/web/home/ 第一行cd切換目錄到/tmp
+第二行是建立超連結到當前目錄（/tmp）並指向/opt/web/home
+會得到結果
+root@David-MacBook: tmp $ ll total 0 lrwxr-xr-x 1 root wheel 14 Jan 25 22:59 home $ /opt/web/home 可以看到我們將home這個資料夾成功建立超連結到/tmp
+
+那什麼是超連結？
+所謂超連結就是類似windows作業系統的&amp;quot;捷徑&amp;quot;，可以藉由超連結的資料夾讀取與原資料夾資料同步的資料
+很難理解嗎？ 其實就是資料夾的影分身這麼簡單而已，主體是同一個。
+那ln這麼簡單的指令會出現哪些問題？ 問題可大了
+魔鬼藏在細節裡
+當你要解除超連結，你會怎麼下指令？ rm吧
+對 就是rm，反正直接移除超連結跟windows移除捷徑一樣，真正的資料夾是不會影響的吧
+錯！ 大錯特錯！！
+root@David-MacBook: tmp $ ll home/ total 0 -rw-r--r-- 1 root whell 0 Jan 25 23:13 test root@David-MacBook: tmp $ rm -rf home/ root@David-MacBook: tmp $ ll total 0 lrwxr-xr-x 1 root wheel 14 Jan 25 22:59 home $ /opt/web/home root@David-MacBook: tmp $ ll home/ ls: home/: No such file or directory 發現了嗎？</description>
+    </item>
+    
+  </channel>
+</rss>

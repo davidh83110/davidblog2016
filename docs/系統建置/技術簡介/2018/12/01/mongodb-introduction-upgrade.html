@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions">
+<meta itemprop="description" content="由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.
+踩過的雷很多，該碰到的問題也都碰到了，卻只花了短短的一個多禮拜，果然壓力使人迅速成長，也見證了一句話，「所謂大神，不過就是雷踩得比較多」。
+MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近年多數資料庫使用的 Replica Set (Primary and Sceondary) 架構, 取代舊有的 Shard Cluster (Master and Slave). 進而增加許多優勢，像是自動故障恢復、讀寫控制等等。
+本篇文章以 mongodb-org 3.0 以及 3.2 為主, 這兩個版本最大的差異就是在 ReplicaSet。 升級上官方也提供非常詳盡的documents, 不得不稱讚mongodb的文件，真的很完整。
+This post is mainly for describing the processes and experiences to upgrade Mongodb from 3.0 to 3.2 on Shopline which is our company.
+There&rsquo;s a big difference of Mongodb 3.">
+<meta itemprop="datePublished" content="2018-12-01T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-12-01T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1552">
+<meta itemprop="image" content="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions" />
+<meta property="og:description" content="由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.
+踩過的雷很多，該碰到的問題也都碰到了，卻只花了短短的一個多禮拜，果然壓力使人迅速成長，也見證了一句話，「所謂大神，不過就是雷踩得比較多」。
+MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近年多數資料庫使用的 Replica Set (Primary and Sceondary) 架構, 取代舊有的 Shard Cluster (Master and Slave). 進而增加許多優勢，像是自動故障恢復、讀寫控制等等。
+本篇文章以 mongodb-org 3.0 以及 3.2 為主, 這兩個版本最大的差異就是在 ReplicaSet。 升級上官方也提供非常詳盡的documents, 不得不稱讚mongodb的文件，真的很完整。
+This post is mainly for describing the processes and experiences to upgrade Mongodb from 3.0 to 3.2 on Shopline which is our company.
+There&rsquo;s a big difference of Mongodb 3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html" />
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png" />
+<meta property="article:published_time" content="2018-12-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-12-01T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png"/>
+
+<meta name="twitter:title" content="MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions"/>
+<meta name="twitter:description" content="由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.
+踩過的雷很多，該碰到的問題也都碰到了，卻只花了短短的一個多禮拜，果然壓力使人迅速成長，也見證了一句話，「所謂大神，不過就是雷踩得比較多」。
+MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近年多數資料庫使用的 Replica Set (Primary and Sceondary) 架構, 取代舊有的 Shard Cluster (Master and Slave). 進而增加許多優勢，像是自動故障恢復、讀寫控制等等。
+本篇文章以 mongodb-org 3.0 以及 3.2 為主, 這兩個版本最大的差異就是在 ReplicaSet。 升級上官方也提供非常詳盡的documents, 不得不稱讚mongodb的文件，真的很完整。
+This post is mainly for describing the processes and experiences to upgrade Mongodb from 3.0 to 3.2 on Shopline which is our company.
+There&rsquo;s a big difference of Mongodb 3."/>
+<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2018%2f12%2f01%2fmongodb-introduction-upgrade.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2018%2f12%2f01%2fmongodb-introduction-upgrade.html&amp;title=MongoDB%20%e7%b0%a1%e4%bb%8b%e8%88%87Replica%20Set%e6%9e%b6%e8%a8%ad%e4%bb%a5%e5%8f%8a%e5%b8%b8%e8%a6%8b%e9%9b%b7%e9%bb%9e%20%2f%20MongoDB%20Introduce%20%2cReplica%20Set%20Setup%20and%20Error%20Soultions" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2018%2f12%2f01%2fmongodb-introduction-upgrade.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+      <ul style="padding: 0;">
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank"></a>
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html">MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2018-12-01 00:00:00 &#43;0000 UTC">
+      December 1, 2018
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2018%2f12%2f01%2fmongodb-introduction-upgrade.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2018%2f12%2f01%2fmongodb-introduction-upgrade.html&amp;title=MongoDB%20%e7%b0%a1%e4%bb%8b%e8%88%87Replica%20Set%e6%9e%b6%e8%a8%ad%e4%bb%a5%e5%8f%8a%e5%b8%b8%e8%a6%8b%e9%9b%b7%e9%bb%9e%20%2f%20MongoDB%20Introduce%20%2cReplica%20Set%20Setup%20and%20Error%20Soultions" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2018%2f12%2f01%2fmongodb-introduction-upgrade.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+  <a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png" alt="">
+    </p>
+    
+  </a>
+
+
+  <div class="content">
+    <p>由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.</p>
+<p>踩過的雷很多，該碰到的問題也都碰到了，卻只花了短短的一個多禮拜，果然壓力使人迅速成長，也見證了一句話，「所謂大神，不過就是雷踩得比較多」。</p>
+<p>MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近年多數資料庫使用的 Replica Set (Primary and Sceondary) 架構, 取代舊有的 Shard Cluster (Master and Slave). 進而增加許多優勢，像是自動故障恢復、讀寫控制等等。</p>
+<p>本篇文章以 mongodb-org 3.0 以及 3.2 為主, 這兩個版本最大的差異就是在 ReplicaSet。 <br>
+升級上官方也提供非常詳盡的documents, 不得不稱讚mongodb的文件，真的很完整。</p>
+<p>This post is mainly for describing the processes and experiences to upgrade Mongodb from 3.0 to 3.2 on Shopline which is our company.<br>
+There&rsquo;s a big difference of Mongodb 3.0 and 3.2, is the Replica Set.<br>
+Replica Set is a is a new structure of databases, using Primary and Secondary instead of Master and Slave and this structure has a lot of advantages such like auto recovery from an unexpected shutdown and split read and write nodes.</p>
+<p><br /></p>
+<h2 id="environment">Environment</h2>
+<hr>
+<ul>
+<li>Mongodb-org 3.0 -&gt; 3.2</li>
+<li>Amazon Linux 1</li>
+</ul>
+<p><br /></p>
+<h2 id="mongodb-introduction">MongoDB Introduction</h2>
+<hr>
+<h3 id="main-structure">Main Structure</h3>
+<p><img src="http://blogs.bmc.com/wp-content/uploads/2017/10/shard-cluster-full.png" alt="Alt text"></p>
+<ul>
+<li><strong>Shard</strong><br>
+The place where is to store data.</li>
+<li><strong>Replica Set</strong><br>
+Normally it will have a primary, a secondary and a arbiter in a replica set, whatever shard server or config server.</li>
+<li><strong>Config Server</strong><br>
+The bridge which is mongos router communicate with shard server.</li>
+<li><strong>Mongos</strong><br>
+A mongo client agent and shell, usually install with application.</li>
+</ul>
+<p>MongoDB 主要的架構大概就是這樣，會有 Shard/Configsvr/mongos<br>
+一般來說Shard會存放資料，mongos是client端，負責去連接資料庫，而configsvr就是那座橋樑，讓mongos client知道該怎麼走到正確的shard去讀寫資料。</p>
+<p><br /></p>
+<h3 id="shard--configsvr-replica-set">Shard / Configsvr Replica Set</h3>
+<p><img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/Replica-Sets-Members.JPG" alt="Alt text"></p>
+<ul>
+<li>
+<p><strong>Primary</strong><br>
+The controller of a Shard cluster, receive all requests to a database when writing and reading, it is the only one can be read and write node in a normal situation. Also has the responsibility to store data into a database.</p>
+</li>
+<li>
+<p><strong>Secondary</strong>
+Normally secondary doesn&rsquo;t allow to receive any request, the only job is to replicate primary&rsquo;s data to store in another place. And can be promoted to a primary node when the original primary is down in unexpected or necessary. Aka Backup.</p>
+</li>
+<li>
+<p><strong>Arbiter</strong>
+The main function is to allocate primary and secondary nodes, it will use &ldquo;vote&rdquo; to decide which secondary will be promoted to primary when needed. Arbiter won&rsquo;t store any data inside.</p>
+</li>
+<li>
+<p><strong>Heartbeat</strong>
+No need to explain, health check.</p>
+</li>
+</ul>
+<p>這是一般的 Shard Replica Set 架構，通常包含 Primary / Secondary / Arbiter.</p>
+<p>Primary 主要接收所有讀與寫的請求以及儲存資料，Secondary 一般來說不會接受任何讀寫請求，只做一件事，就是複製 Primary 的資料來儲存，以便在必要或意外時可以被提升為 Primary 節點。</p>
+<p>而 Arbiter 不會存儲任何資料，主要功用是調配 Primary and Secondary，當 Primary Down的時候，可以投票決定哪一個 Secondary 將被升級為 Primary。</p>
+<p><br /></p>
+<h3 id="this-is-the-configsvr-replica-set-structure">This is the Configsvr replica set structure.</h3>
+<p><img src="https://docs.mongodb.com/manual/_images/replica-set-primary-with-two-secondaries.bakedsvg.svg" alt="Alt text"></p>
+<p>In configsvr replica set, the only difference is no Arbiter.</p>
+<p><br /></p>
+<h2 id="install-mongodb-org-30-on-amazon-linux">Install MongoDB-org 3.0 on Amazon Linux</h2>
+<hr>
+<p><strong>yum</strong> doesn&rsquo;t have mongodb-org inside the package pools, we have to add repo manually.</p>
+<ul>
+<li>
+<p><strong>Add Repo</strong></p>
+<pre><code>cat &gt;&gt; /etc/yum.repos.d/mongodb-org-3.0.repo &lt;&lt;EOF
+[mongodb-org-3.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.0/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-3.0.asc
+EOF
+</code></pre></li>
+<li>
+<p><strong>Install</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install mongodb-org -y
+</code></pre></div></li>
+</ul>
+<p>If we wanna change to another version, just modify the value on repo file.</p>
+<p><br /></p>
+<h2 id="setup-a-replica-set-of-a-complete-mongodb">Setup a Replica Set of a complete MongoDB</h2>
+<hr>
+<ul>
+<li>
+<p><strong>Shard</strong><br>
+3 mongod servers, usually use <code>27018</code> port (version 3.2)</p>
+</li>
+<li>
+<p><strong>Configsvr</strong><br>
+3 mongod servers, usually use <code>27019</code> port</p>
+</li>
+<li>
+<p><strong>mongos</strong><br>
+1 mongo-shell, usually use <code>27017</code> mongodb default route port</p>
+</li>
+</ul>
+<p>Please use the same version <code>mongodb-org 3.0</code> in all servers.<br /></p>
+<p><br /></p>
+<h2 id="shard-servers-config">Shard Servers config</h2>
+<hr>
+<p>In 3 shard servers, please use the same config file.</p>
+<p>mongod-32.conf</p>
+<pre><code>## mongod-32.conf
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /var/lib/mongo
+  journal:
+    enabled: true
+
+# how the process runs
+processManagement:
+  fork: true  # fork and run in background
+  pidFilePath: /var/run/mongodb/mongod.pid  # location of pidfile
+
+# network interfaces
+net:
+  port: 27018
+  bindIp: 0.0.0.0  # Listen to local interface only, comment to listen on all interfaces.
+
+replication:
+  replSetName: shard1
+sharding:
+  clusterRole: shardsvr
+</code></pre><p><br /></p>
+<h2 id="start-your-mongod">Start your mongod</h2>
+<hr>
+<ul>
+<li>
+<p>Use <code>service mongod start</code> or <code>mongod -f /etc/mongod.conf</code> to start mongod servers.</p>
+</li>
+<li>
+<p>Feel free to use <code>ps aux | grep mongo</code> or <code>service mongod status</code> to check if your mongod really started.</p>
+</li>
+<li>
+<p>If you get any issues when starting mongod, please go to <code>/var/log/mongod.log</code> to check error messages.</p>
+</li>
+</ul>
+<blockquote>
+<p>And please notice the permissions of those directories which are define in mongod.conf.</p>
+</blockquote>
+<p>請使用上述啟動指令來啟動你的 mongodb，並檢查他是否真的被啟動了。如果再啟動過程出現 Failed，請到 log 目錄檢查錯誤。常常因為目錄權限問題而失敗，或者是目錄不存在。請小心檢查，若不存在請建立目錄並給予權限。</p>
+<p><br /></p>
+<h2 id="setup-shard-replica-mode">Setup Shard Replica mode</h2>
+<hr>
+<p>After mongodb is started, please use mongo-shell to configure our shard to a replica set.<br>
+Let&rsquo;s do it !!!  The commands are as following below.</p>
+<p><strong>shard - primary</strong> : <code>&gt; mongo localhost:27018</code></p>
+<pre><code>&gt; mongo&gt; rs.initiate()  // to enable replica mode
+&gt; mongo&gt; rs.status()  // check the replica mode if really enabled
+&gt; mongo&gt; rs.add({host: &quot;SECONDARY-IP:27018&quot;, priority: 0.5})  // add secondary to replica set
+&gt; mongo&gt; rs.addArb(&quot;ARBITER-IP:27018&quot;)  // add arbiter to replica set
+</code></pre><p>Congratulations !! Shard Replica Set has already set up successfully if you see primary, secondary, arbiter when you execute <code>rs.status()</code>.</p>
+<pre><code>shard1:PRIMARY&gt; rs.status()
+{
+	&quot;set&quot; : &quot;shard1&quot;,
+    ...
+	&quot;members&quot; : [
+		{
+			&quot;_id&quot; : 5,
+			&quot;name&quot; : &quot;ip-10-0-0-57:27018&quot;,
+			&quot;health&quot; : 1,
+			&quot;state&quot; : 7,
+			&quot;stateStr&quot; : &quot;ARBITER&quot;,
+            ...
+		},
+		{
+			&quot;_id&quot; : 8,
+			&quot;name&quot; : &quot;ip-10-0-0-166:27018&quot;,
+			&quot;health&quot; : 1,
+			&quot;state&quot; : 2,
+			&quot;stateStr&quot; : &quot;SECONDARY&quot;,
+	        ...
+		},
+		{
+			&quot;_id&quot; : 9,
+			&quot;name&quot; : &quot;ip-10-0-0-122:27018&quot;,
+			&quot;health&quot; : 1,
+			&quot;state&quot; : 1,
+			&quot;stateStr&quot; : &quot;PRIMARY&quot;,
+			...
+		}
+	],
+	&quot;ok&quot; : 1
+}
+</code></pre><p><br /></p>
+<h2 id="set-up-a-mongos-client-agent">Set up a mongos client agent</h2>
+<hr>
+<p>Actually, mongos is equal to mongo-shell, one of a package of mongodb-org.
+So when we install mongodb-org, mongos was be installed as well.</p>
+<p>mongos.conf</p>
+<pre><code>#config servers
+configdb=CONFIGSVR-IP-1,CONFIGSVR-IP-2,CONFIGSVR-IP-3
+#where to log
+logpath=/var/log/mongo
+#log overwritten or appended to
+logappend=true
+#fork and run in background
+fork=true
+#override port
+port=27017
+</code></pre><p><code>&gt; mongos -f /etc/mongod.conf</code> to start mongos and keep it right there.</p>
+<p>we will use mongos to configure configsvr later.</p>
+<p><br /></p>
+<h2 id="set-up-configsvr">Set up configsvr</h2>
+<hr>
+<p>The steps of installation configsvr are the same with shards.<br>
+But the config file is different, please set up as below.</p>
+<pre><code># mongod.conf
+#where to log
+logpath=/mnt/log/mongodb/mongod.log
+logappend=true
+configsvr=true
+# fork and run in background
+fork=true
+#port=27019
+dbpath=/mnt/mongo
+# location of pidfile
+pidfilepath=/var/run/mongodb/mongod.pid
+</code></pre><p>Please running <code>3 configsvr</code> with the same config file and <code>mongod -f /etc/mongod.conf</code>.<br>
+And go inside with mongo-shell into <code>mongos</code> which we just set up.<br>
+<code>&gt; mongo</code> // default use 27019</p>
+<p><br /></p>
+<p><strong>The steps are as following: (In mongos client)</strong></p>
+<ol>
+<li>add shard with primary</li>
+<li>create db and collection</li>
+<li>insert data to database.collection</li>
+<li>create index for collection</li>
+<li>enable sharding</li>
+<li>shard collection</li>
+</ol>
+<pre><code>mongo&gt; sh.addShard(&quot;shard1/PRIMARY-SHARD-IP:27018&quot;)   //add one of shard servers, then others will be add automatically
+mongo&gt; use test   //to create a test database
+mongo&gt; db.createCollection(&quot;users&quot;)   //create a collection on test db
+mongo&gt; db.users.insert({&quot;name&quot;: &quot;david&quot;, &quot;sex&quot;: &quot;male&quot;})
+mongo&gt; db.users.ensureIndex({_id: 1}, {background: true})
+mongo&gt; sh.enableSharding(&quot;test.users&quot;)   //&quot;test.users&quot; = &quot;&lt;database&gt;.&lt;collection&gt;&quot;
+mongo&gt; sh.shardCollection(&quot;test.users&quot;, {_id: &quot;hashed&quot;})   //use hashed to shard collection
+mongo&gt; sh.status()   //to check if sharding enabled
+</code></pre><p>Then <code>mongo&gt; db.users.find()</code> to find data if exist
+And please insert another data to test whether succeed.</p>
+<p><br /></p>
+<h2 id="upgrade-mongodb-from-30-to-32">Upgrade MongoDB from 3.0 to 3.2</h2>
+<hr>
+<p>If wanna upgrade configsvr to 3.2, we have some notes to be remember.</p>
+<ul>
+<li>
+<p>3.0 and 3.2 use different <code>storage engine</code><br>
+3.0 -&gt; MMAPv1<br>
+3.2 -&gt; wiredTiger</p>
+</li>
+<li>
+<p>Cluster mode and Replica set
+3.0 -&gt; cluster mode, sccc
+3.2 -&gt; replica set, csrs</p>
+</li>
+</ul>
+<p>So, the step is as following below.</p>
+<ul>
+<li>
+<p>disable balancer with <code>sh.stopBalancer()</code> and change one of three 3.0 configsvr version to 3.2 and set <code>configsvrMode: sccc</code> and <code>storage engine: mmapv1</code><br>
+=&gt; now 3 configsvr, one for 3.2 and two for 3.0</p>
+</li>
+<li>
+<p>use mongo-shell into 3.2 that one to initiate rs mode. <code>rs.initiate()</code><br>
+=&gt; waiting for the data synced to 3.2 that one.</p>
+</li>
+<li>
+<p>launch another 3 configsvr with 3.2 mongod and start with <code>wiredTiger</code> storagr engine.</p>
+</li>
+<li>
+<p>go into the <code>mmapv1</code> that one and <code>rs.add(&quot;config1/IP&quot;)</code> to add those 3 new servers.<br>
+=&gt; now we have four 3.2 configsvr and two 3.0.</p>
+</li>
+<li>
+<p><code>rs.stepDown()</code> in <code>mmapv1</code> that 3.2 one and primary node will change to another server.</p>
+</li>
+<li>
+<p>go to new primary and <code>rs.remove(&quot;NNAPv1-OLD-PRIMARY&quot;)</code> and enable balancer back with <code>rs.enableBalancer()</code></p>
+</li>
+<li>
+<p>shut down old two 3.0 configsvr</p>
+</li>
+<li>
+<p>using 3.2 mongos to connect to new replica set configsvr and check status.</p>
+</li>
+</ul>
+<p><br /></p>
+<h2 id="the-errors-i-encountered-when-upgrading-to-32">The Errors I Encountered when Upgrading to 3.2</h2>
+<hr>
+<h4 id="q-can-30-mongos-connect-to-32-configsvr-"><strong>Q: Can 3.0 mongos connect to 3.2 configsvr ?</strong></h4>
+<p>Absolutely not, 3.0 doesn&rsquo;t support replica mode<br>
+mongos 3.0 是不允許連接到 3.2 或以上版本的 configsvr的。</p>
+<p><br /></p>
+<h4 id="q-setshardversion-failed-when-mongos-configdb-endpoint-has-been-changed"><strong>Q: setShardVersion failed&rdquo; when mongos configDB endpoint has been changed</strong></h4>
+<pre><code>mongos&gt; db.users.find()
+Error: error: {
+    &quot;$err&quot; : &quot;setShardVersion failed shard: shard1:shard1/ip-10-0-0-122:27018,ip-10-0-0-166:27018 { configdb: { stored: \&quot;10.0.0.45:27019,10.0.0.45:27020,10.0.0.45:27021\&quot;, given: \&quot;ip-10-0-0-45:27019,ip-10-0-0-45:27020,ip-10-0-0-45:27021\&quot; }, ok: 0.0, errmsg: \&quot;mongos specified a different config database string : stored : 10.0.0.45:27019,10.0.0.45:27020,10.0.0.45:27021 vs given : ip-10-0-0-45:27019,ip-10-0-0...\&quot;, $gleStats: { lastOpTime: Timestamp 0|0, electionId: ObjectId('5bffb069a4b240083f2691cb') } }&quot;,
+    &quot;code&quot; : 10429,
+    &quot;shard&quot; : &quot;shard1&quot;
+}
+</code></pre><p>cause the shard servers will cache mongos <code>configDB string</code>.<br />
+If you wanna solve this issue, just <code>restart shard servers</code> then everything works well.<br />
+<br />
+因為 shard server 會 cache mongos 的 configDB string，所以如果遇到這個問題，重啟 Shard servers 就可以解決了。（記得先 StepDown Primary 再重啟）<br /></p>
+<p><br /></p>
+<h4 id="q-can-30-configsvr-connect-to-32-or-34up-shard-servers-"><strong>Q: Can 3.0 configsvr connect to 3.2 or 3.4up shard servers ?</strong></h4>
+<p>Absolutely the answer is NO.<br /></p>
+<p>3.0 的 configsvr 是不能連接到 3.0 以上版本的 Shard Server 的，因為不支援 Replica Mode。<br /></p>
+<p><br /></p>
+<h4 id="q-how-to-separate-data-to-two-shards-equally-"><strong>Q: How to separate data to two shards equally ?</strong></h4>
+<p>when <code>shardCollection()</code>, please use &ldquo;hashed&rdquo; on index, then will be equally separated.<br /></p>
+<p>使用 hashed 雜湊就能使資料平均分配在不同的 Shard Server。<br /></p>
+<p><br /></p>
+<h4 id="q-can-30-mongod-upgrade-to-34-and-skip-32-directly-"><strong>Q: Can 3.0 mongod upgrade to 3.4 and skip 3.2 directly ?</strong></h4>
+<p>mongodb 不允許跳版本升級，3.0 只允許升級到 3.2 再到 3.4。<br /></p>
+<p><br /></p>
+<h4 id="q-how-to-stop-a-shard-server-safely-"><strong>Q: How to STOP a shard server safely ?</strong></h4>
+<p>Please use <code>rs.stepDown(120)</code> and <code>db.shutdownServer()</code> in mongo-shell.<br>
+Then exit mongo-shell and stop or kill mongod process.</p>
+<p>使用正確的指令停止一台 mongodb server。</p>
+<p><br /></p>
+<h4 id="q-how-to-change-priority-on-shard-server-"><strong>Q: How to change priority on Shard server ?</strong></h4>
+<pre><code>var cfg = rs.conf()
+cfg.members[ID].priority = 0.5
+rs.reconfig(cfg)
+</code></pre><p>// The ID can use <code>rs.status()</code> to lookup</p>
+<p>使用上列指令去更改 mongodb 的優先度。</p>
+<p><br /></p>
+<h4 id="q-how-to-failover-the-primary-temporary-"><strong>Q: How to failover the primary temporary ?</strong></h4>
+<p><code>rs.stepDown(120)</code> on Primary node</p>
+<p>The 120 is the Time by second. Then it will auto failover to another node.</p>
+<p>暫時的停止一台 Shard Server 的運作，也可以運來測試主副節點切換是否正常運作。</p>
+<p><br /></p>
+<p>以上就寫到這裡了，如果遇到其他的問題歡迎在下面留言或來信發問。<br />
+對於過程也歡迎提出意見，謝謝。</p>
+<p>Feel free to mail me or leave some commemts if you have any questions.<br />
+I will reply all questions if I can help. <br /></p>
+<p><br /></p>
+<p>Thanks for reading.</p>
+<p><br /></p>
+<div style="text-align: right;">
+2018-12-01 04:05 , David in Taipei</div>
+<p><br />
+<br />
+<br /></p>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/architecture">Architecture</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/mongodb">MongoDB</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+    <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html" class="button"><div class="previous"><div>MacOS Mojave Upgrade Issues and Solutions / MacOS Mojave 更新災情及解決方法</div></div></a>
+  
+  
+    <a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html" class="button"><div class="next"><div>Terraform Module Private Registries - Bitbucket</div></div></a>
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">6</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp/">owasp<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/security/">security<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/architecture/">architecture<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linux/">linux<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/mongodb/">mongodb<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <time class="published" datetime="">December 5, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html">Terraform Module Private Registries - Bitbucket</a></h4>
+          <time class="published" datetime="">February 3, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2020
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

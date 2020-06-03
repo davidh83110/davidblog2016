@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>Hugo Future Imperfect Slim</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="Hugo Future Imperfect Slim">
+<meta itemprop="description" content=""><meta property="og:title" content="Hugo Future Imperfect Slim" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="docs/" />
+<meta property="og:updated_time" content="2020-05-14T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hugo Future Imperfect Slim"/>
+<meta name="twitter:description" content=""/>
+<link rel="stylesheet" href="/docs/css/bundle.min.47889aa5caffd0bd3139296ba7dac2fb263fd20c276662cfe1bc51af8b38b3c6.css" integrity="sha256-R4iapcr/0L0xOSlrp9rC&#43;yY/0gwnZmLP4bxRr4s4s8Y="><link rel="stylesheet" href="/docs/css/add-on.css">
+</head>
+
+  <body>
+    
+  <div id="theme-message" style="background-color:#3c3b3b;color:#f4f4f4;margin:auto auto;padding:.25em 2em;text-align:center;width:75%;">
+    <p>This message, related to the development of the theme, only displays on the
+      <code>localhost</code> homepage to notify you of any important theme changes.</p>
+      <hr>
+      <h5 style="color:#f4f4f4"><i class="fas fa-exclamation-triangle"></i>Version 1.0.1 - May 18, 2020<i class="fas fa-exclamation-triangle"></i></h5>
+      <p style="margin-top:0;">This message is newly implemented for use in future updates.
+      <br><button onclick="removeBox()" class="button" style="color:#f4f4f4;margin-top:1em;">Close Notification Until Next Update</button></p>
+    <script>
+      if (window.location.href.indexOf('localhost:') < 1 || window.localStorage.getItem('HFIS-version') == '1.0.1') {
+        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
+      }
+      function removeBox() {
+        window.localStorage.setItem('HFIS-version', '1.0.1');
+        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
+      }
+    </script>
+  </div><header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/docs/">
+        
+          Future Imperfect
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/docs" class="link"><i class='fa fa-bars'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/docs/about/" class="link"><i class='far fa-bookmark'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/docs/blog/" class="link"><i class='far fa-newspaper'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="/docs/categories/" class="link"><i class='fas fa-sitemap'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/docs/contact/" class="link"><i class='far fa-envelope'></i> Contact</a>
+          
+        
+      
+        
+          
+          
+            <a href="/docs/archived/" class="link"><i class='fa fa-home'></i> Archived</a>
+          
+        
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#lang-menu" class="lang-toggle" lang="en">en</a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+      <a href="docs/fr/" lang="fr" class="link">Français (fr)</a>
+    
+      <a href="docs/pl/" lang="pl" class="link">Polski (pl)</a>
+    
+      <a href="docs/pt/" lang="pt" class="link">Português (pt)</a>
+    
+      <a href="docs/de/" lang="de" class="link">Deutsche (de)</a>
+    
+      <a href="docs/es/" lang="es" class="link">Española (es)</a>
+    
+      <a href="docs/zh-cn/" lang="zh-cn" class="link">中文 (zh-cn)</a>
+    
+      <a href="docs/zh-tw/" lang="zh-tw" class="link">中文 (zh-tw)</a>
+    
+      <a href="docs/ja/" lang="ja" class="link">日本語 (ja)</a>
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Hugo%20Future%20Imperfect%20Slim&amp;url=docs%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=docs%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=docs%2f&amp;title=Hugo%20Future%20Imperfect%20Slim" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=docs%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/docs/"><img src="docs/img/main/logo.jpg" class="circle" width="" alt="Hugo Future Imperfect Slim" /></a>
+  <header>
+    <h1>Hugo Future Imperfect Slim</h1>
+  </header>
+  <main>
+    <p>Another fine, responsive site template by <a href='http://html5up.net'>HTML5 UP</a>.</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+    <li><a href="docs/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fas fa-rss"></a></li>
+
+
+        <li><a href="//github.com/pacollins/hugo-future-imperfect-slim" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/example" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/example" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/example" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+<li><a href="//telegram.me/example" target="_blank" rel="noopener" title="telegram" class="fab fa-telegram"></a></li>
+
+
+
+
+
+
+<li><a href="mailto:example" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+        
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="docs/blog/2017-07-23-ai-venue/">AI人工智慧講座筆記</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2017-07-23 00:00:00 &#43;0000 UTC">
+      July 23, 2017
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  
+
+  
+  <p>今天聽了願景工程主辦的AI講座<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+杜奕瑾是誰呢 相信各位鄉民應該不陌生<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+他在1995年架設PTT這個到現在唯一存活的BBS<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+此外他也架設蕃薯藤(小時候的回憶啊～)並成立公司<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+蕃薯藤不為人知的是<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+他是當時第一個做出中文搜尋的search engine<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+之後杜奕瑾先生到了美國衛生研究院做基因分析研究<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+然後到了微軟做Bing搜尋引擎<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+直到最近熟為人之的微軟Cortana也是他一手策劃的 鄉民稱他為Cortana之父<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+那正當AI如日中天的時候他居然選擇離開微軟回到台灣成立AI Lab<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+傻了嗎？我也不知道<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+原來是他覺得台灣在各方面都非常具有優勢<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+但就是沒有人敢去整合 於是他決定要拋磚引玉<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+回到台灣成立AI Lab 以國外的薪資邀請一等人才共同努力<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+因為台灣對於軟體人才的薪資實在令人心酸<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+所以他決定以國外的標準來留下人才<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+當然也提到大家相當關注的軟體思維以及硬體思維<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+如果大家有在follow國外的programmer應該不難發現國外沒有硬體<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+不信的話列舉前幾大資訊產業 全都是軟體產業<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+Microsoft&hellip;</!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></!--></p>
+  <footer>
+    <a href="docs/blog/2017-07-23-ai-venue/" class="button big">Read more</a>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B">技術簡介</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB">雜七雜八</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7">人工智慧</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    
+    
+      <li class="tags">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/python">python</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/ai">ai</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/spark">spark</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/golang">golang</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/ptt">ptt</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/cortana">cortana</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/iot">iot</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/pepper">pepper</a></li>
+          
+        </ul>
+      </li>
+    
+  
+</ul>
+
+  </footer>
+</article>
+
+        
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="docs/blog/2017-07-08-python-nagios-dingtalk/">Python發送警告訊息(Nagios &amp; Dingtalk)</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2017-07-08 00:00:00 &#43;0000 UTC">
+      July 8, 2017
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  
+
+  
+  <p>退伍已經過了一個多月，生活漸漸步入軌道<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+狂寫python練技術，卻有點不知道目標是什麼<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+為了技術，有的人願意放棄80k月薪<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+不禁讓我思考，出社會後如此庸庸碌碌真的是我要的生活嗎<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+每天沈浸在程式海中，最後想得到什麼呢？<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+我想得到的到底是技術還是高薪，如果兩者取其重，我會選哪個？<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+人生真難阿<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+因應最近公司SAP簡訊系統故障，業務又不回信<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+只好利用原本Nagios發警告簡訊的機制去寫一個新程式發送警告訊息<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+雖然還是不懂為何公司要用釘釘，既不安全也不可靠，或許這就是cost down的副作用吧<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+程式放在<!-- raw HTML omitted -->github<!-- raw HTML omitted -->上<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+原理是透過原本簡訊的log去抓關鍵字來發送訊息<!-- raw HTML omitted -->
+然後透過釘釘oapi用POST去發送消息<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+或許將來哪天Nagios不用了，這程式也就失效了，未來可能需要再修正。<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+  <footer>
+    <a href="docs/blog/2017-07-08-python-nagios-dingtalk/" class="button big">Read more</a>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B">技術簡介</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB">雜七雜八</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/python">Python</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    
+    
+      <li class="tags">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/python3">python3</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/python">python</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/python-re">python re</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/python-json">python json</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/python-requests">python requests</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/nagios">nagios</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/dingtalk">dingtalk</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/oapi">oapi</a></li>
+          
+        </ul>
+      </li>
+    
+  
+</ul>
+
+  </footer>
+</article>
+
+        
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="docs/blog/2017-02-05-urllib2-intro/">Python套件urllib2簡介</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2017-02-05 00:00:00 &#43;0000 UTC">
+      February 5, 2017
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  
+
+  
+  <p>這裡就像哈利波特裡的儲思盆<!-- raw HTML omitted -->
+趁著我在當兵前還沒完全放空的時候<!-- raw HTML omitted -->
+把這些東西倒出來<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+還以為我會很緊張要當兵了<!-- raw HTML omitted -->
+沒想到居然心如止水 來講講一個小套件<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+今天講Python的一個小小小小套件 , urllib2<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+基本上不需要額外安裝任何新的module就可以使用，所以用來救急很方便<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+當有時候需要使用程式對某一網頁做POST或GET並獲得response時<!-- raw HTML omitted -->
+使用urllib2就非常方便<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+簡單的幾行程式碼就可以搞定<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+範例程式如下：<!-- raw HTML omitted -->
+我們對google首頁做GET<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+  <footer>
+    <a href="docs/blog/2017-02-05-urllib2-intro/" class="button big">Read more</a>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B">技術簡介</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB">雜七雜八</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/categories/python">Python</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    
+    
+      <li class="tags">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/python2">python2</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/python">python</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/urllib">urllib</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/urllib2">urllib2</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/wget">wget</a></li>
+          
+            
+            <li><a class="article-category-link" href="docs/tags/curl">curl</a></li>
+          
+        </ul>
+      </li>
+    
+  
+</ul>
+
+  </footer>
+</article>
+
+        
+        
+<div class="pagination">
+  
+    <a href="docs/page/4/" class="button"><div class="previous"><div>Previous</div></div></a>
+  
+  
+    <a href="docs/page/6/" class="button"><div class="next"><div>Next</div></div></a>
+  
+</div>
+
+      </main>
+      <section id="site-sidebar">
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="docs/blog/2020-05-14-eks-external-dns/">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="docs/blog/2020-03-30-eks-install/">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="docs/blog/2020-03-05-saas-self-hosted/">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="docs/blog/2020-02-15-cloud-native-log-solution/">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="docs/blog/2019-12-05-aws-saa-pass/">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <time class="published" datetime="">December 5, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/docs/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/docs/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/docs/categories/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/">技術簡介<span class="count">13</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/">系統建置<span class="count">9</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/aws/">aws<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/">雜七雜八<span class="count">5</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/python/">python<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/terraform/">terraform<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/owasp-top10/">owasp-top10<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/">人工智慧<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/">前端工程<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/">後端工程<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/">資訊安全<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/docs/categories/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/">駭客技術<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+  
+    <section id="mini-bio">
+      <header>
+        <h1>About</h1>
+      </header>
+      <p>This theme was developed for Hugo static site generator.</p>
+      <footer>
+        <a href="/docs/about" class="button">Learn More</a>
+      </footer>
+    </section>
+  
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+    <li><a href="docs/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fas fa-rss"></a></li>
+
+
+        <li><a href="//github.com/pacollins/hugo-future-imperfect-slim" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/example" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/example" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/example" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+<li><a href="//telegram.me/example" target="_blank" rel="noopener" title="telegram" class="fab fa-telegram"></a></li>
+
+
+
+
+
+
+<li><a href="mailto:example" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2020
+      
+        Hugo Future Imperfect Slim
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/docs/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/docs/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/docs/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

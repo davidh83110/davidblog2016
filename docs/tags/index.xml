@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Hugo Future Imperfect Slim</title>
+    <link>docs/tags/</link>
+    <description>Recent content in Tags on Hugo Future Imperfect Slim</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 31 Aug 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="docs/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>container</title>
+      <link>docs/tags/container/</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/container/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>docs/tags/docker/</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flash</title>
+      <link>docs/tags/flash/</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/flash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>letsencrypt</title>
+      <link>docs/tags/letsencrypt/</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/letsencrypt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>docs/tags/nginx/</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>docs/tags/python/</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>uwsgi</title>
+      <link>docs/tags/uwsgi/</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/uwsgi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ai</title>
+      <link>docs/tags/ai/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/ai/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cortana</title>
+      <link>docs/tags/cortana/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/cortana/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>docs/tags/golang/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iot</title>
+      <link>docs/tags/iot/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/iot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pepper</title>
+      <link>docs/tags/pepper/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/pepper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ptt</title>
+      <link>docs/tags/ptt/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/ptt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>spark</title>
+      <link>docs/tags/spark/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/spark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dingtalk</title>
+      <link>docs/tags/dingtalk/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/dingtalk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nagios</title>
+      <link>docs/tags/nagios/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/nagios/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>oapi</title>
+      <link>docs/tags/oapi/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/oapi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python json</title>
+      <link>docs/tags/python-json/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/python-json/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python re</title>
+      <link>docs/tags/python-re/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/python-re/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python requests</title>
+      <link>docs/tags/python-requests/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/python-requests/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python3</title>
+      <link>docs/tags/python3/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/python3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>curl</title>
+      <link>docs/tags/curl/</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/curl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python2</title>
+      <link>docs/tags/python2/</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/python2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>urllib</title>
+      <link>docs/tags/urllib/</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/urllib/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>urllib2</title>
+      <link>docs/tags/urllib2/</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/urllib2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>wget</title>
+      <link>docs/tags/wget/</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/wget/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Back-End</title>
+      <link>docs/tags/back-end/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/back-end/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C#</title>
+      <link>docs/tags/c#/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/c#/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>java</title>
+      <link>docs/tags/java/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jboss</title>
+      <link>docs/tags/jboss/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/jboss/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>php</title>
+      <link>docs/tags/php/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ruby</title>
+      <link>docs/tags/ruby/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tomcat</title>
+      <link>docs/tags/tomcat/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/tomcat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>weblogic</title>
+      <link>docs/tags/weblogic/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/weblogic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>wildfly</title>
+      <link>docs/tags/wildfly/</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/wildfly/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>centos</title>
+      <link>docs/tags/centos/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/centos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linuxsst</title>
+      <link>docs/tags/linuxsst/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/linuxsst/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ln</title>
+      <link>docs/tags/ln/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/ln/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redhat</title>
+      <link>docs/tags/redhat/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/redhat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rm</title>
+      <link>docs/tags/rm/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/rm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>unlink</title>
+      <link>docs/tags/unlink/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/unlink/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>filezilla</title>
+      <link>docs/tags/filezilla/</link>
+      <pubDate>Sun, 11 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/filezilla/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FTP</title>
+      <link>docs/tags/ftp/</link>
+      <pubDate>Sun, 11 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/ftp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FTPS</title>
+      <link>docs/tags/ftps/</link>
+      <pubDate>Sun, 11 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/ftps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>openssl</title>
+      <link>docs/tags/openssl/</link>
+      <pubDate>Sun, 11 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/openssl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pure-ftpd</title>
+      <link>docs/tags/pure-ftpd/</link>
+      <pubDate>Sun, 11 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/pure-ftpd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL</title>
+      <link>docs/tags/ssl/</link>
+      <pubDate>Sun, 11 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/ssl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TLS</title>
+      <link>docs/tags/tls/</link>
+      <pubDate>Sun, 11 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/tls/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bootstrap</title>
+      <link>docs/tags/bootstrap/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/bootstrap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Front-End</title>
+      <link>docs/tags/front-end/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/front-end/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HTML</title>
+      <link>docs/tags/html/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/html/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java Script</title>
+      <link>docs/tags/java-script/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/java-script/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>W3C</title>
+      <link>docs/tags/w3c/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/w3c/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web</title>
+      <link>docs/tags/web/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/web/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>XSS</title>
+      <link>docs/tags/xss/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/xss/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Burp-Suite</title>
+      <link>docs/tags/burp-suite/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/burp-suite/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cross Site Scripting</title>
+      <link>docs/tags/cross-site-scripting/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/cross-site-scripting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NetSecurity</title>
+      <link>docs/tags/netsecurity/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/netsecurity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OWASP</title>
+      <link>docs/tags/owasp/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/owasp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>xss-quiz.int21h.jp</title>
+      <link>docs/tags/xss-quiz.int21h.jp/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/xss-quiz.int21h.jp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>directory traversal</title>
+      <link>docs/tags/directory-traversal/</link>
+      <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/directory-traversal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>files traversal</title>
+      <link>docs/tags/files-traversal/</link>
+      <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/files-traversal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>owasp top10</title>
+      <link>docs/tags/owasp-top10/</link>
+      <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/owasp-top10/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cookies</title>
+      <link>docs/tags/cookies/</link>
+      <pubDate>Fri, 09 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/cookies/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cross-site-request-forgery</title>
+      <link>docs/tags/cross-site-request-forgery/</link>
+      <pubDate>Fri, 09 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/cross-site-request-forgery/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>csrf</title>
+      <link>docs/tags/csrf/</link>
+      <pubDate>Fri, 09 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/csrf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dd-wrt</title>
+      <link>docs/tags/dd-wrt/</link>
+      <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/dd-wrt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DDNS</title>
+      <link>docs/tags/ddns/</link>
+      <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/ddns/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>no-ip</title>
+      <link>docs/tags/no-ip/</link>
+      <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/no-ip/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SQL</title>
+      <link>docs/tags/sql/</link>
+      <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/sql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>index</title>
+      <link>docs/tags/index/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>docs/tags/index/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

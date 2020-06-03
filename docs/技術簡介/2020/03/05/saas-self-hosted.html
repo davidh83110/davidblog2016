@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>SaaS/Managed Services &amp; Self-Hosted 衍伸思考 - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="SaaS/Managed Services &amp; Self-Hosted 衍伸思考">
+<meta itemprop="description" content="Let&rsquo;s talk about SaaS/Managed Services and Self-Hosted today! SaaS/Managed Services派的人會說，我不想管機器。
+自架派的會說，我喜歡掌握所有東西的感覺。
+但到底哪個好？
+
+名詞解釋  感謝社團大大指出，AWS不算是全SaaS服務，它包含了SaaS/PaaS/IaaS，所以應該屬於Cloud Provider，提供Managed Services   SaaS
+SaaS 全名是 Software as a Service ，軟體即服務。 通常為直接面對客戶的應用程式，像是 Office365/Slack/LastPass/Splunk。
+  Managed Service
+Managed Service 是指託管在雲上的服務。 像是 EKS/Elasticache/Elasticsearch。
+  所以我要講的是什麼？
+因為我太懶的關係 本文以下所稱 SaaS 或是 Managed Services 即代表 SaaS 或是 Managed Service 兩者互相通用的意思。
+但更準確的說我要表達的是 XXXX AS A SERVICE 的這種商業與開發模式。
+  SaaS = Managed Services ?
+其實他們是不一樣的意思，所以特別在這邊解釋。
+不過本文並非名詞探討，就不多就不多寫了，怕會離題歪樓。">
+<meta itemprop="datePublished" content="2020-03-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-03-05T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="234">
+<meta itemprop="image" content="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="SaaS/Managed Services &amp; Self-Hosted 衍伸思考" />
+<meta property="og:description" content="Let&rsquo;s talk about SaaS/Managed Services and Self-Hosted today! SaaS/Managed Services派的人會說，我不想管機器。
+自架派的會說，我喜歡掌握所有東西的感覺。
+但到底哪個好？
+
+名詞解釋  感謝社團大大指出，AWS不算是全SaaS服務，它包含了SaaS/PaaS/IaaS，所以應該屬於Cloud Provider，提供Managed Services   SaaS
+SaaS 全名是 Software as a Service ，軟體即服務。 通常為直接面對客戶的應用程式，像是 Office365/Slack/LastPass/Splunk。
+  Managed Service
+Managed Service 是指託管在雲上的服務。 像是 EKS/Elasticache/Elasticsearch。
+  所以我要講的是什麼？
+因為我太懶的關係 本文以下所稱 SaaS 或是 Managed Services 即代表 SaaS 或是 Managed Service 兩者互相通用的意思。
+但更準確的說我要表達的是 XXXX AS A SERVICE 的這種商業與開發模式。
+  SaaS = Managed Services ?
+其實他們是不一樣的意思，所以特別在這邊解釋。
+不過本文並非名詞探討，就不多就不多寫了，怕會離題歪樓。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" />
+<meta property="og:image" content="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" />
+<meta property="article:published_time" content="2020-03-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-03-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg"/>
+
+<meta name="twitter:title" content="SaaS/Managed Services &amp; Self-Hosted 衍伸思考"/>
+<meta name="twitter:description" content="Let&rsquo;s talk about SaaS/Managed Services and Self-Hosted today! SaaS/Managed Services派的人會說，我不想管機器。
+自架派的會說，我喜歡掌握所有東西的感覺。
+但到底哪個好？
+
+名詞解釋  感謝社團大大指出，AWS不算是全SaaS服務，它包含了SaaS/PaaS/IaaS，所以應該屬於Cloud Provider，提供Managed Services   SaaS
+SaaS 全名是 Software as a Service ，軟體即服務。 通常為直接面對客戶的應用程式，像是 Office365/Slack/LastPass/Splunk。
+  Managed Service
+Managed Service 是指託管在雲上的服務。 像是 EKS/Elasticache/Elasticsearch。
+  所以我要講的是什麼？
+因為我太懶的關係 本文以下所稱 SaaS 或是 Managed Services 即代表 SaaS 或是 Managed Service 兩者互相通用的意思。
+但更準確的說我要表達的是 XXXX AS A SERVICE 的這種商業與開發模式。
+  SaaS = Managed Services ?
+其實他們是不一樣的意思，所以特別在這邊解釋。
+不過本文並非名詞探討，就不多就不多寫了，怕會離題歪樓。"/>
+<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2020%2f03%2f05%2fsaas-self-hosted.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2020%2f03%2f05%2fsaas-self-hosted.html&amp;title=SaaS%2fManaged%20Services%20%26%20Self-Hosted%20%e8%a1%8d%e4%bc%b8%e6%80%9d%e8%80%83" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2020%2f03%2f05%2fsaas-self-hosted.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+      <ul style="padding: 0;">
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank"></a>
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2020-03-05 00:00:00 &#43;0000 UTC">
+      March 5, 2020
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2020%2f03%2f05%2fsaas-self-hosted.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2020%2f03%2f05%2fsaas-self-hosted.html&amp;title=SaaS%2fManaged%20Services%20%26%20Self-Hosted%20%e8%a1%8d%e4%bc%b8%e6%80%9d%e8%80%83" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2f2020%2f03%2f05%2fsaas-self-hosted.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+  <div class="content">
+    <h4 id="lets-talk-about-saasmanaged-services-and-self-hosted-today">Let&rsquo;s talk about SaaS/Managed Services and Self-Hosted today!</h4>
+<p>SaaS/Managed Services派的人會說，我不想管機器。<br>
+自架派的會說，我喜歡掌握所有東西的感覺。<br>
+但到底哪個好？</p>
+<p><br /></p>
+<h2 id="名詞解釋">名詞解釋</h2>
+<hr>
+<pre><code>感謝社團大大指出，AWS不算是全SaaS服務，它包含了SaaS/PaaS/IaaS，所以應該屬於Cloud Provider，提供Managed Services
+</code></pre><ul>
+<li>
+<p>SaaS<br>
+<code>SaaS</code> 全名是 Software as a Service ，軟體即服務。 通常為直接面對客戶的應用程式，像是 Office365/Slack/LastPass/Splunk。</p>
+</li>
+<li>
+<p>Managed Service<br>
+<code>Managed Service</code> 是指託管在雲上的服務。 像是 EKS/Elasticache/Elasticsearch。</p>
+</li>
+<li>
+<p>所以我要講的是什麼？<br>
+<del>因為我太懶的關係</del>  本文以下所稱 <code>SaaS</code> 或是 <code>Managed Services</code> 即代表 SaaS 或是 Managed Service 兩者互相通用的意思。<br>
+但更準確的說我要表達的是 <code>XXXX AS A SERVICE</code> 的這種商業與開發模式。</p>
+</li>
+<li>
+<p>SaaS = Managed Services ?<br>
+其實他們是不一樣的意思，所以特別在這邊解釋。<br>
+不過本文並非名詞探討，就不多就不多寫了，怕會離題歪樓。</p>
+</li>
+</ul>
+<p><br /></p>
+<h2 id="先看看案例">先看看案例</h2>
+<hr>
+<p>SaaS儼然已經成為趨勢，看看現今的軟體世界，你會發現不知不覺中生活裡已經充滿SaaS了。</p>
+<ul>
+<li>
+<p>UBER<br>
+像是常用的Uber，你打開App所看到的地圖，Uber並沒有自行開發，而是付費使用Google Map API。</p>
+</li>
+<li>
+<p>金流<br>
+又像是電商最愛的藍星/綠界這些金流服務，你也並沒有自己寫一套金流服務去跟銀行串接，而是付費使用別人已經寫好的東西。</p>
+</li>
+<li>
+<p>再把範圍放大一些，飛利浦從以前的賣燈泡，現在改成賣照明服務了，以照明時數計費。</p>
+</li>
+<li>
+<p>AWS，幫你把你常用的東西全部做成服務，讓你想用的時候就可以快速搭建好你所需要的東西。</p>
+</li>
+<li>
+<p>以前大家都需要的Mail Server，現在幾乎已經快被G-Suite取代。</p>
+</li>
+</ul>
+<p>這個時代，你想得到的都能成為SaaS。</p>
+<p>區塊鏈/交易所可以變成SaaS服務、工作溝通軟體可以變成SaaS (Slack)、<br>
+你常用的Word/Powerpoint也可變成SaaS (Google文件/簡報, Office365)、<br>
+甚至是你的代碼儲存庫也可以(GitHub)、<br>
+連Adobe都變成Adobe Cloud並採用訂閱制了、<br>
+電商開店平台也變成SaaS (Shopline/91APP)、
+資安居然也有SaaS的方案了。</p>
+<p>就連工程師的世界也發生很多改變，開始出現Kubernetes as a Service, Logging as a Service, Instance as a Service等等的這些東西，連DevOps as a Service都出現了。</p>
+<p><br /></p>
+<h2 id="為什麼-聽起來很虧啊我自己都可以做到的事我還要花錢讓別人幫我服務">為什麼？ 聽起來很虧啊，我自己都可以做到的事我還要花錢讓別人幫我服務？</h2>
+<hr>
+<p><code>因為就算你很行，你一天還是只有24HR可以用，而厲害的你，會想把時間花在刀口上。</code></p>
+<p>使用SaaS服務，你需要做的事變少了，哪邊有問題就往哪邊的客服打去。<br>
+老闆問說怎麼壞了，你很輕鬆地回答：喔，XXX家的服務又掛了，下次要考慮換一家了。<br>
+千錯萬錯，都不會是你的錯。</p>
+<p>而你使用SaaS花的錢真的會比較多嗎？我只能說 &ldquo;Hm&hellip; It depends&hellip;&quot;。<br>
+一開始投入的金錢可能會看起來多了些，但是長久來看，SaaS幫你節省的<code>人力成本</code>以及<code>客戶服務</code>還有<code>SLA的保證</code>跟<code>不需要擔心Scaling的問題</code>，在我看來是非常值得的一件事。</p>
+<pre><code>隱藏成本，永遠是我們最常忽略的事。
+</code></pre><p><br /></p>
+<h2 id="從技術面剖析">從技術面剖析</h2>
+<hr>
+<p>以技術面來說，你一個人或者你是一個20人的團隊，你有自信做出比10家廠商加起來可能200人的團隊做出來的東西好嗎？</p>
+<p>就算以個體來說，<code>你一對一單挑一定可以贏</code>，但是當這10個系統同時出現問題，你可以化身為鳴人使用影分身之術一起解決問題嗎？</p>
+<p>當面臨軟體背後所採用的套件需要升級的時候，針對相容性做測試，你覺得你有多少時間從規劃到執行最後還可以保證SLA？</p>
+<p>再談Scaling, 流量進來的時候，你要是一個人負責全部的服務，會不會手動Scale到死？<br>
+Oh, 你有Auto-Scaling. 那恭喜你，<code>但你知道Auto-Scaling要應付瞬間流量的前提是你provisioning的時間要夠短嗎？</code> 不然等你機器開好了，流量也過了。</p>
+<p>更別說你只有一雙眼睛，要監控一堆服務，尤其在這個微服務興起的時代。</p>
+<p><br /></p>
+<h2 id="看不見的影響-你最優秀的工程師為何一個一個離去">看不見的影響。 你最優秀的工程師為何一個一個離去？</h2>
+<hr>
+<p>而節省下來的時間，可以拿去做針對公司核心服務的<code>效能優化</code>或是<code>補齊單元測試</code>又或者是定期的軟體及Infra上的<code>重構</code>。</p>
+<p>先不說定期重構跟優化很重要這件事，這件事<code>背後的意義遠大於實質上的意義</code>。</p>
+<pre><code>你想留住你公司最好的軟體人才，你需要讓他有真正的事可以做，也就是讓他有發揮的舞台。  
+</code></pre><p>效能優化以及重構都是相對你第一次寫商業邏輯來的有挑戰性許多，只有讓developers感覺他們自己有在長大，長大的同時還有發亮的機會，這才能把他們留在公司裡。<br>
+你問為什麼？ 你可以問問馬斯洛為什麼把<code>自我實現</code>放在需求金字塔的頂端。</p>
+<p>你要是叫一個優秀的團隊整天修Bug，這邊調調Config那邊改改IP，改完重啟服務，然後測試。每天除了這些之外，發生問題還要一直去救火，PM/Manager還站在你旁邊看你修，有已知流量要來的時候還要幫忙預先開好機器，時間一到還要忙著監控服務。這樣就佔據你大部分的時間了，別說做什麼有趣的新專案，還要忙軟體升級都忙不過來了。</p>
+<p><code>這時候開始有人會覺得自己的才能被淹沒</code>，我有想法有技能，為什麼要在這裡每天做一樣的事？我應該要做些更有意義的事的。然後到達臨界值，你將會漸漸地失去人才。</p>
+<p><br /></p>
+<h2 id="managed-services--saas-的缺點">Managed Services / SaaS 的缺點</h2>
+<hr>
+<p>唬爛了這麼多，Managed Services / SaaS 真的沒有缺點？ 有啊，當然有。</p>
+<p>都交給別人做很方便，但是萬一你選到很爛的廠商，那也很難置身其外。<br>
+資安以及合規的問題，也是都要特別注意。</p>
+<p>像是銀行，涉及到金流的廠商，是很難信任第三方把資料交給別人的。<br>
+再談到使用SaaS服務，<code>Secrets</code>跟<code>權限控管</code>也會變成很嚴重的問題。<br>
+還有就是你會被<code>綁死在某個平台上</code>，像是AWS。</p>
+<p><br /></p>
+<h2 id="轉換思考角度">轉換思考角度</h2>
+<hr>
+<pre><code>Managed Services 改變的不只是軟體發展，更改變了這個世界，管理者必須要轉換角度去思考。
+</code></pre><p>你不可以說：「喔我自架的時候我都可以控制整個Config調參數，現在都不行了。 Managed Services really sucks!!」</p>
+<p>這世界是需要你<code>等價交換</code>的，你不能魚跟熊掌你都要，除非你很有錢。<br>
+拿錢叫廠商幫你客製化，我相信沒有做不出來的，如果有就是你口袋還不夠深！ ;)</p>
+<p><br /></p>
+<h2 id="案例思考---gitlab-ci">案例思考 - GitLab CI</h2>
+<hr>
+<p>再舉個例子。你不可以說我自架GitLab的時候要跑CI，AWS的Secret都不用交給別人，我放內網很安全，但是換成Cloud版本我就要擔心我的Key被偷走。</p>
+<p>Okay. 你需要擔心的還有GitLab升級的時候你要做哪些事，還有那個該死的Database資料不見了你要去哪裡找所有的Code給你的同事們。</p>
+<p>風險是相對的，沒有零風險這件事，你只能選擇相對風險小的去做。</p>
+<p><br /></p>
+<h2 id="案例思考---eks">案例思考 - EKS</h2>
+<hr>
+<p>你也不能說EKS很爛，因為他版本永遠追不上社群版本阿。然後EKS上我連Dashboard, metrics-server都要自己裝，那跟我自架有什麼不同？</p>
+<p>EKS提供給你的是相對穩定的Master (至少你不需要自己Scale Master &amp; Etcd)，還提供給你結合IAM的RBAC以及可以整合Fargate的優勢。</p>
+<p><br /></p>
+<h2 id="案例思考---前端服務">案例思考 - 前端服務</h2>
+<hr>
+<p>你也可以比較前端該怎麼Hosting。</p>
+<p><code>Nginx+ALB+CloudFront</code> or <code>S3+CloudFront</code>?</p>
+<p>你不能說Nginx的Config讓你想怎樣就怎樣，S3連加個Security Header都要透過Lambda幫我去做。</p>
+<pre><code>這其中的成本一樣涉及了管理以及人力，S3至少還有AWS可以給你靠甚至是versioning，你自己管的Nginx呢？
+</code></pre><p><br /></p>
+<h2 id="自架真的不流行了嗎">自架真的不流行了嗎？</h2>
+<hr>
+<p>當然Managed Services不是什麼萬靈丹，在你取捨之下你發現自架帶給你的好處更多，那你為何不自架？</p>
+<ul>
+<li>
+<p>Google 為什麼都自己架？<br>
+像是 Google 部門劃分仔細，大家都專注負責自己的那一塊，Infra跟VM有專職的Ops處理，Database有DBA處理，Issue有SRE Team可以處理，<code>搭配完善的DevOps流程</code>，在這種環境下你想要自架，你可以有足夠的時間專研好一個軟體而不是一知半解的為了用而用，你也有足夠的時間處理這個服務上線後所產生的失敗，可以去完善他，那你為何不自架呢？</p>
+</li>
+<li>
+<p>但我們都不是Google, Microsoft, Apple, Netflix&hellip;<br>
+你可以發現在台灣，甚是是全世界，現在新創軟體公司崛起，有多少DevOps是身兼多職的呢？<br>
+<code>你真的認為你可以在沒有完善的流程下handle這麼多東西嗎？</code><br>
+出了意外手忙腳亂都來不及了，只會讓技術棧越疊越歪。</p>
+</li>
+</ul>
+<p><br /></p>
+<pre><code>沒有制度/流程/人力下的自架，只會讓你在意外發生的時候更亂。  
+
+而當你走了之後如果沒有文件，你可以擔保下一個接手的人很清楚你做了什麼嗎？   
+通常只會為了快速解而workaround。 
+
+到最後，就會產生越來越多的技術債。
+</code></pre><p><br /></p>
+<p>良好的運用第三方托管服務，可以使風險減少到最低，至少接手的人如果熟悉你用的平台，像是AWS，他至少不會做出太偏離你當初設計想法的路徑。</p>
+<p><br /></p>
+<h2 id="總結">總結</h2>
+<hr>
+<p><strong>我真的不是要鞭打自架多不好，我相信民間出高手，這真的沒有絕對</strong></p>
+<p>最近正好遇到純自架派的高手同事，讓我反覆思考到底架構是怎麼一回事，因此才寫了這篇。 我也很佩服那位同事所擁有的超強架設技能，沒有一種東西可以難的倒他的，Ansible+Terraform一寫，整個天下都是我的！ 但也正讓我反思，我是SaaS派，到底我覺得SaaS有哪些優勢跟為什麼我會想用SaaS。</p>
+<p>但從以上的案例應該可以看出我想表達的是我們要<code>轉換思考模式</code>。</p>
+<pre><code>沒有誰比較好，只有誰最適合你。  
+你永遠只能選擇對你來說相對風險小的去做，那你勢必得要犧牲一些東西。
+
+記得等價交換的原則。
+</code></pre><p>管理者的角色必須轉變，你必須思考你使用了哪些服務，而他們是不是真的Cloud-Native?</p>
+<pre><code>你必須要站在Managed Services的角度去理解Managed Services，不能一昧地拿自架跟Managed Services相比，那是沒有意義的事。
+</code></pre><p>你該思考的是該怎麼做，你要付出的代價最少？</p>
+<p>可以讓你專心去發揮你的才華，給你滿滿的大平台，<code>進而滿足心裡的成就感</code>（馬斯洛需求 - 自我實現的需要），也正因應文章一開始的圖片。</p>
+<pre><code>同樣一句話，沒有萬能解，沒有複製貼上就會成功的架構，只有最適合你的架構。
+</code></pre><p><br /></p>
+<p>走入XXXaaS的時代，你準備好改變你的思維了嗎？</p>
+<p><br />
+<br /></p>
+<div style="text-align: right;">
+2020-03-05 02:50 , David in Taipei</div>
+<p><br />
+<br />
+<br /></p>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/jibber-jabber">Jibber-Jabber</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+    <a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html" class="button"><div class="previous"><div>Cloud-Native LOG 儲存以及分析方案</div></div></a>
+  
+  
+    <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="button"><div class="next"><div>EKS Building &amp; Troubleshooting</div></div></a>
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">6</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp/">owasp<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/security/">security<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/architecture/">architecture<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linux/">linux<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/mongodb/">mongodb<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <time class="published" datetime="">December 5, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html">Terraform Module Private Registries - Bitbucket</a></h4>
+          <time class="published" datetime="">February 3, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2020
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

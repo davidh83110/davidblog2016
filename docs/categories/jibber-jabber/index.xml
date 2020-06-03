@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jibber-jabber on David&#39;s Blog</title>
+    <link>/categories/jibber-jabber/</link>
+    <description>Recent content in jibber-jabber on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 05 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/jibber-jabber/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SaaS/Managed Services &amp; Self-Hosted 衍伸思考</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</link>
+      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</guid>
+      <description>Let&amp;rsquo;s talk about SaaS/Managed Services and Self-Hosted today! SaaS/Managed Services派的人會說，我不想管機器。
+自架派的會說，我喜歡掌握所有東西的感覺。
+但到底哪個好？
+
+名詞解釋  感謝社團大大指出，AWS不算是全SaaS服務，它包含了SaaS/PaaS/IaaS，所以應該屬於Cloud Provider，提供Managed Services   SaaS
+SaaS 全名是 Software as a Service ，軟體即服務。 通常為直接面對客戶的應用程式，像是 Office365/Slack/LastPass/Splunk。
+  Managed Service
+Managed Service 是指託管在雲上的服務。 像是 EKS/Elasticache/Elasticsearch。
+  所以我要講的是什麼？
+因為我太懶的關係 本文以下所稱 SaaS 或是 Managed Services 即代表 SaaS 或是 Managed Service 兩者互相通用的意思。
+但更準確的說我要表達的是 XXXX AS A SERVICE 的這種商業與開發模式。
+  SaaS = Managed Services ?
+其實他們是不一樣的意思，所以特別在這邊解釋。
+不過本文並非名詞探討，就不多就不多寫了，怕會離題歪樓。</description>
+    </item>
+    
+    <item>
+      <title>MacOS Mojave Upgrade Issues and Solutions / MacOS Mojave 更新災情及解決方法</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</link>
+      <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</guid>
+      <description>MacOS Mojave 於今日2018/09/25正式上線提供正式版給全球用戶下載
+我就打了頭陣搶先更新，沒想到更新完遇到一連串的問題
+慶幸的是有找到解決的方法，就讓我來分享一下吧！ 先說整個更新的過程，花費約30min。
+更新之後原本可以選的暗色系狀態欄已經消失了，只能選淺色或者暗色主題
+而這個暗色，一開始會很不習慣，因為實在是太黑了！！
+有多黑呢？
+大概就是這樣
+而更新後出現的問題我整理一下，大概如下面幾點。   系統字體渲染效果很模糊也很細，中文更加嚴重，很像windows的字體
+是真的會模糊到看不清楚那種，解法如下：
+打開終端機(Option+Space打開Spotlight搜尋 -&amp;gt; 輸入Terminal -&amp;gt; Enter)，輸入下列指令：
+defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO 輸入完按Enter後把終端機關掉，登出系統再登入，字體就會恢復正常。   git 會壞掉
+原因是xcode需要安裝一些東西，在Terminal執行下列指令即可：
+xcode-select --install
+git 就會復活了！！
+  homebrew也壞掉 因為在MacOS裡，xcode是很重要的東西，dependency很重，所以連帶會有問題
+解答他也給你了，權限問題，執行下列指令即可
+sudo xcodebuild -license accept
+  bashrc清空 眼尖的朋友就會發現，我的command line提示列是default狀態，因為被他媽的清空了
+幹，還我alias阿～～～
+這問題我記得每次大改版都會清掉，就只能重寫囉
+用zshrc / iTerm的朋友應該不會遇到這問題，所以不用擔心
+  
+目前已知的問題大概是這樣，如果有遇到其他問題可以在下方留言幫忙補充。
+
+感謝補充：更新MacOS之前，先去AppStore更新Terminal以及XCode就可以避免所有問題囉（除了字體） 
+問題講完了，講講這次改版的特色
+  當然是暗色主題，習慣後其實還挺不錯的，對眼睛也比較舒服
+基本上只有系統內建的會是暗色，像是Chrome/Line這一些額外安裝的就沒有了。
+  桌面堆疊整理，這個其實滿實用的，看起來乾淨很多 (桌面點右鍵 -&amp;gt; 堆疊整理)</description>
+    </item>
+    
+    <item>
+      <title>Docker Note (Nginx&#43;uwsgi&#43;Letsencrypt)</title>
+      <link>/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</guid>
+      <description>docker筆記    nginx+uwsgi+flask+letsencrypt    Env: Python3    Line串接API使用，需執行crontab更新憑證(簽署期限為30天)       note:    certbot-auto可單一clone此檔案就好    產生憑證： (docker裡執行)  certbot-auto certonly --webroot --webroot-path=WEB_ROOT -d DOMAIN_NAME    更新憑證：&amp;nbsp;  docker exec -it CONTAINER_ID /opt/letsencrypt/certbot-auto renew --quiet --renew-hook &#34;/etc/init.d/nginx restart&#34;    啟動程序：&amp;nbsp;  docker run -p 80:80 -p 443:443 CONTAINER_ID /opt/start. &amp;amp;     /opt/start.</description>
+    </item>
+    
+    <item>
+      <title>AI人工智慧講座筆記</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</guid>
+      <description>今天聽了願景工程主辦的AI講座
+最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗
+杜奕瑾是誰呢 相信各位鄉民應該不陌生
+他在1995年架設PTT這個到現在唯一存活的BBS
+此外他也架設蕃薯藤(小時候的回憶啊～)並成立公司
+蕃薯藤不為人知的是
+他是當時第一個做出中文搜尋的search engine
+之後杜奕瑾先生到了美國衛生研究院做基因分析研究
+然後到了微軟做Bing搜尋引擎
+直到最近熟為人之的微軟Cortana也是他一手策劃的 鄉民稱他為Cortana之父
+那正當AI如日中天的時候他居然選擇離開微軟回到台灣成立AI Lab
+傻了嗎？我也不知道
+原來是他覺得台灣在各方面都非常具有優勢
+但就是沒有人敢去整合 於是他決定要拋磚引玉
+回到台灣成立AI Lab 以國外的薪資邀請一等人才共同努力
+因為台灣對於軟體人才的薪資實在令人心酸
+所以他決定以國外的標準來留下人才
+當然也提到大家相當關注的軟體思維以及硬體思維
+如果大家有在follow國外的programmer應該不難發現國外沒有硬體
+不信的話列舉前幾大資訊產業 全都是軟體產業
+Microsoft , Google , Facebook &amp;hellip;等等
+唯獨台灣有軟體產業 也有硬體產業
+但要如何做一個完美結合，就有待時間證明了
+我反思的是他提到的國外都是軟體的世界
+流行的是Full stack engineer 全端工程師
+像我這種做系統管理的我想應該也很快會不再需要
+AWS已經推出Lamda 應該不難發現這個趨勢
+這大概也是我最近狂寫python的原因
+強迫自己拋棄bash shell
+當然Linux還是要懂 只是不在需要一個人專門管理
+應該走敏捷開發 一個人負責一小塊(cell)
+那一小塊裡包含所有東西
+從系統到後端程式到前端都由一個team負責
+以需求及系統來劃分部門而不是切割軟硬體
+part2.
+而AI對我們產業會帶來什麼衝擊？ 我在未來會被取代嗎？
+其實AI遠比我們想的要廣泛
+AI未來不只是AI，更是結合IoT成為AIoT進到我們的生活中
+你覺得只有專業攝影師拍得出來的照片
+AI經過學習(machine learning or deep learning)之後可以做得比人還好
+舉個例子
+出國要過海關為什麼自動通關可以被信賴？</description>
+    </item>
+    
+    <item>
+      <title>後端工程(Back-End)簡介</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</guid>
+      <description>新年快樂，雞年行大運。 快當兵了趕緊來寫文章，以免當完兵變笨全忘光光
+   今天補一下一直沒時間寫的後端工程    前面已經先提過前端工程，就是常見的HTML、Javascript。  如果硬要區分前端以及後端的話，可以用外觀來分辨      你肉眼所見的網頁、很美的素材、動畫都是前端  你所使用的功能、結帳、訂房、訂餐這些動作都牽扯到後端的程式。      後端常見語言：Java、PHP、Python、Ruby、.Net、C#....等等       後端工程(Back-End)  顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到  舉個例子    小時候應該大家都玩過無名小站吧  那你在挑選的網誌的樣板的時候，是否記得都會有一個CSS可以修改？  沒錯，那就是前端(Front-End)    那你想過為什麼你可以發表文章，朋友可以來留言嗎？ 這些東西又放在哪？    發表文章以及留言還有建立相簿鎖密碼之一類的事情  都有一個共同點  那就是需要邏輯判斷，那就是需要程式來幫忙做這些事，這是你在那些CSS/HTML代碼中所看不到的    那這些東西放在哪？  這些資料放在DataBase，常見有Oracle、MS SQL，不是本章重點就不多提。        前端後端區分大致上就是這樣      那後端語言Java一般來說為企業愛用語言，原因無他  架構很多，常見有spring、struts，雖然入門很難  但只要會寫，新手跟老手寫出來並無太大差異  而且擴充性強，產品一條龍    最常見的就是使用  weblogic/jboss/wildfly/tomcat 去搭配 Java程式  使用起來非常順手，因為這些後端server就是為了java程式而設計的。      那PHP呢？  PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈  但php使用者還是偏小型公司開發小型網站使用  也因為入手簡單，無太多架構  新手跟老手寫出來的一看就知道  非常危險          新年快樂就不講太多了</description>
+    </item>
+    
+    <item>
+      <title>前端工程(Front-End)簡介</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</guid>
+      <description>簡介網站架構 (Front-End)
+   一般來說，我們瀏覽的網站都會分為前端以及後端    何謂前端？何謂後端？ &amp;nbsp;其實到現在快2017還是存在一點界定的爭議。  但我們通常會以程式功能來區別前後端，前端後端適當的整合才能架構出優良使用者體驗的網站。    前端工程(Front-End)   簡單來說，我們瀏覽的所有網站，不分大小，使用者(Client)端肉眼可見的全都稱為&#34;前端&#34;。  前端設計需要兼顧美感與實用，隨著近年來行動裝置的竄起，如何相容於不同裝置也成為一個重要課題。
+優秀的前端工程師寫的程式通常會相容於各大瀏覽器以及行動裝置，並同時兼顧美感和實用。
+  常見程式語言：HTML、CSS、JavaScript  常見框架：jQuery、BootStrap、AngularJS、Nodejs    何謂HTML？   傳統且古老的前端語言，前端工程師必備的語言能力。  在各大網站都不難發現採用HTML寫前端的網頁，至今已發展到HTML5。  以前無名小站寫部落格常用的超連結功能不知道還記得嗎？  &amp;lt;a href=&#34;www.davidh83110.com&#34;&amp;gt;David&#39;s HomePage&amp;lt;/a&amp;gt;   寫這一段語法如下面所示，就會變成文字超連結，這就是HTML，相信大家都不覺得陌生。
+ David&#39;s HomePage 
+
+HTML的架構？ 其實並沒有限制我們怎麼寫，有些人喜歡把&amp;lt;head&amp;gt;、&amp;lt;body&amp;gt;都寫出來才寫程式
+其實你連&amp;lt;html&amp;gt;都不用寫，網頁就可以正常呈現了，所以說用法其實滿free的。
+ 但是對開發者來說，沒有規範卻是一件令人困擾的事，所以我們需要W3C制定的規範。
+W3C大家應該不陌生，就是World Wide Web Consortium，簡稱W3C，中文翻譯為全球資訊網協會。
+雖然說HTML沒有強制規定大家要怎麼寫，但是有一個全球統一的標準架構來參考還是比較ok的。
+那為什麼我要照著W3C的標準來開發？ 1.瀏覽器的支援度很高
+&amp;nbsp; &amp;nbsp; W3C的用意其實就是為了整合跨瀏覽器支援的問題，才有這一套制度規範，如果完全符合W3C的規範寫出來的網頁，通常在各大瀏覽器(FireFox、Chrome、Opera、Safari...)的呈現都是一樣的。
+2.方便維護及管理
+&amp;nbsp; &amp;nbsp; 全球統一標準，當然容易維護跟管理，同時也利於下一個接手的人修改程式碼，不至於完全看不懂。</description>
+    </item>
+    
+    <item>
+      <title>SQL Server 無固定IP架設教學(使用DDNS)</title>
+      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</link>
+      <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</guid>
+      <description>以SQL Server 2008 及no-ip為範例
+1.上no-ip註冊一個帳號
+&amp;nbsp; &amp;nbsp;&amp;nbsp;http://www.noip.com/
+2.下載no-ip桌面管理程式,並讓他開機自動啟動
+&amp;nbsp; &amp;nbsp; &amp;nbsp;如此一來,他就會自動偵測當前IP
+3.稍微講解一下網路架構
+&amp;nbsp; &amp;nbsp; &amp;nbsp;家用網路線在最常見的都是使用中華的數據機+無線AP
+&amp;nbsp; &amp;nbsp; &amp;nbsp;而這種架構基本上就是中華給你一個實體對外IP,這是那台數據機的IP
+&amp;nbsp; &amp;nbsp; &amp;nbsp;然後數據機建立一個內網,使用192.168.X.X分配IP給家裡免一個使用者
+&amp;nbsp; &amp;nbsp; &amp;nbsp;這種IP是虛擬的,所以對我們要架設伺服器一點幫助也沒有
+&amp;nbsp; &amp;nbsp; &amp;nbsp;你需要做的事就是進到數據機的管理模式
+&amp;nbsp; &amp;nbsp; &amp;nbsp;將router mode 切換成 bridge mode
+&amp;nbsp; &amp;nbsp; &amp;nbsp;如此一來,每一來電腦就會直接拿到實體IP,而不是192.168.X.X
+&amp;nbsp; &amp;nbsp; &amp;nbsp;這樣的作法就是將你的IP暴露在外,方便架設伺服器
+&amp;nbsp; &amp;nbsp; &amp;nbsp;當然,也方便駭客入侵,但是資安不再本篇的討論重點,所以先帶過.
+&amp;nbsp; &amp;nbsp; 如果說你的AP無法切換到bridge mode,或是你很懶,請直接去刷dd-wrt !
+&amp;nbsp; &amp;nbsp;&amp;nbsp;http://www.dd-wrt.com/site/index
+4.然後安裝SQL server 2008
+&amp;nbsp; &amp;nbsp;安裝步驟就先帶過,如果有任何問題我之後會再開一板教學
+5.測試連線伺服器名稱請打 你的no-ip\SQLEXPRESS,應該就可以了
+此篇的重點就是使用DDNS來取代浮動IP的困擾
+那如果SQL無法連接請檢查:
+1.進到SQL 組態設定,查看SQL Server以及SQL Server Browser是否開啟及正常運作
+2.進到SQL組態設定,查看TCP/IP 及具名管道 以及 Share memory是否為開啟狀態
+&amp;nbsp; &amp;nbsp; 這邊開啟的用意就是讓外面的人可以連進來,因為SQL預設是不開放的</description>
+    </item>
+    
+  </channel>
+</rss>

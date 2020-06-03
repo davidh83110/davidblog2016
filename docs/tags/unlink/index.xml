@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>unlink on Hugo Future Imperfect Slim</title>
+    <link>docs/tags/unlink/</link>
+    <description>Recent content in unlink on Hugo Future Imperfect Slim</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 25 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="docs/tags/unlink/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux指令 - ln 慘痛的教訓</title>
+      <link>docs/blog/2017-01-25-linux-ln-exp/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>docs/blog/2017-01-25-linux-ln-exp/</guid>
+      <description>用慘痛教訓換來經驗常常使用Linux做為系統的工程師應該都不陌生ln這個指令ln是對資料夾建立超連結的指令以下範例root@David-MacBook: ~ -&amp;gt; cd /tmproot@David-MacBook: tmp -&amp;gt; ln -s /opt/web/home/p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 21; back00; back0, 0, 0, 0.85)} p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px f4; back00; back0, 0, 0, 0.85)} span.s1 {font-variant-ligatures: no-common-liga1e} span.s2 {font-variant-ligatures: no-common-ligaf4} span.s3 {font-variant-ligatures: no-common-ligatures} span.s4 {font-variant-ligatures: no-common-liga21} </description>
+    </item>
+    
+  </channel>
+</rss>

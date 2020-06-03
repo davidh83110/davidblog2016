@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes on David&#39;s Blog</title>
+    <link>/categories/kubernetes/</link>
+    <description>Recent content in Kubernetes on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>EKS External-DNS Cross Account Route53 Setup</title>
+      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</link>
+      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</guid>
+      <description>External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
+當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
+External-DNS 官方介紹：
+ Inspired by Kubernetes DNS, Kubernetes&amp;rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.</description>
+    </item>
+    
+    <item>
+      <title>EKS Building &amp; Troubleshooting</title>
+      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</link>
+      <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</guid>
+      <description>This is the full map of EKS and we&amp;rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&amp;rsquo;s go!
+Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;amp;&amp;amp; make plan &amp;amp;&amp;amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave.</description>
+    </item>
+    
+  </channel>
+</rss>

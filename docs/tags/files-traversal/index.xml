@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>files traversal on Hugo Future Imperfect Slim</title>
+    <link>docs/tags/files-traversal/</link>
+    <description>Recent content in files traversal on Hugo Future Imperfect Slim</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 07 Oct 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="docs/tags/files-traversal/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Directory Traversal - 跨目錄/檔案穿越攻擊 in OWASP</title>
+      <link>docs/blog/2016-10-07-directory-traversal/</link>
+      <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>docs/blog/2016-10-07-directory-traversal/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

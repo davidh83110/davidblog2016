@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OWASP on David&#39;s Blog</title>
+    <link>/categories/owasp/</link>
+    <description>Recent content in OWASP on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 10 Oct 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/owasp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>XSS (Cross-Site Scripting) 跨站腳本攻擊簡介和實作</title>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</guid>
+      <description>XSS (Cross-Site Scripting) 跨站腳本攻擊&amp;#65292;目前在網路上仍非常常見&amp;#12290;
+何謂XSS&amp;#65311; 所謂XSS泛指惡意攻擊者在Web網頁上插入惡意html代碼&amp;#65292;以達到特殊目的&amp;#65288;控制網站元素&amp;#12289;取走cookies&amp;#65289;&amp;#12290;
+很多人會說XSS就是能在Web上跳出警告視窗並修改其內容&amp;#65292;其實是不完全正確的&amp;#12290;
+正確來說&amp;#65292;XSS是利用惡意程式碼&amp;#65292;常見是Javascript&amp;#65292;將惡意code輸入到網頁&amp;#65292;再誘使user連線到已被攻擊的網頁&amp;#65292;並不只是show message視窗&amp;#12290;
+你發現了嗎&amp;#65311; XSS只是修改網頁資料傳給其他使用者&amp;#65292;並不會回傳到Server&amp;#65292;所以其實不難察覺有異常&amp;#12290;
+XSS介紹&amp;#65306;
+XSS漏洞一般來說最常見的是網站可以被插入惡意字元&amp;#65292;像是&amp;lt; &amp;gt; / &#34; &#39; ; ....等等&amp;#12290;
+現今網站都會防禦使用者動作&amp;#65292;像是禁止你回傳惡意字元到server或是直接將其去除&amp;#65292;這是所謂server端的防禦&amp;#65292;通常會藉由code或Firewall等設備去防禦&amp;#65292;通常是有效的&amp;#12290;
+有些網站在server端並沒有做任何防禦&amp;#65292;認為只要在使用者端(Client)做防禦即可&amp;#65292;像是使用語法檢查輸入格式&amp;#12289;跳出警告視窗...等等&amp;#65292;其實這都是無效的&amp;#12290;只能防君子&amp;#65292;難防小人&amp;#12290;
+上完Allen Own大神的課之後我學得最透徹的大概就是他的口頭禪&amp;#65306;
+任何在Client端的防禦都是無效的&amp;#12290;
+XSS攻擊非常氾濫&amp;#65292;但是屬於被動式的攻擊手法&amp;#12290;
+XSS的攻擊流程最普遍來說是惡意人士會在第三方網站&amp;#65292;如pchome&amp;#12289;google進行XSS攻擊&amp;#65292;再利用社交工程誘使受害者點擊URL連線到已受到XSS攻擊的網頁&amp;#65292;惡意人士便可以利用此漏洞show出cookies以偽造使用者的身份&amp;#65292;最終目的就是將使用者資料傳回惡意人士電腦&amp;#12290;
+這麼說可能不是很清楚XSS到底在做什麼事&amp;#65292;簡單來說就是駭客修改網頁內容&amp;#65292;讓user去點擊並回傳資料&amp;#12290;
+日本有一個網站可以提供XSS練習&amp;#65292;共有30個stage可以打&amp;#65292;每個層級的防禦手段都不一樣&amp;#65292;我們來實作到stage8&amp;#12290;
+http://xss-quiz.int21h.jp/
+上面寫說只要能讓網頁彈出警告視窗並寫document.domain即算成功&amp;#12290;
+Stage1.
+做XSS攻擊&amp;#65292;首先要知道目標網頁有哪些防禦&amp;#65292;我們可以插入特殊字元進行測試
+例如&amp;#65306; aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh
+然後查看原始碼&amp;#65292;看哪些字元被屏蔽&amp;#65292;哪些字元可以被利用&amp;#12290;
+
+我們可以發現&amp;#65292;stage1並沒有對任何字元進行屏蔽&amp;#65292;所以我們只要簡單的javascript即可成功&amp;#12290;
+&amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt;
+插入以上惡意javascript即可發現成功進到第二關&amp;#12290;
+Stage2.
+我們故技重施&amp;#65292;使用aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh來檢查網站的防禦&amp;#12290;
+
+可以發現老招無效&amp;#65292;但是原始碼也告訴你&amp;#65292;這段語法出錯了&amp;#65292;難道是結束字元出錯&amp;#65311;
+讓我們再試試aaa&#34;&amp;gt;&amp;#65292;嘗試以&#34;&amp;gt;來結束value並利用其中空隙插入語法&amp;#12290;
+
+看起來好像可行&amp;#65292;那我們試著插入javascript&amp;#65292;並在前面加上&#34;&amp;gt;試試&amp;#12290;
+&#34;&amp;gt;&amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt;
+順利過關&amp;#65292;可以發現跟stage1差別只是需要將上一段語法先結束掉&amp;#65292;再利用空間插入語法而已&amp;#12290;
+Stage3.
+
+試試老方法&amp;#65292;可以發現我們的aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh被變成
+&#34;aaa&amp;amp;lt;bbb&amp;amp;gt;ccc/ddd&amp;amp;#039;eee&amp;amp;quot;fff;ggg:hhh&#34; 惡意字元會變自動轉換成其他字元組合&amp;#12290;
+但旁邊還有個dropdownlist&amp;#65292;似乎是個可以運用的弱點&amp;#65311;
+想要修改DropDownList的回傳值我們需要利用Brup-Suite來修改&amp;#12290;
+將proxy設為Brup-Suite來攔截封包並修改&amp;#12290;
+
+會發現網頁一直送不出去直到你在Brup-Suite按下Forward&amp;#65292;因為你的封包正被攔截&amp;#12290;
+我們來試著插入 &amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt; 在japan那個欄位試試&amp;#12290;
+
+按下Forward&amp;#65292;成功過關&amp;#65281;可以發現stage3只防禦了一個欄位&amp;#65292;在下拉式選單沒有做防禦&amp;#65292;是個只能防新手的防禦方式&amp;#12290;
+Stage4.</description>
+    </item>
+    
+    <item>
+      <title>Directory Traversal - 跨目錄/檔案穿越攻擊 in OWASP</title>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</link>
+      <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</guid>
+      <description>Directory Traversal指的是我們可以在網頁的URL上使用 .. ../.. cat /etc/passwd等探索目錄的行為&amp;#12290;
+很容易理解的一個簡單漏洞&amp;#65292;而會發生這個漏洞原因不外乎是當初設計網站的人忘了將目錄探索功能關閉(像是Apache的FollowSymLinks Deny all;)&amp;#65292;導致惡意人士可以透過輸入網址的方式來瀏覽web端主機內容&amp;#65292;甚至取得全部主機資料&amp;#12289;網站資料&amp;#12290;
+我們今天利用OWASP裡的bWAPP來熟悉這個漏洞&amp;#12290;
+Directory Traversal - Directory
+先來熟悉目錄穿越的部分&amp;#12290;
+
+一開始我們會看到這是一個可以下載檔案的網頁&amp;#65292;那我們試試在網址上做些修改&amp;#65292;看是否能列出目錄&amp;#12290;
+http://172.20.10.5/bWAPP/directory_traversal_2.php?directory=documents
+上列是架在我主機上的OWASP具有Directory Traversal漏洞的網頁之網址
+我們可以看到網址後面已經告訴你這一頁的目錄資料夾叫做documents
+那我們試試在後面加上&#34; .. &#34; (為上一層目錄的意思)&amp;#65292;看能否顯示出上一層目錄有什麼&amp;#12290;
+http://172.20.10.5/bWAPP/directory_traversal_2.php?directory=documents/..
+ 
+ 有發現嗎&amp;#65311; 跟剛剛顯示的目錄內容不一樣了&amp;#65292;代表我們已經成功存取上一層的資料&amp;#12290;
+藉由這樣探索的方式&amp;#65292;駭客可以將整個系統的架構摸透&amp;#65292;以尋找後門攻擊或將整個主機資料download下來&amp;#12290;
+那既然可以使用.. 這種相對目錄的寫法&amp;#65292;是不是我們可以使用絕對路徑的寫法&amp;#65311;
+http://172.20.10.5/bWAPP/directory_traversal_2.php?directory=documents/../../../../../etc/passwd
+嗯...看來不行&amp;#12290; 這邊使用很多..的意思是強迫回到最前面的/(根目錄)之前的意思&amp;#12290;
+那跨檔案攻擊的漏洞是另一個 (Directory Traversal - Files)&amp;#12290;
+
+可以看到網頁內什麼都沒有&amp;#65292;就是叫我們去爬....
+那我們試試是否可以爬到系統帳號檔案 (/etc/passwd)
+http://172.20.10.5/bWAPP/directory_traversal_1.php?page=message.txt
+以上是網址&amp;#65292;可以看到我們瀏覽的網頁正是message.txt這個檔案所show出來的
+那我們把message.txt改成/etc/passwd呢&amp;#65311;
+http://172.20.10.5/bWAPP/directory_traversal_1.php?page=/etc/passwd
+
+成功&amp;#65281; 我們成功讀取到系統所有使用者的資料了&amp;#12290;
+以上就是Directory Traversal的攻擊手法&amp;#65292;一般來說只要控管好前端Web瀏覽權限&amp;#65292;都可以防範這樣的攻擊&amp;#12290;
+這樣的攻擊就是利用網管的疏忽而已&amp;#12290;
+有任何問題或錯誤觀念歡迎來信&amp;#65292;謝謝&amp;#12290;
+2016-10-02 22:06 , David in Taipei   </description>
+    </item>
+    
+    <item>
+      <title>CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP</title>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</link>
+      <pubDate>Fri, 09 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</guid>
+      <description>CSRF全名為Cross-Site-Request-Forgery&amp;#65292;跨站請求偽造攻擊&amp;#12290;
+簡而言之&amp;#65292;駭客利用你瀏覽網站時尚未過期的session來進行偽造&amp;#65292;發送惡意request&amp;#12290;
+舉個例子&amp;#65292;以網路銀行為例&amp;#65292;你向網銀發送帳號密碼進行驗證&amp;#65292;驗證通過後server會回傳驗證成功&amp;#65292;可以進行所有&amp;#8220;登入後才可以進行的動作&amp;#8221;&amp;#12290;
+這時候駭客利用網銀尚未通知閒置過久(session未過期)&amp;#65292;可以利用社交工程或者是其他方式讓user在不知不覺中發送request&amp;#12290;
+如何做到就是我們以下要講的&amp;#12290;
+我們利用原先就有CSRF漏洞的OWASP bWApp來進行練習&amp;#12290;
+目的就是讓user讓不知不覺的情況下成功被轉帳&amp;#12290;
+step1.我們必須要知道&amp;#8220;轉帳&amp;#8221;這個步驟在web端如何發送request&amp;#12290;
+我們可以用自己電腦來得到這個連結
+先將瀏覽器設定代理伺服器(Proxy)
+使用Burp-Suite內建proxy工具進行request攔截
+
+可以看到在我們設定proxy之後&amp;#65292;點擊&#34;transfer&#34;網頁會有點卡住
+那是因為我們的request被攔截下來了
+這時候我們可以看到這一段語法是轉帳的執行語法
+GET /bWAPP/csrf_2.php?account=123-45678-90&amp;amp;amount=0&amp;amp;action=transfer HTTP/1.1
+account=轉出帳號
+amount=轉出金額
+p.s.按Forward可以繼續將request送出&amp;#65292;甚至可以修改再送出&amp;#12290;
+step2.撰寫釣魚網頁
+為了簡化過程&amp;#65292;我們簡化網頁內容&amp;#65292;實際進行攻擊的網頁通常不會這麼簡單&amp;#12290;
+
+##################################
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta charset=&#34;utf-8&#34;&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;font&amp;gt;
+泰勒絲愛你哦 &amp;lt;/br&amp;gt;
+這是泰勒斯的電話跟照片 &amp;lt;/br&amp;gt;
+0931097313 &amp;lt;/br&amp;gt;
+點擊照片到我的blog看更多照片哦&amp;lt;/br&amp;gt;
+&amp;lt;/font&amp;gt;
+&amp;lt;img src=&#34;http://172.20.10.2/bWAPP/csrf_2.php?account=123-45678-90&amp;amp;amount=200&amp;amp;action=transfer=a.jpg&#34;&amp;gt;
+&amp;lt;a href=&#34;http://www.google.com.tw&#34; target=&#34;&#34;&amp;gt; &amp;nbsp;&amp;lt;img src=&#34;http://www.daliulian.org/imgs/image/12/1251496.jpg&#34;&amp;gt;&amp;lt;/a&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+#################################
+step3. 尋找目標下手
+撰寫完成只要找尋目標&amp;#65292;使user成功點擊網站&amp;#65292;即可完成轉帳&amp;#12290;
+user不需要點擊任何圖片或者是網址&amp;#65292;只需要看到這個頁面就可以進行CSRF攻擊了&amp;#12290;
+
+step4.我們回到剛剛的bWApp帳戶頁面&amp;#65292;重新整理後會發現已經如程式碼所寫的轉出200 EUR了&amp;#65292;然後這段時間user沒有對這個網頁進行任何動作&amp;#12290;
+
+總結&amp;#65306;
+這是因為user的request已經被我們依樣畫葫蘆偽造了一份&amp;#65292;並加以修改回傳給銀行server&amp;#65292;然而銀行也未查覺到有任何異常&amp;#65292;在銀行看來就是user發送的一般請求而已&amp;#12290;
+防禦&amp;#65306;
+現在網路服務皆會設定閒置過期時間(session-time-out)&amp;#65292;閒置過久將會被自動登出&amp;#65292;減少被偽造的機會&amp;#12290;
+而有些較大的web server&amp;#65292;例如facebook&amp;#12289;google...etc會設有token&amp;#65292;所謂token就是利用演算法算出一組unique key&amp;#65292;再經由md5加密送出&amp;#65292;user做任何動作都需要token驗證&amp;#65292;使駭客無從偽造&amp;#65292;因為他沒有使用你當前的瀏覽器就無法得知你目前的token是什麼&amp;#12290;
+當然你會說&amp;#65292;md5加密還是可以破解&amp;#65292;沒錯&amp;#65281;所以重點在於演算法的精密度&amp;#65292;越精密的演算法&amp;#65292;駭客越無從猜測&amp;#65292;也就無從破解&amp;#12290;
+目前ASP.Net 的mvc上的CSRF防禦已經非常普遍化了&amp;#65292;可以利用簡單的程式碼計算token&amp;#65292;加以防禦簡單的CSFR攻擊&amp;#12290;
+經由以上簡單的CSRF滲透測試&amp;#65292;雖然現今大部分網頁服務都有防禦CSRF&amp;#65292;但是我們必須知道如果不使用的話&amp;#65292;盡可能登出網頁服務&amp;#65292;就可以避免造成不必要的風險&amp;#12290;</description>
+    </item>
+    
+  </channel>
+</rss>

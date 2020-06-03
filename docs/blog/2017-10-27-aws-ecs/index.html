@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>AWS EC2 Container Service (ECS) Note - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="AWS EC2 Container Service (ECS) Note">
+<meta itemprop="description" content="AWS EC2 Container Service (ECS) Note
+There are three way to create a cluster and instance, via ecs-cli and aws cli as well as AWS Console. And ecs-cli via CloudFormation Stack to create, so I will use aws cli to create it.
+First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back-End Service
+# aws ecs create-cluster --cluster-name $CLUSTER_FLASK Step2. Create an instance for Cluster a.">
+<meta itemprop="datePublished" content="2017-10-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="915">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="AWS EC2 Container Service (ECS) Note" />
+<meta property="og:description" content="AWS EC2 Container Service (ECS) Note
+There are three way to create a cluster and instance, via ecs-cli and aws cli as well as AWS Console. And ecs-cli via CloudFormation Stack to create, so I will use aws cli to create it.
+First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back-End Service
+# aws ecs create-cluster --cluster-name $CLUSTER_FLASK Step2. Create an instance for Cluster a." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2017-10-27-aws-ecs/" />
+<meta property="article:published_time" content="2017-10-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-10-27T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="AWS EC2 Container Service (ECS) Note"/>
+<meta name="twitter:description" content="AWS EC2 Container Service (ECS) Note
+There are three way to create a cluster and instance, via ecs-cli and aws cli as well as AWS Console. And ecs-cli via CloudFormation Stack to create, so I will use aws cli to create it.
+First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back-End Service
+# aws ecs create-cluster --cluster-name $CLUSTER_FLASK Step2. Create an instance for Cluster a."/>
+<link rel="stylesheet" href="/css/bundle.min.e48525f842f0775483c6c966d1db9b666b27d4da583ad8f8addd1dabb2f9d6de.css" integrity="sha256-5IUl&#43;ELwd1SDxslm0dubZmsn1NpYOtj4rd0dq7L51t4="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f2017-10-27-aws-ecs%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f2017-10-27-aws-ecs%2f&amp;title=AWS%20EC2%20Container%20Service%20%28ECS%29%20Note" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2fblog%2f2017-10-27-aws-ecs%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank"></a>
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/2017-10-27-aws-ecs/">AWS EC2 Container Service (ECS) Note</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2017-10-27 00:00:00 &#43;0000 UTC">
+      October 27, 2017
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f2017-10-27-aws-ecs%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f2017-10-27-aws-ecs%2f&amp;title=AWS%20EC2%20Container%20Service%20%28ECS%29%20Note" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2fblog%2f2017-10-27-aws-ecs%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+
+  <div class="content">
+    <div class="separator" style="clear: both; text-align: center;">
+<a href="/images/aws-ecs.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="315" data-original-width="560" height="180" src="/images/aws-ecs.jpg" width="320" /></a></div>
+<br />
+<p>AWS EC2 Container Service (ECS) Note</p>
+<p>There are three way to create a cluster and instance,
+<br />
+via ecs-cli and aws cli as well as AWS Console.
+<br />
+<br />
+And ecs-cli via CloudFormation Stack to create, so I will use aws cli to create it.</p>
+<p>First, We create a Back-End Service (Use Flask)
+<br />
+<br /></p>
+<p>Step1. Create a Cluster for Back-End Service</p>
+<p><code># aws ecs create-cluster --cluster-name $CLUSTER_FLASK</code>
+<br />
+<br /></p>
+<p>Step2. Create an instance for Cluster
+<br /></p>
+<p>a.          Create user-data.txt to install ecs-init package</p>
+<p><code>user-data.txt :</code></p>
+<pre><code>#!/bin/bash
+
+sudo yum update -y
+sudo yum install -y ecs-init
+sudo service docker start
+sudo echo ECS_CLUSTER=$CLUSTER_FLASK &gt;&gt; /etc/ecs/ecs.config
+sudo start ecs
+
+</code></pre><p><br /></p>
+<p>b.         Launch an Instance and use ecsInstanceRole as well as user-data.txt</p>
+<pre><code># aws ec2 run-instances --image-id ami-0797ea64 --count 1 \
+--instance-type t2.micro --key-name david \
+--user-data file://user-data.txt
+--subnet-id $SUBNET --security-group-ids $SECURITY_GROUP \
+--iam-instance-profile Arn=$ecsInstanceRole_ARN \
+--tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=ECS-Instance-CLUSTER_FLASK}]'
+
+</code></pre><p>Note:
+<br />
+&ndash;Image-id ami-0797ea64 : Amazon Linux AMI
+<br />
+&ndash;Iam-instance-profile Arn : use ecsInstanceRole to connect cluster and instance, create this role if doesn’t exist</p>
+<p><br />
+<br /></p>
+<p>Step3. Create a target group for ALB</p>
+<pre><code># aws elbv2 create-target-group --name $CLUSTER_FLASK --protocol HTTP \
+ --port 8080 --vpc-id $VPC
+</code></pre><p>Note:
+&ndash;port : Back-End Service’s Port (Flask use 8080)</p>
+<p><br />
+<br /></p>
+<p>Step4. Register instance to target group when EC2 status is running</p>
+<pre><code># aws elbv2 register-targets --target-group-arn $TARGET_GROUP_ARN \
+ --targets Id=$INSTANCE_ID_FLASK
+</code></pre><p><br />
+<br /></p>
+<p>Step5. Create an Application Load Balancer (ALB) and Listener for Back-End service cluster</p>
+<p>a.          Create ALB
+<br /></p>
+<pre><code># aws elbv2 create-load-balancer --name $ALB_NAME --subnets $SUBNET_A $SUBNET_B \
+ --security-groups $SECURITY_GROUP
+</code></pre><p><br /></p>
+<p>b. Create Listener</p>
+<pre><code># aws elbv2 create-listener --load-balancer-arn $ALB_ARN --protocol HTTP \
+ --port 8080 --default-actions Type=forward,TargetGroupArn=$TARGET_GROUP_ARN
+</code></pre><p><br />
+<br /></p>
+<p>Step6. Create a task definition for Flask cluster</p>
+<pre><code># aws ecs register-task-definition --network-mode bridge \
+ --family $TASK_NAME --volumes name=test-flask, \
+ host={sourcePath=/tmp/container_log} \
+ --container-definitions &quot;[{&quot;name&quot;:&quot;$TASK_NAME&quot;,&quot;image&quot;:&quot;$FLASK_DOCKER_IMAGE&quot;, \
+ &quot;cpu&quot;:50,&quot;memory&quot;:500,&quot;essential&quot;:true \
+ &quot;portMappings&quot;:[{&quot;hostPort&quot;:8080,&quot;containerPort&quot;:8080,&quot;protocol&quot;:&quot;tcp&quot;}], \
+ &quot;logConfiguration&quot;:{&quot;logDriver&quot;:&quot;awslogs&quot;, \
+ &quot;options&quot;:{&quot;awslogs-group&quot;:&quot;/ecs/david-flask&quot;,&quot;awslogs-region&quot;:&quot;ap-southeast-1&quot;, \
+ &quot;awslogs-stream-prefix&quot;:&quot;flask&quot;}}, &quot;mountPoints&quot;: \
+ [{&quot;sourceVolume&quot;:&quot;test-flask&quot;,&quot;containerPath&quot;:&quot;/var/log&quot;,&quot;readOnly&quot;:false}]}]&quot;
+</code></pre><p><br />
+<br /></p>
+<p>Note:
+<br />
+&ndash;volumes name : Volume name , host={sourcePath=$YOUR_INSTANCE_PATH }
+<br />
+&ndash;container-definitions {[&ldquo;name&rdquo;:&ldquo;$TASK_NAME&rdquo;]} must the same with &ndash;family name
+<br />
+logConfiguration : awslogs – It will send stdout result to CloudWatch
+<br />
+mountPoints : sourceVolume must the same with Volume name</p>
+<p><br />
+<br /></p>
+<p>Step7. Create a Service for Back-End service cluster</p>
+<pre><code># aws ecs create-service --service-name $SERVICE_NAME --cluster $CLUSTER_FLASK \
+ --task-definition $FLASK_TASK_DEFINITION --desired-count 1 \
+  --load-balancers &quot;[{&quot;targetGroupArn&quot;:&quot;$TARGET_GROUP_ARN&quot;, \
+  &quot;containerName&quot;:&quot;$CONTAINER_NAME&quot;, &quot;containerPort&quot;:8080}]&quot; \
+  --role ecsServiceRole
+</code></pre><p><br />
+<br /></p>
+<p>Note:
+<br />
+&ndash;load-balancers : Use ALB that Step5 create
+<br />
+containerName must the same with Step6 you create
+<br />
+&ndash;role ecsServiceRole : Use ecsServiceRole to let cluster to access EC2, S3, CloudWatch (Can be modifity in IAM Settings)</p>
+<p><br />
+<br /></p>
+<p>We already create a Flask Service in ECS , it can be check via GET.
+<br /></p>
+<p><code># wget http://ALB-DNS-NAME:8080</code>
+<br />
+<br />
+<br /></p>
+<p>Now we create a Front-End Service (Use Nginx)
+<br /></p>
+<p>Step8. Create a cluster for Nginx just like Step1 we create Flask cluster</p>
+<p><code># aws ecs create-cluster --cluster-name $CLUSTER_NGINX</code></p>
+<p><br />
+<br /></p>
+<p>Step9. Create a instance for Nginx Cluster just like Step2
+<br /></p>
+<p>a. Create user-data.txt to install ecs-init package</p>
+<p><code>user-data.txt :</code></p>
+<pre><code>#!/bin/bash
+
+sudo yum update -y
+sudo yum install -y ecs-init
+sudo service docker start
+sudo echo ECS_CLUSTER=$CLUSTER_NGINX &gt;&gt; /etc/ecs/ecs.config
+sudo start ecs
+
+</code></pre><p><br /></p>
+<p>b.         Launch an Instance and use ecsInstanceRole as well as user-data.txt</p>
+<pre><code># aws ec2 run-instances --image-id ami-0797ea64 --count 1 \
+ --instance-type t2.micro --key-name david --user-data file://user-data.txt \
+ --subnet-id $SUBNET --security-group-ids $SECURITY_GROUP --iam-instance-profile \
+ Arn=arn:aws:iam::$ACCOUNT:instance-profile/ecsInstanceRole \
+ --tag-specifications 'ResourceType=instance, \
+ Tags=[{Key=Name,Value=ECS-Instance-CLUSTER_NGINX}]'
+</code></pre><p><br />
+<br />
+Note:
+<br />
+&ndash;Image-id ami-0797ea64 : Amazon Linux AMI
+<br />
+&ndash;Iam-instance-profile Arn : use ecsInstanceRole to connect cluster and instance, create this role if doesn’t exist</p>
+<p><br />
+<br /></p>
+<p>Step10. Create an Classic Load Balancer (ELB) for Nginx Cluster</p>
+<pre><code># aws elb create-load-balancer --load-balancer-name $ELB_NAME \
+ --listeners &quot;Protocol=HTTP,LoadBalancerPort=80,InstanceProtocol=HTTP, \
+ InstancePort=80&quot; --subnets $SUBNET_A $SUBNET_B --security-groups $SECURITY_GROUP
+</code></pre><p>Note:
+<br />
+In ELB, We don’t have to specify target group.</p>
+<p><br />
+<br /></p>
+<p>Step11. Register instance to ELB</p>
+<pre><code># aws elb register-instances-with-load-balancer \
+--load-balancer-name $ELB_NAME --instances $INSTANCE_ID_NGINX
+</code></pre><p><br />
+<br /></p>
+<p>Step12. Build a new version for Nginx image
+<br />
+Because we should specify the proxy_pass setting to Back-End service’s ALB DNS name in Nginx config.
+<br /></p>
+<p><code>Doclerfile: </code>
+<br /></p>
+<pre><code>FROM $ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/david-nginx:latest
+RUN sed -i '52c\        proxy_pass http://$ALB_DNS_NAME:8080;' /etc/nginx/nginx.conf
+EXPOSE 80
+CMD (tail -F /var/log/nginx/access.log &amp;) &amp;&amp; exec nginx -g \&quot;daemon off;\&quot;
+
+</code></pre><p><br /></p>
+<p>Save Dockerfile and build a new version then push it to ECR</p>
+<p><code># docker build -t david-nginx:latest .</code>
+<br /></p>
+<p><code># docker tag david-nginx:latest $ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/david-nginx:latest</code>
+<br /></p>
+<p><code># docker push $ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/david-nginx:latest</code>
+<br />
+<br /></p>
+<p>Note:
+<br />
+We should use <code>exec nginx –g &quot;daemon off; &quot;</code> to start Nginx, or Nginx process will crash when ECS start.
+<br /></p>
+<p>Execute <code>aws ecs get-login</code> to login if push image to ECR fail.</p>
+<p><br />
+<br /></p>
+<p>Step13. Create a task definition for Nginx Service</p>
+<pre><code># aws ecs register-task-definition --network-mode host \
+ --family $TASK_NAME --volumes name=test-nginx, \
+ host={sourcePath=/tmp/container_tmp} --container-definitions \
+ &quot;[{&quot;name&quot;:&quot;task-nginx&quot;,&quot;image&quot;:&quot;$NGINX_DOCKER_IMAGE&quot;,&quot;cpu&quot;:50, \
+ &quot;memory&quot;:500,&quot;essential&quot;:true&quot;portMappings&quot;: \
+ [{&quot;hostPort&quot;:80,&quot;containerPort&quot;:80,&quot;protocol&quot;:&quot;tcp&quot;}], \
+ &quot;logConfiguration&quot;:{&quot;logDriver&quot;:&quot;awslogs&quot;,&quot;options&quot;: \
+ {&quot;awslogs-group&quot;:&quot;/ecs/david-nginx&quot;,&quot;awslogs-region&quot;:&quot;ap-southeast-1&quot;, \
+ &quot;awslogs-stream-prefix&quot;:&quot;nginx&quot;}}, \
+ &quot;mountPoints&quot;:[{&quot;sourceVolume&quot;:&quot;test-nginx&quot;, \
+ &quot;containerPath&quot;:&quot;/tmp&quot;,&quot;readOnly&quot;:false}]}]&quot;
+</code></pre><p><br /></p>
+<p>Note:
+<br />
+&ndash;ntework-mode host : Use host mode to make sure one instance only have one nginx container,
+because ELB doesn’t allow we use random port in ECS to point to ELB Listener just like ALB.
+<br />
+&ndash;volumes name : Volume name , host={sourcePath=$YOUR_INSTANCE_PATH }
+<br />
+&ndash;container-definitions {[&ldquo;name&rdquo;:&ldquo;$TASK_NAME&rdquo;]} must the same with &ndash;family name
+<br />
+logConfiguration: awslogs – It will send stdout result to CloudWatch
+<br />
+mountPoints: sourceVolume must the same with Volume name</p>
+<p><br />
+<br /></p>
+<p>Step14. Create a Nginx Service for Nginx Cluster just like Step7</p>
+<pre><code># aws ecs create-service --service-name service-nginx --cluster $CLUSTER_NGINX \
+ --task-definition $NGINX_TASK_DEFINITION --desired-count 1 --load-balancers \
+ &quot;[{&quot;loadBalancerName&quot;:&quot;$ELB_NAME&quot;,&quot;containerName&quot;:&quot;$CONTAINER_NEM&quot;, \
+ &quot;containerPort&quot;:80}]&quot; --role ecsServiceRole
+</code></pre><p>Note:
+<br />
+&ndash;load-balancers : Use ELB that Step10 create
+<br />
+containerName must the same with family name that Step13 you create
+<br />
+&ndash;role ecsServiceRole : Use ecsServiceRole to let cluster to access EC2, S3, CloudWatch (Can be modifity in IAM Settings)</p>
+<p><br />
+<br /></p>
+<p>Now, We create Nginx Cluster and Flask Cluster successfully, it should be connect via Nginx’s proxy_pass setting.
+<br /></p>
+<p>We can verify via GET.
+<br /></p>
+<p><code># wget http://ELB-DNS-NAME</code>
+<br />
+<br /></p>
+<p>We will see the Flask’s program is running via Nginx’s proxy.</p>
+<p><br />
+<br />
+<br />
+<br /></p>
+<div style="text-align: right;">
+2017-10-27 01:50 , David in Taipei</div>
+<p><br />
+<br />
+<br /></p>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE">系統建置</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B">技術簡介</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/aws">AWS</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+    <a href="/blog/2017-08-31-docker-note/" class="button"><div class="previous"><div>Docker Note (Nginx&#43;uwsgi&#43;Letsencrypt)</div></div></a>
+  
+  
+    <a href="/blog/2018-04-21-srverless/" class="button"><div class="next"><div>20180329 Serverless event NOTE</div></div></a>
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/">技術簡介<span class="count">12</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/">系統建置<span class="count">6</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/">雜七雜八<span class="count">5</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/architecture/">architecture<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp-top10/">owasp-top10<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/">人工智慧<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/">前端工程<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/">後端工程<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/">資訊安全<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/">駭客技術<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <time class="published" datetime="">December 5, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/blog/2019-02-03-terraform-module-bitbucket/">Terraform Module Private Registries - Bitbucket</a></h4>
+          <time class="published" datetime="">February 3, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2020
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

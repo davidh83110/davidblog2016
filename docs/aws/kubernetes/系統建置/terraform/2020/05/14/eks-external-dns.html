@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>EKS External-DNS Cross Account Route53 Setup - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="EKS External-DNS Cross Account Route53 Setup">
+<meta itemprop="description" content="External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
+當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
+External-DNS 官方介紹：
+ Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.">
+<meta itemprop="datePublished" content="2020-05-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-14T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="658">
+<meta itemprop="image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="EKS External-DNS Cross Account Route53 Setup" />
+<meta property="og:description" content="External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
+當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
+External-DNS 官方介紹：
+ Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" />
+<meta property="og:image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10" />
+<meta property="article:published_time" content="2020-05-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-14T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10"/>
+
+<meta name="twitter:title" content="EKS External-DNS Cross Account Route53 Setup"/>
+<meta name="twitter:description" content="External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
+當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
+External-DNS 官方介紹：
+ Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records."/>
+<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html&amp;title=EKS%20External-DNS%20Cross%20Account%20Route53%20Setup" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+      <ul style="padding: 0;">
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank"></a>
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2020-05-14 00:00:00 &#43;0000 UTC">
+      May 14, 2020
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html&amp;title=EKS%20External-DNS%20Cross%20Account%20Route53%20Setup" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+  <div class="content">
+    <p>External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。</p>
+<p>當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。</p>
+<p>External-DNS 官方介紹：</p>
+<blockquote>
+<p>Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records. Unlike KubeDNS, however, it&rsquo;s not a DNS server itself, but merely configures other DNS providers accordingly—e.g. AWS Route 53 or Google Cloud DNS.</p>
+<p>In a broader sense, ExternalDNS allows you to control DNS records dynamically via Kubernetes resources in a DNS provider-agnostic way.</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/kubernetes-sigs/external-dns">官方 Github Repository</a></li>
+</ul>
+<p><br /></p>
+<h2 id="prepare">Prepare</h2>
+<hr>
+<ul>
+<li>
+<p>ALB Ingress Controller needs to be installed on EKS cluster.
+<br /></p>
+<p>如果沒有安裝的話可以參考我的文章進行安裝, <a href="https://blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">文章連結</a></p>
+</li>
+</ul>
+<p><br />
+<br /></p>
+<h2 id="setup-with-single-aws-account">Setup with Single AWS Account</h2>
+<hr>
+<p>其實只有一個帳號的話，設定上很容易，按照官方的說明就可以了。
+<br /></p>
+<ul>
+<li>
+<p>建立授權給 Route53 的 IAM Policy, 並指配給 EKS Service Role</p>
+<pre><code>{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [
+        &quot;route53:ChangeResourceRecordSets&quot;
+      ],
+      &quot;Resource&quot;: [
+        &quot;arn:aws:route53:::hostedzone/*&quot;
+      ]
+    },
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [
+        &quot;route53:ListHostedZones&quot;,
+        &quot;route53:ListResourceRecordSets&quot;
+      ],
+      &quot;Resource&quot;: [
+        &quot;*&quot;
+      ]
+    }
+  ]
+}
+</code></pre></li>
+</ul>
+<p><br /></p>
+<ul>
+<li>
+<p>安裝 External-DNS 在 EKS / 驗證安裝</p>
+<p><a href="https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md">參考官方安裝教學</a></p>
+<p>或參考附錄我的 YAML, 修改帳號及 Role Name, 再 Apply to cluster 就可以。 <a href="#%E9%99%84%E9%8C%84">附錄</a></p>
+<p>也可以 <code>--domain-filter</code> 指定要控制的 Domain, 避免影響到其他 Domain.</p>
+</li>
+</ul>
+<p><br />
+<br /></p>
+<h2 id="setup-with-cross-account-route53-zone-and-eks-in-different-account">Setup with Cross-Account (Route53 Zone and EKS in different account)</h2>
+<hr>
+<p>這邊就會比較複雜, 也是這篇要講的重點。 在 EKS 1.14 以上使用 OIDC 的部分，設定上會比較不一樣。</p>
+<p><br /></p>
+<p><strong>環境假設:</strong><br>
+有兩個 AWS Accounts, 分別是 Root Account &amp; EKS Account.<br>
+<code>Root Account</code>: 管理 Route53 Hosted Zone<br>
+<code>EKS Account</code>: 管理 EKS Cluster</p>
+<p><br /></p>
+<p><strong>建立 Route53 Permission:</strong><br>
+我們需要建立這個授權建立 Record 的 IAM Policy 在 <code>Root Account</code></p>
+<pre><code>{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [
+        &quot;route53:ChangeResourceRecordSets&quot;
+      ],
+      &quot;Resource&quot;: [
+        &quot;arn:aws:route53:::hostedzone/*&quot;
+      ]
+    },
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [
+        &quot;route53:ListHostedZones&quot;,
+        &quot;route53:ListResourceRecordSets&quot;
+      ],
+      &quot;Resource&quot;: [
+        &quot;*&quot;
+      ]
+    }
+  ]
+}
+</code></pre><p><br /></p>
+<p><strong>建立 OIDC Identity Provider:</strong><br>
+要在 <code>Root Account</code> 做, 因為我們是要把 EKS Account 連結到 Root Account。</p>
+<p>請在 <code>Root Account</code> 建立 IAM Identity Provider</p>
+<blockquote>
+<p><strong>Provuder Type</strong> - 請選擇 OpenID Connect<br>
+<strong>Provider URL</strong> -  請填入 EKS Account EKS Cluster 的 OIDC URL。<br>
+<strong>Audience</strong> - 請填入 <code>sts.awsamazon.com</code></p>
+</blockquote>
+<p><img src="https://live.staticflickr.com/65535/49907767258_345e5bf7cb_k.jpg" alt="text"></p>
+<p><br /></p>
+<p><strong>建立 IAM Role:</strong><br>
+接下來需要在 <code>Root Account</code> 建立一個 IAM Role 給剛剛建立的 Identity Provider 套用。</p>
+<p>請選擇 <code>Web Identity</code> 類型建立 IAM Role, 並選擇剛剛的 Identity Provider &amp; Audience。</p>
+<p><img src="https://live.staticflickr.com/65535/49908580392_88e700df71_k.jpg" alt="text"></p>
+<p><br /></p>
+<p><strong>修改 Trusted Relationship (optional):</strong><br>
+我們要對 trusted relationship 做一些修改。 (直接編輯 trusted relationship YAML)
+<br /></p>
+<ul>
+<li>將 <code>aud</code> 改成 <code>sub</code></li>
+<li>將 <code>namespace</code> 改成 <code>serviceaccount</code></li>
+</ul>
+<p><br />
+改完之後應該會像這樣</p>
+<pre><code>{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Principal&quot;: {
+        &quot;Federated&quot;: &quot;arn:aws:iam::0729292222:oidc-provider/oidc.eks.ap-northeast-1.amazonaws.com/id/81309C8WWMNK2BF580A65EB4099B&quot;
+      },
+      &quot;Action&quot;: &quot;sts:AssumeRoleWithWebIdentity&quot;,
+      &quot;Condition&quot;: {
+        &quot;StringEquals&quot;: {
+          &quot;oidc.eks.ap-northeast-1.amazonaws.com/id/81309C8WWMNK2BF580A65EB4099B:sub&quot;: &quot;system:serviceaccount:default:external-dns&quot;
+        }
+      }
+    }
+  ]
+}
+</code></pre><p><br /></p>
+<p><strong>安裝 External-DNS:</strong><br>
+<a href="https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md">參考官方安裝教學</a></p>
+<p>或參考<a href="#%E9%99%84%E9%8C%84">附錄</a>，直接修改我的參考 YAML 裡的帳號跟 Role Name, 然後 Apply to Cluster.</p>
+<blockquote>
+<p>可以 <code>--domain-filter</code> 指定要控制的 Domain, 避免影響到其他 Domain.</p>
+</blockquote>
+<p><br /></p>
+<p><strong>跟 Single Account的不同:</strong><br>
+在附錄裡的 YAML , Account ID &amp; Role Name 請填入 <code>Root Account</code> 的 ID 跟 Role Name. (我們前幾步驟建立的那個 Role)</p>
+<p><br />
+<br /></p>
+<h2 id="附錄">附錄</h2>
+<hr>
+<ul>
+<li>
+<p>External-DNS YAML</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: ServiceAccount
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: external-dns
+  <span style="color:#75715e"># If you&#39;re using Amazon EKS with IAM Roles for Service Accounts, specify the following annotation.</span>
+  <span style="color:#75715e"># Otherwise, you may safely omit it.</span>
+  <span style="color:#66d9ef">annotations</span>:
+    <span style="color:#75715e"># Substitute your account ID and IAM service role name below.</span>
+    <span style="color:#66d9ef">eks.amazonaws.com/role-arn</span>: arn:aws:iam::{{ account_id }}:role/{{ iam_service_role_name }}
+---
+<span style="color:#66d9ef">apiVersion</span>: rbac.authorization.k8s.io/v1beta1
+<span style="color:#66d9ef">kind</span>: ClusterRole
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: external-dns
+<span style="color:#66d9ef">rules</span>:
+- <span style="color:#66d9ef">apiGroups</span>: [<span style="color:#e6db74">&#34;&#34;</span>]
+  <span style="color:#66d9ef">resources</span>: [<span style="color:#e6db74">&#34;services&#34;</span>,<span style="color:#e6db74">&#34;endpoints&#34;</span>,<span style="color:#e6db74">&#34;pods&#34;</span>]
+  <span style="color:#66d9ef">verbs</span>: [<span style="color:#e6db74">&#34;get&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>,<span style="color:#e6db74">&#34;list&#34;</span>]
+- <span style="color:#66d9ef">apiGroups</span>: [<span style="color:#e6db74">&#34;extensions&#34;</span>]
+  <span style="color:#66d9ef">resources</span>: [<span style="color:#e6db74">&#34;ingresses&#34;</span>]
+  <span style="color:#66d9ef">verbs</span>: [<span style="color:#e6db74">&#34;get&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>,<span style="color:#e6db74">&#34;list&#34;</span>]
+- <span style="color:#66d9ef">apiGroups</span>: [<span style="color:#e6db74">&#34;&#34;</span>]
+  <span style="color:#66d9ef">resources</span>: [<span style="color:#e6db74">&#34;nodes&#34;</span>]
+  <span style="color:#66d9ef">verbs</span>: [<span style="color:#e6db74">&#34;list&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>]
+---
+<span style="color:#66d9ef">apiVersion</span>: rbac.authorization.k8s.io/v1beta1
+<span style="color:#66d9ef">kind</span>: ClusterRoleBinding
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: external-dns-viewer
+<span style="color:#66d9ef">roleRef</span>:
+  <span style="color:#66d9ef">apiGroup</span>: rbac.authorization.k8s.io
+  <span style="color:#66d9ef">kind</span>: ClusterRole
+  <span style="color:#66d9ef">name</span>: external-dns
+<span style="color:#66d9ef">subjects</span>:
+- <span style="color:#66d9ef">kind</span>: ServiceAccount
+  <span style="color:#66d9ef">name</span>: external-dns
+  <span style="color:#66d9ef">namespace</span>: default
+---
+<span style="color:#66d9ef">apiVersion</span>: apps/v1
+<span style="color:#66d9ef">kind</span>: Deployment
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: external-dns
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">strategy</span>:
+    <span style="color:#66d9ef">type</span>: Recreate
+  <span style="color:#66d9ef">selector</span>:
+    <span style="color:#66d9ef">matchLabels</span>:
+      <span style="color:#66d9ef">app</span>: external-dns
+  <span style="color:#66d9ef">template</span>:
+    <span style="color:#66d9ef">metadata</span>:
+      <span style="color:#66d9ef">labels</span>:
+        <span style="color:#66d9ef">app</span>: external-dns
+      <span style="color:#75715e"># If you&#39;re using kiam or kube2iam, specify the following annotation.</span>
+      <span style="color:#75715e"># Otherwise, you may safely omit it.</span>
+      <span style="color:#66d9ef">annotations</span>:
+        <span style="color:#66d9ef">iam.amazonaws.com/role</span>: arn:aws:iam::{{ account_id }}:role/{{ iam_service_role_name }}
+    <span style="color:#66d9ef">spec</span>:
+      <span style="color:#66d9ef">serviceAccountName</span>: external-dns
+      <span style="color:#66d9ef">nodeSelector</span>:
+        <span style="color:#66d9ef">app</span>: system
+      <span style="color:#66d9ef">containers</span>:
+      - <span style="color:#66d9ef">name</span>: external-dns
+        <span style="color:#66d9ef">image</span>: registry.opensource.zalan.do/teapot/external-dns:latest
+        <span style="color:#66d9ef">args</span>:
+        - --source=service
+        - --source=ingress
+        - --provider=aws
+        - --policy=upsert-only <span style="color:#75715e"># would prevent ExternalDNS from deleting any records, omit to enable full synchronization</span>
+        - --aws-zone-type=public <span style="color:#75715e"># only look at public hosted zones (valid values are public, private or no value for both)</span>
+        - --registry=txt
+        - --txt-owner-id=my-hostedzone-identifier
+      <span style="color:#66d9ef">securityContext</span>:
+        <span style="color:#66d9ef">fsGroup</span>: <span style="color:#ae81ff">65534</span> <span style="color:#75715e"># For ExternalDNS to be able to read Kubernetes and AWS token files</span>
+</code></pre></div></li>
+</ul>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/aws">AWS</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/kubernetes">Kubernetes</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+    <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="button"><div class="previous"><div>EKS Building &amp; Troubleshooting</div></div></a>
+  
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">6</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp/">owasp<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/security/">security<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/architecture/">architecture<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linux/">linux<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/mongodb/">mongodb<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <time class="published" datetime="">December 5, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html">Terraform Module Private Registries - Bitbucket</a></h4>
+          <time class="published" datetime="">February 3, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2020
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

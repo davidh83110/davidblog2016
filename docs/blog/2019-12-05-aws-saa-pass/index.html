@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略 - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略">
+<meta itemprop="description" content="AWS Solutions Architect Associate (SAA) - [PASSED]  經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。
+With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.
+
+事前準備 Preparation  先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
+The first time I use AWS was in 2016, those services below are I&rsquo;ve been studying:
+ EC2 (EBS, EC2 RI), LB, ASG VPC (subnet, Route Table, Peering connection) ECS / OpsWorks / Beanstalk S3 Lambda Cloudwatch / CloudwatchLogs  其餘沒有列出來的服務都只有接觸過並沒有很深入了解。">
+<meta itemprop="datePublished" content="2019-12-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-05T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="996">
+<meta itemprop="image" content="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略" />
+<meta property="og:description" content="AWS Solutions Architect Associate (SAA) - [PASSED]  經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。
+With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.
+
+事前準備 Preparation  先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
+The first time I use AWS was in 2016, those services below are I&rsquo;ve been studying:
+ EC2 (EBS, EC2 RI), LB, ASG VPC (subnet, Route Table, Peering connection) ECS / OpsWorks / Beanstalk S3 Lambda Cloudwatch / CloudwatchLogs  其餘沒有列出來的服務都只有接觸過並沒有很深入了解。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2019-12-05-aws-saa-pass/" />
+<meta property="og:image" content="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" />
+<meta property="article:published_time" content="2019-12-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg"/>
+
+<meta name="twitter:title" content="AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略"/>
+<meta name="twitter:description" content="AWS Solutions Architect Associate (SAA) - [PASSED]  經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。
+With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.
+
+事前準備 Preparation  先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
+The first time I use AWS was in 2016, those services below are I&rsquo;ve been studying:
+ EC2 (EBS, EC2 RI), LB, ASG VPC (subnet, Route Table, Peering connection) ECS / OpsWorks / Beanstalk S3 Lambda Cloudwatch / CloudwatchLogs  其餘沒有列出來的服務都只有接觸過並沒有很深入了解。"/>
+<link rel="stylesheet" href="/css/bundle.min.e48525f842f0775483c6c966d1db9b666b27d4da583ad8f8addd1dabb2f9d6de.css" integrity="sha256-5IUl&#43;ELwd1SDxslm0dubZmsn1NpYOtj4rd0dq7L51t4="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f2019-12-05-aws-saa-pass%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f2019-12-05-aws-saa-pass%2f&amp;title=AWS%20Solutions%20Architect%20Associate%20%28SAA%29%20-%20%5bPASSED%5d%20%e5%bf%83%e5%be%97%e4%bb%a5%e5%8f%8a%e6%94%bb%e7%95%a5" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2fblog%2f2019-12-05-aws-saa-pass%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank"></a>
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/2019-12-05-aws-saa-pass/">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2019-12-05 00:00:00 &#43;0000 UTC">
+      December 5, 2019
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f2019-12-05-aws-saa-pass%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f2019-12-05-aws-saa-pass%2f&amp;title=AWS%20Solutions%20Architect%20Associate%20%28SAA%29%20-%20%5bPASSED%5d%20%e5%bf%83%e5%be%97%e4%bb%a5%e5%8f%8a%e6%94%bb%e7%95%a5" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2fblog%2f2019-12-05-aws-saa-pass%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+  <a href="/blog/2019-12-05-aws-saa-pass/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+  <div class="content">
+    <h2 id="aws-solutions-architect-associate-saa---passed">AWS Solutions Architect Associate (SAA) - [PASSED]</h2>
+<hr>
+<p>經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。</p>
+<p>With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.</p>
+<p><br />
+<br /></p>
+<h2 id="事前準備-preparation">事前準備 Preparation</h2>
+<hr>
+<p>先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：</p>
+<p>The first time I use AWS was in 2016, those services below are I&rsquo;ve been studying:</p>
+<ul>
+<li>EC2 (EBS, EC2 RI), LB, ASG</li>
+<li>VPC (subnet, Route Table, Peering connection)</li>
+<li>ECS / OpsWorks / Beanstalk</li>
+<li>S3</li>
+<li>Lambda</li>
+<li>Cloudwatch / CloudwatchLogs</li>
+</ul>
+<p>其餘沒有列出來的服務都只有接觸過並沒有很深入了解。</p>
+<p>一開始先閱讀 AWS 官方的考試指南是一定要的。 <code>但我建議閱讀FAQ就好</code>，因為白皮書太多東西了，有時間再看就好。</p>
+<p>First of all, you need to read the AWS official whitpapers. But I do not really recommend the read this, that is too much to read. If you don&rsquo;t wanna sepend too much time on it, you can read <code>AWS FAQ</code> is basically okay.</p>
+<p><a href="https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS_Certified_Solutions_Architect_Associate-Exam_Guide_EN_1.8.pdf">考試指南連結</a></p>
+<p>裡面明確指出，你會需要閱讀白皮書(WhitePapers)以及了解何謂良好架構，講白話點就是你要知道每個服務的Best Practices以及多個常見的服務組合該怎麼使用，會有哪些限制。</p>
+<p>考這些重要嗎？ 坦白說我覺得很重要。 不一定要把所有服務細節都記在腦海裡，但一定要知道哪些服務怎麼組合，使用情境為何，會遇到哪些限制，以及怎麼做規劃。</p>
+<p>有這些知識之後再去做架構規劃會比每次都瞎Google一通好太多了。</p>
+<p><code>那到底考試都考哪些？</code></p>
+<p><code>I think those services below will be in the real exam</code>, can be a reference. If you wanna know more detail, then you can scroll to the end of this page, I have a detail list for it.</p>
+<p>我個人認為必考的如下</p>
+<ul>
+<li>EC2 (RI, Placement Group, EBS)</li>
+<li>ALB / ELB / NLB</li>
+<li>IAM</li>
+<li>VPC (NAT / IGW / Subnets / Endpoints / VPN)</li>
+<li>S3 (大重點！) (Storage Gateway/S3各種種類/Lifecycle)</li>
+<li>RDS (Aurora / RDS) / RedShift / DynamoDB</li>
+<li>如何與 On Premise 的叢集做混合雲架構</li>
+</ul>
+<p>最後面會再細講到底考了哪些，以及懶人包。</p>
+<p>講了這麼多廢話，下面開始介紹我如何準備這個考試。</p>
+<p>OK &ndash; Let&rsquo;s see how I prepare this exam.</p>
+<p><br />
+<br /></p>
+<h2 id="stage1-線上課程-online-course">Stage1. 線上課程 Online Course</h2>
+<hr>
+<p>我第一個使用的是 A Cloud Guru.</p>
+<p>The first course I bought was <code>A Cloud Guru</code> and it was very helpful, but the mega tests might be a little bit difficult to a new guy on AWS. I will suggest you to purchase this course but don&rsquo;t feel frustrating if you get a bad score. That&rsquo;s pretty noraml. But I will recommend you to do the section tests, that will let you know what&rsquo;s the point of the service.</p>
+<p><a href="https://www.udemy.com/course/aws-certified-solutions-architect-associate/">A Cloud Guru - Udemy</a></p>
+<p>Udemy 上常常會有優惠，或上網可以找到優惠代碼，如果有要購買的人可以稍微找一下，省點錢。畢竟考試很貴。</p>
+<p>A Cloud Guru 好用嗎？</p>
+<p>我覺得如果你從0開始學習AWS，那這將會是一堂不錯的入門課程，還附有隨堂測驗跟Lab。</p>
+<p>但如果已經具備一些 AWS 基本知識，那可以直接去做每個項目的隨堂測驗 (e.g. RDS - quiz)。 做完基本就知道自己對這個服務掌握度到哪裡，不足的話，<code>非常建議把整堂課重看一次。</code></p>
+<p>最後會有 Mega Test，也就是 120min 模擬真實考試的60題測驗，<code>A Cloud Guru 的難度比真實測驗要高得太多。</code> 如果想挫挫自己銳氣或是想完整掌握知識，非常建議去做，但是會有點崩潰。</p>
+<p>我第一次做 Mega Test 的時候拿到 46% 的分數而已，第二次 68% ， 但最後我還是 82% 通過了，可見這題庫有點太過難。</p>
+<p>And I got a 46% when I first did the Mega Test, second time got 68%, that&rsquo;s really bad but I passed the real exam with 82%. I think the Mega Test really might be difficult.</p>
+<p><br />
+<br /></p>
+<h2 id="stage2-aws-faq">Stage2. AWS FAQ</h2>
+<hr>
+<p>之後我發現 A Cloud Guru 還是漏講了很多東西，也或許是 AWS 更新的太快。 我又跑去看所有會考的服務的FAQ。 <code>獲益良多</code></p>
+<p>這邊不多說，大家都知道哪些特別需要看。 請見上面前情提要。</p>
+<p><a href="https://aws.amazon.com/tw/faqs/">AWS FAQ</a></p>
+<p>As I said, A Cloud Guru doesn&rsquo;t mention too much details on each services and the official whitpapers are really too much to read. So I read <code>AWS FAQ</code> to dig deeply on each services and I felt it was very helpful.</p>
+<p><br />
+<br /></p>
+<h2 id="stage3-whizlabs">Stage3. WhizLabs</h2>
+<hr>
+<p>這是一個線上模擬題庫，我不得不說命中率有75%以上。 非常神準。</p>
+<p>裡面包含 8-10 組題庫，還能針對錯誤的題目做客製化題庫，特別拉出來練習，是個考前幾週補強觀念的好地方。</p>
+<p>非常推薦考前兩週開始做，到考試日期剛好差不多作完。</p>
+<p>特別要說的是， <code>Whizlabs 的題目詳解，真的寫得很好</code>，清楚的告訴你正確觀念，以及你選的為什麼會是錯的。 我覺得大推！</p>
+<p>我每次測驗分數大概落在 73 - 90 之間，最後通過正式考試是 82，可以當做個參考囉。</p>
+<p><a href="https://www.whizlabs.com/aws-solutions-architect-associate/">Whizlabs - AWS SAA C01</a></p>
+<p>Whizlabs has 8-10 sets of exam mock and <code>it was very close to the real exam</code>, truly recommend this.</p>
+<p>Not only this, it also provide very clear explaination with every single question. That&rsquo;s very important because you will know why your answer is wrong without read too much AWS documents.</p>
+<p>The score I got was between 73 to 90, and I got 82 in real exam, so it&rsquo;s very close to real one. And <code>Some questions were very similar to real exam's questions</code>.</p>
+<p><br />
+<br /></p>
+<h2 id="正式考試-real-exam">正式考試 Real Exam</h2>
+<hr>
+<p>正式考試不外乎難度比任何練習題都還要低一點，其實不難答題。</p>
+<p>要掌握的觀念就跟題目做久了一樣，就會發現就是那些東西在重複而已。</p>
+<p>OK &ndash; Let&rsquo;s go to the real exam.</p>
+<p>I have to say the real exam was simple than any practices I&rsquo;ve done. So if you have already read FAQ and also bought some mock exams to did, I think you should be more confident to go in the real exam.</p>
+<p>And I also have a list can help you to recall what you&rsquo;ve learned and tell you what&rsquo;s the point of exam. Let&rsquo;s see.</p>
+<ul>
+<li>
+<p>EC2</p>
+<ul>
+<li>Reserved Instances (RI)</li>
+<li>Placement Group</li>
+<li>AMI (Can it Cross Region？ No, you need to copy it to another Region.)</li>
+<li>EIP Pricing (<code>For Free</code> if your EIP are attaching to an ENI.)</li>
+<li>EBS (All kinds of types you all need to know)</li>
+<li>ASG (Scaling Policies / Terminated Policy / ASG Config)</li>
+<li><code>Use IAM Role instead of insert Access Key</code></li>
+</ul>
+</li>
+<li>
+<p>VPC</p>
+<ul>
+<li>Subnets &amp; AZ (One Subnet, One AZ)</li>
+<li>Security v.s. Network ACL (<code>Stateful v.s. Stateless</code>) (Service Level like RDS and EC2, you should use SG, because you will need to control <code>PORTS which you wanna public</code>)</li>
+<li>Routing Table</li>
+<li>Public Subnet v.s. Private Subnet (<code>Attched IGW v.s. NAT</code>)</li>
+<li>NAT (<code>Put it IN PUBLIC Subnet, but need to attach to PRIVATE Subnet.</code>)(<code>要放在Public Subnet, 但是Private Subnet Attach.</code>，在Private Subnet內的都透過NAT跟外網溝通，NAT內的網路流量<code>只出不進</code>)</li>
+<li>IGW (Public Subent Attach，直接與外網溝通，網路可進可出)</li>
+<li>Peering Connection (Can Cross Account)</li>
+<li>VPN (How to communicate with On Premise Networking)</li>
+<li>VPC Endpoints</li>
+</ul>
+</li>
+<li>
+<p>S3</p>
+<ul>
+<li>S3 IA / Single IA / Glacier (<code>Lifecycle</code>)</li>
+<li>S3 Policy &amp; IAM</li>
+<li>Cross Region Replication (CORS) &amp; Versioning</li>
+<li>VPC Endpoints for using internal networking</li>
+</ul>
+</li>
+<li>
+<p>RDS</p>
+<ul>
+<li>DynamoDB</li>
+<li>RDS Engines</li>
+<li>Aurora (MySQL / PSSQL)</li>
+<li><code>Read-Replica &amp; Mutil-AZ</code></li>
+<li>Cross Region Read-Replica</li>
+<li><code>Mantainence Window &amp; Buckup</code></li>
+<li>Redshift is a Data Warehouse</li>
+</ul>
+</li>
+<li>
+<p>IAM</p>
+<ul>
+<li>Organization</li>
+<li>IAM User (Access Key &amp; Password) &amp; Group</li>
+<li>Role &amp; PPolicy</li>
+<li>Cross Account &amp; sts Roles</li>
+</ul>
+</li>
+<li>
+<p>Others</p>
+<ul>
+<li>For Compliance (VPC -&gt; Flow logs / API Call -&gt; CloudTrails)</li>
+<li>AWS EMR</li>
+<li>SSM Parameter Store &amp; Secret Manager</li>
+<li>Beanstalk &amp; Opsworks</li>
+<li>ECS</li>
+<li>Lambda &amp; APIGW</li>
+<li>Cloudwatch &amp; CloudwatchLogs</li>
+</ul>
+</li>
+</ul>
+<p><br />
+<br /></p>
+<h2 id="conclusion-總結">Conclusion 總結</h2>
+<hr>
+<p>洋洋灑灑列出了記憶中的考試重點以及必考的觀念跟資訊，如果有遺漏再麻煩留言或來信告知，謝謝。</p>
+<p>雖說是考試，但在工作上不難發現用到的也都是這些。 有時候一個Bug解不出來也很可能是因為在某個服務的某個關鍵觀念不熟，所以說考試反映出的題目，跟工作上遇到的難題其實是很雷同的。</p>
+<p>我在備考的時候，習慣把一直看到我又一直做錯的題目寫在筆記本裡，製作自己的cheat sheet。睡前看一下，每次寫題目前看一下，都是非常有幫助的，看久了也就記得了。</p>
+<p>最後，祝福大家考試都能過關。</p>
+<p>Feel so good to pass the exam and I will suggest you be more confidence to go in the real exam. It&rsquo;s not that hard to do.</p>
+<p>If you really don&rsquo;t know how to prepare, you can follow my steps and I believe you will pass it. Remember to make some notes and read them when you are free, even if you are in toilet.</p>
+<p>Also feel free to send me messages or reply this article if you got any problems.</p>
+<p>Cheers.</p>
+<p><br />
+<br /></p>
+<h2 id="references--links">References &amp; Links</h2>
+<hr>
+<p>列出幾個有參考過以及覺得很棒的網站</p>
+<p>首推Rick。</p>
+<p><a href="https://rickhw.github.io/2018/02/15/AWS/AWS-Certified-SAA001-Update/">Complete Think - AWS SAA-001 Update (Feb, 2018)</a></p>
+<p>最神整理，根本Cheat Sheet. 考前閱讀大推！</p>
+<p><a href="http://jayendrapatil.com/aws-solutions-architect-associate-feb-2018-exam-learning-path/">Jayendra&rsquo;s Blog - AWS Certified Solutions Architect – Associate SAA-C01 Exam Learning Path</a></p>
+<p>網友分享(gjnzsu)</p>
+<p><a href="https://www.twblogs.net/a/5c2b3aadbd9eee016114880c">台部落 - AWS雲服務認證攻略系列（一）AWS Certified Solution Architect Associate 考試經驗分享</a></p>
+<p><br />
+<br /></p>
+<div style="text-align: right;">
+2019-12-05 00:23 , David in Taipei</div>
+<p><br />
+<br />
+<br /></p>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/aws">AWS</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+    <a href="/blog/2019-02-03-terraform-module-bitbucket/" class="button"><div class="previous"><div>Terraform Module Private Registries - Bitbucket</div></div></a>
+  
+  
+    <a href="/blog/2020-02-15-cloud-native-log-solution/" class="button"><div class="next"><div>Cloud-Native LOG 儲存以及分析方案</div></div></a>
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/">技術簡介<span class="count">13</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/">系統建置<span class="count">8</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/">雜七雜八<span class="count">5</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp-top10/">owasp-top10<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/">人工智慧<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/">前端工程<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/">後端工程<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/">資訊安全<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/">駭客技術<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2020-03-30-eks-install/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2020-03-30-eks-install/">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2020-03-05-saas-self-hosted/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2020-03-05-saas-self-hosted/">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/blog/2020-02-15-cloud-native-log-solution/">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2019-12-05-aws-saa-pass/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2019-12-05-aws-saa-pass/">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <time class="published" datetime="">December 5, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/blog/2019-02-03-terraform-module-bitbucket/">Terraform Module Private Registries - Bitbucket</a></h4>
+          <time class="published" datetime="">February 3, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2020
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

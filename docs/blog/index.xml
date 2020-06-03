@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on David&#39;s Blog</title>
+    <link>/blog/</link>
+    <description>Recent content in Posts on David&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>EKS External-DNS Cross Account Route53 Setup</title>
+      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</link>
+      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</guid>
+      <description>External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
+當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
+External-DNS 官方介紹：
+ Inspired by Kubernetes DNS, Kubernetes&amp;rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.</description>
+    </item>
+    
+    <item>
+      <title>EKS Building &amp; Troubleshooting</title>
+      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</link>
+      <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</guid>
+      <description>This is the full map of EKS and we&amp;rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&amp;rsquo;s go!
+Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;amp;&amp;amp; make plan &amp;amp;&amp;amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave.</description>
+    </item>
+    
+    <item>
+      <title>SaaS/Managed Services &amp; Self-Hosted 衍伸思考</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</link>
+      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</guid>
+      <description>Let&amp;rsquo;s talk about SaaS/Managed Services and Self-Hosted today! SaaS/Managed Services派的人會說，我不想管機器。
+自架派的會說，我喜歡掌握所有東西的感覺。
+但到底哪個好？
+
+名詞解釋  感謝社團大大指出，AWS不算是全SaaS服務，它包含了SaaS/PaaS/IaaS，所以應該屬於Cloud Provider，提供Managed Services   SaaS
+SaaS 全名是 Software as a Service ，軟體即服務。 通常為直接面對客戶的應用程式，像是 Office365/Slack/LastPass/Splunk。
+  Managed Service
+Managed Service 是指託管在雲上的服務。 像是 EKS/Elasticache/Elasticsearch。
+  所以我要講的是什麼？
+因為我太懶的關係 本文以下所稱 SaaS 或是 Managed Services 即代表 SaaS 或是 Managed Service 兩者互相通用的意思。
+但更準確的說我要表達的是 XXXX AS A SERVICE 的這種商業與開發模式。
+  SaaS = Managed Services ?
+其實他們是不一樣的意思，所以特別在這邊解釋。
+不過本文並非名詞探討，就不多就不多寫了，怕會離題歪樓。</description>
+    </item>
+    
+    <item>
+      <title>Cloud-Native LOG 儲存以及分析方案</title>
+      <link>/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html</link>
+      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html</guid>
+      <description>隨著 Microservices 的蓬勃發展，從以前的一體式架構慢慢演變成了現今的動輒數十數百個服務同時在線，Log 的量也以很可怕的速度成長中，面對巨量的 Log ，要存在哪裡、要怎麼去利用這些資料反而是現今架構上的難題。
+利用這些 Log 我們可以輕易的去提早發現服務的異常，也可以拿來做分析，產出更珍貴的資源，像是 BI。 最重要的是可以協助 Debug, 除錯, 還有做 Audit.
+ 我認為 Logging 就是一件很容易被大家認為不重要的事，但他其實很重要，也是很珍貴的資產，絕對值得我們花時間好好處理以及規劃。
+ 
+格式問題  一般來說都會是 JSON, 不管你要存存什麼格式 統一就好 然後避免直接存 Raw Data。
+Log Level 也是要注意，盡量把 CRITICAL / ERROR / WARNING / INFO &amp;hellip;這些分出來。
+
+要存在哪裡  這是一個很難的問題，市面是常見的方案有以下幾種
+A. Elasticsearch + Fluentd(Logstash) + Kibana (ELK) B. CloudwatchLogs C. S3 D. Database E. Splunk F. Graylog 
+A. ELK 這套適合成長中的組織，有足夠人力也有足夠彈性可以去維護。
+但是他是 Near-Real-Time 的服務（畢竟中間還要經過 Fluentd），所以會有一定的延遲。</description>
+    </item>
+    
+    <item>
+      <title>AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</title>
+      <link>/aws/2019/12/05/aws-saa-pass.html</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/aws/2019/12/05/aws-saa-pass.html</guid>
+      <description>AWS Solutions Architect Associate (SAA) - [PASSED]  經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。
+With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.
+
+事前準備 Preparation  先自我介紹，我從2016年開始接觸AWS，有使用過的服務有：
+The first time I use AWS was in 2016, those services below are I&amp;rsquo;ve been studying:
+ EC2 (EBS, EC2 RI), LB, ASG VPC (subnet, Route Table, Peering connection) ECS / OpsWorks / Beanstalk S3 Lambda Cloudwatch / CloudwatchLogs  其餘沒有列出來的服務都只有接觸過並沒有很深入了解。</description>
+    </item>
+    
+    <item>
+      <title>Terraform Module Private Registries - Bitbucket</title>
+      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</link>
+      <pubDate>Sun, 03 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</guid>
+      <description>在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。
+Due to less information on the internet when I am searching how terraform module access remote private registry, so I decide to share this.
+先講講 Terraform module 是如何運作。其實就是直接 clone 一份下來，所以等於你去 git clone。
+First, we need to know how Terraform module work, that is git clone, Terraform will clone the module repo which you use.
+而我們都知道，git分為 HTTP(S) 以及 SSH 兩種clone方式，所以在這邊兩種方式都會介紹 (居然連stackoverflow都找不到到資料 T_T)
+And we know that you can clone a git repo by HTTP(S) and SSH, so I will also introduce both of these two ways.</description>
+    </item>
+    
+    <item>
+      <title>MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions</title>
+      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html</link>
+      <pubDate>Sat, 01 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html</guid>
+      <description>由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.
+踩過的雷很多，該碰到的問題也都碰到了，卻只花了短短的一個多禮拜，果然壓力使人迅速成長，也見證了一句話，「所謂大神，不過就是雷踩得比較多」。
+MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近年多數資料庫使用的 Replica Set (Primary and Sceondary) 架構, 取代舊有的 Shard Cluster (Master and Slave). 進而增加許多優勢，像是自動故障恢復、讀寫控制等等。
+本篇文章以 mongodb-org 3.0 以及 3.2 為主, 這兩個版本最大的差異就是在 ReplicaSet。 升級上官方也提供非常詳盡的documents, 不得不稱讚mongodb的文件，真的很完整。
+This post is mainly for describing the processes and experiences to upgrade Mongodb from 3.0 to 3.2 on Shopline which is our company.
+There&amp;rsquo;s a big difference of Mongodb 3.</description>
+    </item>
+    
+    <item>
+      <title>MacOS Mojave Upgrade Issues and Solutions / MacOS Mojave 更新災情及解決方法</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</link>
+      <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</guid>
+      <description>MacOS Mojave 於今日2018/09/25正式上線提供正式版給全球用戶下載
+我就打了頭陣搶先更新，沒想到更新完遇到一連串的問題
+慶幸的是有找到解決的方法，就讓我來分享一下吧！ 先說整個更新的過程，花費約30min。
+更新之後原本可以選的暗色系狀態欄已經消失了，只能選淺色或者暗色主題
+而這個暗色，一開始會很不習慣，因為實在是太黑了！！
+有多黑呢？
+大概就是這樣
+而更新後出現的問題我整理一下，大概如下面幾點。   系統字體渲染效果很模糊也很細，中文更加嚴重，很像windows的字體
+是真的會模糊到看不清楚那種，解法如下：
+打開終端機(Option+Space打開Spotlight搜尋 -&amp;gt; 輸入Terminal -&amp;gt; Enter)，輸入下列指令：
+defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO 輸入完按Enter後把終端機關掉，登出系統再登入，字體就會恢復正常。   git 會壞掉
+原因是xcode需要安裝一些東西，在Terminal執行下列指令即可：
+xcode-select --install
+git 就會復活了！！
+  homebrew也壞掉 因為在MacOS裡，xcode是很重要的東西，dependency很重，所以連帶會有問題
+解答他也給你了，權限問題，執行下列指令即可
+sudo xcodebuild -license accept
+  bashrc清空 眼尖的朋友就會發現，我的command line提示列是default狀態，因為被他媽的清空了
+幹，還我alias阿～～～
+這問題我記得每次大改版都會清掉，就只能重寫囉
+用zshrc / iTerm的朋友應該不會遇到這問題，所以不用擔心
+  
+目前已知的問題大概是這樣，如果有遇到其他問題可以在下方留言幫忙補充。
+
+感謝補充：更新MacOS之前，先去AppStore更新Terminal以及XCode就可以避免所有問題囉（除了字體） 
+問題講完了，講講這次改版的特色
+  當然是暗色主題，習慣後其實還挺不錯的，對眼睛也比較舒服
+基本上只有系統內建的會是暗色，像是Chrome/Line這一些額外安裝的就沒有了。
+  桌面堆疊整理，這個其實滿實用的，看起來乾淨很多 (桌面點右鍵 -&amp;gt; 堆疊整理)</description>
+    </item>
+    
+    <item>
+      <title>How to Import data to Elasticsearch (Nginx Access logs)</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</link>
+      <pubDate>Sat, 21 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</guid>
+      <description>因為統計流量的需求，需要將nginx access log放進elasticsearch方便做統計。 對ELS不是很熟的我，也花了一點時間釐清觀念，就寫進來當作notes吧。 也希望對剛接觸ELS的朋友有一些幫助。
+
+Preparation  Elasticsearch Server == 6.3.0 (host by AWS) Python == 3.6 elasticsearch python module == 6.3.0  
+Step 1. Install Elasticsearch  Because we use ELS which is host by AWS, so basically we just need to take care of instance type and count.
+And why I use AWS ELS ?
+Because I just wanna get the rid of instance management lol</description>
+    </item>
+    
+    <item>
+      <title>20180329 Serverless event NOTE</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/serverless/2018/04/21/srverless.html</link>
+      <pubDate>Sat, 21 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/serverless/2018/04/21/srverless.html</guid>
+      <description>Serverless for Monitoring how to debug on serverless ? how&amp;rsquo;s the security for using serverless ? hoe&amp;rsquo;s the latency ? how&amp;rsquo;s the cost ? &amp;ldquo;Less is More&amp;rdquo; we have to focus on other things not just only code when using serverless
+
+Structure is Changing During the application structure is changing to CaaS, we have to reduce the instances which are not for application layer as possible as we can, to avoid launching more and more instances which unnecessary to save cost.</description>
+    </item>
+    
+    <item>
+      <title>AWS EC2 Container Service (ECS) Note</title>
+      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/2017/10/27/aws-ecs.html</link>
+      <pubDate>Fri, 27 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/2017/10/27/aws-ecs.html</guid>
+      <description>AWS EC2 Container Service (ECS) Note
+There are three way to create a cluster and instance, via ecs-cli and aws cli as well as AWS Console. And ecs-cli via CloudFormation Stack to create, so I will use aws cli to create it.
+First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back-End Service
+# aws ecs create-cluster --cluster-name $CLUSTER_FLASK Step2. Create an instance for Cluster a. Create user-data.</description>
+    </item>
+    
+    <item>
+      <title>Docker Note (Nginx&#43;uwsgi&#43;Letsencrypt)</title>
+      <link>/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</link>
+      <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</guid>
+      <description>docker筆記    nginx+uwsgi+flask+letsencrypt    Env: Python3    Line串接API使用，需執行crontab更新憑證(簽署期限為30天)       note:    certbot-auto可單一clone此檔案就好    產生憑證： (docker裡執行)  certbot-auto certonly --webroot --webroot-path=WEB_ROOT -d DOMAIN_NAME    更新憑證：&amp;nbsp;  docker exec -it CONTAINER_ID /opt/letsencrypt/certbot-auto renew --quiet --renew-hook &#34;/etc/init.d/nginx restart&#34;    啟動程序：&amp;nbsp;  docker run -p 80:80 -p 443:443 CONTAINER_ID /opt/start. &amp;amp;     /opt/start.</description>
+    </item>
+    
+    <item>
+      <title>AI人工智慧講座筆記</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</guid>
+      <description>今天聽了願景工程主辦的AI講座
+最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗
+杜奕瑾是誰呢 相信各位鄉民應該不陌生
+他在1995年架設PTT這個到現在唯一存活的BBS
+此外他也架設蕃薯藤(小時候的回憶啊～)並成立公司
+蕃薯藤不為人知的是
+他是當時第一個做出中文搜尋的search engine
+之後杜奕瑾先生到了美國衛生研究院做基因分析研究
+然後到了微軟做Bing搜尋引擎
+直到最近熟為人之的微軟Cortana也是他一手策劃的 鄉民稱他為Cortana之父
+那正當AI如日中天的時候他居然選擇離開微軟回到台灣成立AI Lab
+傻了嗎？我也不知道
+原來是他覺得台灣在各方面都非常具有優勢
+但就是沒有人敢去整合 於是他決定要拋磚引玉
+回到台灣成立AI Lab 以國外的薪資邀請一等人才共同努力
+因為台灣對於軟體人才的薪資實在令人心酸
+所以他決定以國外的標準來留下人才
+當然也提到大家相當關注的軟體思維以及硬體思維
+如果大家有在follow國外的programmer應該不難發現國外沒有硬體
+不信的話列舉前幾大資訊產業 全都是軟體產業
+Microsoft , Google , Facebook &amp;hellip;等等
+唯獨台灣有軟體產業 也有硬體產業
+但要如何做一個完美結合，就有待時間證明了
+我反思的是他提到的國外都是軟體的世界
+流行的是Full stack engineer 全端工程師
+像我這種做系統管理的我想應該也很快會不再需要
+AWS已經推出Lamda 應該不難發現這個趨勢
+這大概也是我最近狂寫python的原因
+強迫自己拋棄bash shell
+當然Linux還是要懂 只是不在需要一個人專門管理
+應該走敏捷開發 一個人負責一小塊(cell)
+那一小塊裡包含所有東西
+從系統到後端程式到前端都由一個team負責
+以需求及系統來劃分部門而不是切割軟硬體
+part2.
+而AI對我們產業會帶來什麼衝擊？ 我在未來會被取代嗎？
+其實AI遠比我們想的要廣泛
+AI未來不只是AI，更是結合IoT成為AIoT進到我們的生活中
+你覺得只有專業攝影師拍得出來的照片
+AI經過學習(machine learning or deep learning)之後可以做得比人還好
+舉個例子
+出國要過海關為什麼自動通關可以被信賴？</description>
+    </item>
+    
+    <item>
+      <title>Python發送警告訊息(Nagios &amp; Dingtalk)</title>
+      <link>/blog/2017-07-08-python-nagios-dingtalk/</link>
+      <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-07-08-python-nagios-dingtalk/</guid>
+      <description>退伍已經過了一個多月，生活漸漸步入軌道
+狂寫python練技術，卻有點不知道目標是什麼
+為了技術，有的人願意放棄80k月薪
+不禁讓我思考，出社會後如此庸庸碌碌真的是我要的生活嗎
+每天沈浸在程式海中，最後想得到什麼呢？
+我想得到的到底是技術還是高薪，如果兩者取其重，我會選哪個？
+人生真難阿
+因應最近公司SAP簡訊系統故障，業務又不回信
+只好利用原本Nagios發警告簡訊的機制去寫一個新程式發送警告訊息
+雖然還是不懂為何公司要用釘釘，既不安全也不可靠，或許這就是cost down的副作用吧
+程式放在github上
+原理是透過原本簡訊的log去抓關鍵字來發送訊息
+然後透過釘釘oapi用POST去發送消息
+或許將來哪天Nagios不用了，這程式也就失效了，未來可能需要再修正。
+&#34;&#34;&#34; * Nagios Alert Message SMS to Dingtalk *  * @author David * Version 1.0 , 2017-06-23 &#34;&#34;&#34; # !/usr/bin/env python3 import re import time , datetime import requests import json  由於nagios admin可以收到全部alert SMS，為了不重複發送訊息，只取這一筆num # nagios admin&#39;s phone number nagios_admin_num = &#34;09&#34; # David  # read sms_service log file f = open(&#39;D:\david_hsu\Desktop\message.txt&#39;,&#39;r&#39;) line = f.</description>
+    </item>
+    
+    <item>
+      <title>Python套件urllib2簡介</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</link>
+      <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</guid>
+      <description>這裡就像哈利波特裡的儲思盆
+趁著我在當兵前還沒完全放空的時候
+把這些東西倒出來
+還以為我會很緊張要當兵了
+沒想到居然心如止水 來講講一個小套件
+今天講Python的一個小小小小套件 , urllib2
+基本上不需要額外安裝任何新的module就可以使用，所以用來救急很方便
+當有時候需要使用程式對某一網頁做POST或GET並獲得response時
+使用urllib2就非常方便
+簡單的幾行程式碼就可以搞定
+範例程式如下：
+我們對google首頁做GET
+# /usr/bin/env python # encoding: utf-8 import urllib2 request = urllib2.Request(&amp;#34;http://www.google.com.tw/&amp;#34;) response = urllib2.urlopen(request) html = response.read() print html 
+去執行python 程式名稱就可以看到GET網頁的內容了
+非常簡單且快速
+用來撈取資料或做POST、GET都很方便
+當然，你也可以使用linux環境下的wget、curl等套件來達成。
+因為腦袋放太空不適合一次寫太多東西
+就先這樣好了
+2017-02-05 12:46 , Davin in Taipei  </description>
+    </item>
+    
+    <item>
+      <title>後端工程(Back-End)簡介</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</link>
+      <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</guid>
+      <description>新年快樂，雞年行大運。 快當兵了趕緊來寫文章，以免當完兵變笨全忘光光
+   今天補一下一直沒時間寫的後端工程    前面已經先提過前端工程，就是常見的HTML、Javascript。  如果硬要區分前端以及後端的話，可以用外觀來分辨      你肉眼所見的網頁、很美的素材、動畫都是前端  你所使用的功能、結帳、訂房、訂餐這些動作都牽扯到後端的程式。      後端常見語言：Java、PHP、Python、Ruby、.Net、C#....等等       後端工程(Back-End)  顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到  舉個例子    小時候應該大家都玩過無名小站吧  那你在挑選的網誌的樣板的時候，是否記得都會有一個CSS可以修改？  沒錯，那就是前端(Front-End)    那你想過為什麼你可以發表文章，朋友可以來留言嗎？ 這些東西又放在哪？    發表文章以及留言還有建立相簿鎖密碼之一類的事情  都有一個共同點  那就是需要邏輯判斷，那就是需要程式來幫忙做這些事，這是你在那些CSS/HTML代碼中所看不到的    那這些東西放在哪？  這些資料放在DataBase，常見有Oracle、MS SQL，不是本章重點就不多提。        前端後端區分大致上就是這樣      那後端語言Java一般來說為企業愛用語言，原因無他  架構很多，常見有spring、struts，雖然入門很難  但只要會寫，新手跟老手寫出來並無太大差異  而且擴充性強，產品一條龍    最常見的就是使用  weblogic/jboss/wildfly/tomcat 去搭配 Java程式  使用起來非常順手，因為這些後端server就是為了java程式而設計的。      那PHP呢？  PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈  但php使用者還是偏小型公司開發小型網站使用  也因為入手簡單，無太多架構  新手跟老手寫出來的一看就知道  非常危險          新年快樂就不講太多了</description>
+    </item>
+    
+    <item>
+      <title>Linux指令 - ln 慘痛的教訓</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</guid>
+      <description>用慘痛教訓換來經驗
+常常使用Linux做為系統的工程師應該都不陌生ln這個指令
+ln是對資料夾建立超連結的指令
+以下範例 root@David-MacBook: $ cd /tmp root@David-MacBook: tmp $ ln -s /opt/web/home/ 第一行cd切換目錄到/tmp
+第二行是建立超連結到當前目錄（/tmp）並指向/opt/web/home
+會得到結果
+root@David-MacBook: tmp $ ll total 0 lrwxr-xr-x 1 root wheel 14 Jan 25 22:59 home $ /opt/web/home 可以看到我們將home這個資料夾成功建立超連結到/tmp
+
+那什麼是超連結？
+所謂超連結就是類似windows作業系統的&amp;quot;捷徑&amp;quot;，可以藉由超連結的資料夾讀取與原資料夾資料同步的資料
+很難理解嗎？ 其實就是資料夾的影分身這麼簡單而已，主體是同一個。
+那ln這麼簡單的指令會出現哪些問題？ 問題可大了
+魔鬼藏在細節裡
+當你要解除超連結，你會怎麼下指令？ rm吧
+對 就是rm，反正直接移除超連結跟windows移除捷徑一樣，真正的資料夾是不會影響的吧
+錯！ 大錯特錯！！
+root@David-MacBook: tmp $ ll home/ total 0 -rw-r--r-- 1 root whell 0 Jan 25 23:13 test root@David-MacBook: tmp $ rm -rf home/ root@David-MacBook: tmp $ ll total 0 lrwxr-xr-x 1 root wheel 14 Jan 25 22:59 home $ /opt/web/home root@David-MacBook: tmp $ ll home/ ls: home/: No such file or directory 發現了嗎？</description>
+    </item>
+    
+    <item>
+      <title>前端工程(Front-End)簡介</title>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</guid>
+      <description>簡介網站架構 (Front-End)
+   一般來說，我們瀏覽的網站都會分為前端以及後端    何謂前端？何謂後端？ &amp;nbsp;其實到現在快2017還是存在一點界定的爭議。  但我們通常會以程式功能來區別前後端，前端後端適當的整合才能架構出優良使用者體驗的網站。    前端工程(Front-End)   簡單來說，我們瀏覽的所有網站，不分大小，使用者(Client)端肉眼可見的全都稱為&#34;前端&#34;。  前端設計需要兼顧美感與實用，隨著近年來行動裝置的竄起，如何相容於不同裝置也成為一個重要課題。
+優秀的前端工程師寫的程式通常會相容於各大瀏覽器以及行動裝置，並同時兼顧美感和實用。
+  常見程式語言：HTML、CSS、JavaScript  常見框架：jQuery、BootStrap、AngularJS、Nodejs    何謂HTML？   傳統且古老的前端語言，前端工程師必備的語言能力。  在各大網站都不難發現採用HTML寫前端的網頁，至今已發展到HTML5。  以前無名小站寫部落格常用的超連結功能不知道還記得嗎？  &amp;lt;a href=&#34;www.davidh83110.com&#34;&amp;gt;David&#39;s HomePage&amp;lt;/a&amp;gt;   寫這一段語法如下面所示，就會變成文字超連結，這就是HTML，相信大家都不覺得陌生。
+ David&#39;s HomePage 
+
+HTML的架構？ 其實並沒有限制我們怎麼寫，有些人喜歡把&amp;lt;head&amp;gt;、&amp;lt;body&amp;gt;都寫出來才寫程式
+其實你連&amp;lt;html&amp;gt;都不用寫，網頁就可以正常呈現了，所以說用法其實滿free的。
+ 但是對開發者來說，沒有規範卻是一件令人困擾的事，所以我們需要W3C制定的規範。
+W3C大家應該不陌生，就是World Wide Web Consortium，簡稱W3C，中文翻譯為全球資訊網協會。
+雖然說HTML沒有強制規定大家要怎麼寫，但是有一個全球統一的標準架構來參考還是比較ok的。
+那為什麼我要照著W3C的標準來開發？ 1.瀏覽器的支援度很高
+&amp;nbsp; &amp;nbsp; W3C的用意其實就是為了整合跨瀏覽器支援的問題，才有這一套制度規範，如果完全符合W3C的規範寫出來的網頁，通常在各大瀏覽器(FireFox、Chrome、Opera、Safari...)的呈現都是一樣的。
+2.方便維護及管理
+&amp;nbsp; &amp;nbsp; 全球統一標準，當然容易維護跟管理，同時也利於下一個接手的人修改程式碼，不至於完全看不懂。</description>
+    </item>
+    
+    <item>
+      <title>XSS (Cross-Site Scripting) 跨站腳本攻擊簡介和實作</title>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</guid>
+      <description>XSS (Cross-Site Scripting) 跨站腳本攻擊&amp;#65292;目前在網路上仍非常常見&amp;#12290;
+何謂XSS&amp;#65311; 所謂XSS泛指惡意攻擊者在Web網頁上插入惡意html代碼&amp;#65292;以達到特殊目的&amp;#65288;控制網站元素&amp;#12289;取走cookies&amp;#65289;&amp;#12290;
+很多人會說XSS就是能在Web上跳出警告視窗並修改其內容&amp;#65292;其實是不完全正確的&amp;#12290;
+正確來說&amp;#65292;XSS是利用惡意程式碼&amp;#65292;常見是Javascript&amp;#65292;將惡意code輸入到網頁&amp;#65292;再誘使user連線到已被攻擊的網頁&amp;#65292;並不只是show message視窗&amp;#12290;
+你發現了嗎&amp;#65311; XSS只是修改網頁資料傳給其他使用者&amp;#65292;並不會回傳到Server&amp;#65292;所以其實不難察覺有異常&amp;#12290;
+XSS介紹&amp;#65306;
+XSS漏洞一般來說最常見的是網站可以被插入惡意字元&amp;#65292;像是&amp;lt; &amp;gt; / &#34; &#39; ; ....等等&amp;#12290;
+現今網站都會防禦使用者動作&amp;#65292;像是禁止你回傳惡意字元到server或是直接將其去除&amp;#65292;這是所謂server端的防禦&amp;#65292;通常會藉由code或Firewall等設備去防禦&amp;#65292;通常是有效的&amp;#12290;
+有些網站在server端並沒有做任何防禦&amp;#65292;認為只要在使用者端(Client)做防禦即可&amp;#65292;像是使用語法檢查輸入格式&amp;#12289;跳出警告視窗...等等&amp;#65292;其實這都是無效的&amp;#12290;只能防君子&amp;#65292;難防小人&amp;#12290;
+上完Allen Own大神的課之後我學得最透徹的大概就是他的口頭禪&amp;#65306;
+任何在Client端的防禦都是無效的&amp;#12290;
+XSS攻擊非常氾濫&amp;#65292;但是屬於被動式的攻擊手法&amp;#12290;
+XSS的攻擊流程最普遍來說是惡意人士會在第三方網站&amp;#65292;如pchome&amp;#12289;google進行XSS攻擊&amp;#65292;再利用社交工程誘使受害者點擊URL連線到已受到XSS攻擊的網頁&amp;#65292;惡意人士便可以利用此漏洞show出cookies以偽造使用者的身份&amp;#65292;最終目的就是將使用者資料傳回惡意人士電腦&amp;#12290;
+這麼說可能不是很清楚XSS到底在做什麼事&amp;#65292;簡單來說就是駭客修改網頁內容&amp;#65292;讓user去點擊並回傳資料&amp;#12290;
+日本有一個網站可以提供XSS練習&amp;#65292;共有30個stage可以打&amp;#65292;每個層級的防禦手段都不一樣&amp;#65292;我們來實作到stage8&amp;#12290;
+http://xss-quiz.int21h.jp/
+上面寫說只要能讓網頁彈出警告視窗並寫document.domain即算成功&amp;#12290;
+Stage1.
+做XSS攻擊&amp;#65292;首先要知道目標網頁有哪些防禦&amp;#65292;我們可以插入特殊字元進行測試
+例如&amp;#65306; aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh
+然後查看原始碼&amp;#65292;看哪些字元被屏蔽&amp;#65292;哪些字元可以被利用&amp;#12290;
+
+我們可以發現&amp;#65292;stage1並沒有對任何字元進行屏蔽&amp;#65292;所以我們只要簡單的javascript即可成功&amp;#12290;
+&amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt;
+插入以上惡意javascript即可發現成功進到第二關&amp;#12290;
+Stage2.
+我們故技重施&amp;#65292;使用aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh來檢查網站的防禦&amp;#12290;
+
+可以發現老招無效&amp;#65292;但是原始碼也告訴你&amp;#65292;這段語法出錯了&amp;#65292;難道是結束字元出錯&amp;#65311;
+讓我們再試試aaa&#34;&amp;gt;&amp;#65292;嘗試以&#34;&amp;gt;來結束value並利用其中空隙插入語法&amp;#12290;
+
+看起來好像可行&amp;#65292;那我們試著插入javascript&amp;#65292;並在前面加上&#34;&amp;gt;試試&amp;#12290;
+&#34;&amp;gt;&amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt;
+順利過關&amp;#65292;可以發現跟stage1差別只是需要將上一段語法先結束掉&amp;#65292;再利用空間插入語法而已&amp;#12290;
+Stage3.
+
+試試老方法&amp;#65292;可以發現我們的aaa&amp;lt;bbb&amp;gt;ccc/ddd&#39;eee&#34;fff;ggg:hhh被變成
+&#34;aaa&amp;amp;lt;bbb&amp;amp;gt;ccc/ddd&amp;amp;#039;eee&amp;amp;quot;fff;ggg:hhh&#34; 惡意字元會變自動轉換成其他字元組合&amp;#12290;
+但旁邊還有個dropdownlist&amp;#65292;似乎是個可以運用的弱點&amp;#65311;
+想要修改DropDownList的回傳值我們需要利用Brup-Suite來修改&amp;#12290;
+將proxy設為Brup-Suite來攔截封包並修改&amp;#12290;
+
+會發現網頁一直送不出去直到你在Brup-Suite按下Forward&amp;#65292;因為你的封包正被攔截&amp;#12290;
+我們來試著插入 &amp;lt;script&amp;gt; alert(document.domain) &amp;lt;/script&amp;gt; 在japan那個欄位試試&amp;#12290;
+
+按下Forward&amp;#65292;成功過關&amp;#65281;可以發現stage3只防禦了一個欄位&amp;#65292;在下拉式選單沒有做防禦&amp;#65292;是個只能防新手的防禦方式&amp;#12290;
+Stage4.</description>
+    </item>
+    
+    <item>
+      <title>Directory Traversal - 跨目錄/檔案穿越攻擊 in OWASP</title>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</link>
+      <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</guid>
+      <description>Directory Traversal指的是我們可以在網頁的URL上使用 .. ../.. cat /etc/passwd等探索目錄的行為&amp;#12290;
+很容易理解的一個簡單漏洞&amp;#65292;而會發生這個漏洞原因不外乎是當初設計網站的人忘了將目錄探索功能關閉(像是Apache的FollowSymLinks Deny all;)&amp;#65292;導致惡意人士可以透過輸入網址的方式來瀏覽web端主機內容&amp;#65292;甚至取得全部主機資料&amp;#12289;網站資料&amp;#12290;
+我們今天利用OWASP裡的bWAPP來熟悉這個漏洞&amp;#12290;
+Directory Traversal - Directory
+先來熟悉目錄穿越的部分&amp;#12290;
+
+一開始我們會看到這是一個可以下載檔案的網頁&amp;#65292;那我們試試在網址上做些修改&amp;#65292;看是否能列出目錄&amp;#12290;
+http://172.20.10.5/bWAPP/directory_traversal_2.php?directory=documents
+上列是架在我主機上的OWASP具有Directory Traversal漏洞的網頁之網址
+我們可以看到網址後面已經告訴你這一頁的目錄資料夾叫做documents
+那我們試試在後面加上&#34; .. &#34; (為上一層目錄的意思)&amp;#65292;看能否顯示出上一層目錄有什麼&amp;#12290;
+http://172.20.10.5/bWAPP/directory_traversal_2.php?directory=documents/..
+ 
+ 有發現嗎&amp;#65311; 跟剛剛顯示的目錄內容不一樣了&amp;#65292;代表我們已經成功存取上一層的資料&amp;#12290;
+藉由這樣探索的方式&amp;#65292;駭客可以將整個系統的架構摸透&amp;#65292;以尋找後門攻擊或將整個主機資料download下來&amp;#12290;
+那既然可以使用.. 這種相對目錄的寫法&amp;#65292;是不是我們可以使用絕對路徑的寫法&amp;#65311;
+http://172.20.10.5/bWAPP/directory_traversal_2.php?directory=documents/../../../../../etc/passwd
+嗯...看來不行&amp;#12290; 這邊使用很多..的意思是強迫回到最前面的/(根目錄)之前的意思&amp;#12290;
+那跨檔案攻擊的漏洞是另一個 (Directory Traversal - Files)&amp;#12290;
+
+可以看到網頁內什麼都沒有&amp;#65292;就是叫我們去爬....
+那我們試試是否可以爬到系統帳號檔案 (/etc/passwd)
+http://172.20.10.5/bWAPP/directory_traversal_1.php?page=message.txt
+以上是網址&amp;#65292;可以看到我們瀏覽的網頁正是message.txt這個檔案所show出來的
+那我們把message.txt改成/etc/passwd呢&amp;#65311;
+http://172.20.10.5/bWAPP/directory_traversal_1.php?page=/etc/passwd
+
+成功&amp;#65281; 我們成功讀取到系統所有使用者的資料了&amp;#12290;
+以上就是Directory Traversal的攻擊手法&amp;#65292;一般來說只要控管好前端Web瀏覽權限&amp;#65292;都可以防範這樣的攻擊&amp;#12290;
+這樣的攻擊就是利用網管的疏忽而已&amp;#12290;
+有任何問題或錯誤觀念歡迎來信&amp;#65292;謝謝&amp;#12290;
+2016-10-02 22:06 , David in Taipei   </description>
+    </item>
+    
+    <item>
+      <title>CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP</title>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</link>
+      <pubDate>Fri, 09 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</guid>
+      <description>CSRF全名為Cross-Site-Request-Forgery&amp;#65292;跨站請求偽造攻擊&amp;#12290;
+簡而言之&amp;#65292;駭客利用你瀏覽網站時尚未過期的session來進行偽造&amp;#65292;發送惡意request&amp;#12290;
+舉個例子&amp;#65292;以網路銀行為例&amp;#65292;你向網銀發送帳號密碼進行驗證&amp;#65292;驗證通過後server會回傳驗證成功&amp;#65292;可以進行所有&amp;#8220;登入後才可以進行的動作&amp;#8221;&amp;#12290;
+這時候駭客利用網銀尚未通知閒置過久(session未過期)&amp;#65292;可以利用社交工程或者是其他方式讓user在不知不覺中發送request&amp;#12290;
+如何做到就是我們以下要講的&amp;#12290;
+我們利用原先就有CSRF漏洞的OWASP bWApp來進行練習&amp;#12290;
+目的就是讓user讓不知不覺的情況下成功被轉帳&amp;#12290;
+step1.我們必須要知道&amp;#8220;轉帳&amp;#8221;這個步驟在web端如何發送request&amp;#12290;
+我們可以用自己電腦來得到這個連結
+先將瀏覽器設定代理伺服器(Proxy)
+使用Burp-Suite內建proxy工具進行request攔截
+
+可以看到在我們設定proxy之後&amp;#65292;點擊&#34;transfer&#34;網頁會有點卡住
+那是因為我們的request被攔截下來了
+這時候我們可以看到這一段語法是轉帳的執行語法
+GET /bWAPP/csrf_2.php?account=123-45678-90&amp;amp;amount=0&amp;amp;action=transfer HTTP/1.1
+account=轉出帳號
+amount=轉出金額
+p.s.按Forward可以繼續將request送出&amp;#65292;甚至可以修改再送出&amp;#12290;
+step2.撰寫釣魚網頁
+為了簡化過程&amp;#65292;我們簡化網頁內容&amp;#65292;實際進行攻擊的網頁通常不會這麼簡單&amp;#12290;
+
+##################################
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta charset=&#34;utf-8&#34;&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;font&amp;gt;
+泰勒絲愛你哦 &amp;lt;/br&amp;gt;
+這是泰勒斯的電話跟照片 &amp;lt;/br&amp;gt;
+0931097313 &amp;lt;/br&amp;gt;
+點擊照片到我的blog看更多照片哦&amp;lt;/br&amp;gt;
+&amp;lt;/font&amp;gt;
+&amp;lt;img src=&#34;http://172.20.10.2/bWAPP/csrf_2.php?account=123-45678-90&amp;amp;amount=200&amp;amp;action=transfer=a.jpg&#34;&amp;gt;
+&amp;lt;a href=&#34;http://www.google.com.tw&#34; target=&#34;&#34;&amp;gt; &amp;nbsp;&amp;lt;img src=&#34;http://www.daliulian.org/imgs/image/12/1251496.jpg&#34;&amp;gt;&amp;lt;/a&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+#################################
+step3. 尋找目標下手
+撰寫完成只要找尋目標&amp;#65292;使user成功點擊網站&amp;#65292;即可完成轉帳&amp;#12290;
+user不需要點擊任何圖片或者是網址&amp;#65292;只需要看到這個頁面就可以進行CSRF攻擊了&amp;#12290;
+
+step4.我們回到剛剛的bWApp帳戶頁面&amp;#65292;重新整理後會發現已經如程式碼所寫的轉出200 EUR了&amp;#65292;然後這段時間user沒有對這個網頁進行任何動作&amp;#12290;
+
+總結&amp;#65306;
+這是因為user的request已經被我們依樣畫葫蘆偽造了一份&amp;#65292;並加以修改回傳給銀行server&amp;#65292;然而銀行也未查覺到有任何異常&amp;#65292;在銀行看來就是user發送的一般請求而已&amp;#12290;
+防禦&amp;#65306;
+現在網路服務皆會設定閒置過期時間(session-time-out)&amp;#65292;閒置過久將會被自動登出&amp;#65292;減少被偽造的機會&amp;#12290;
+而有些較大的web server&amp;#65292;例如facebook&amp;#12289;google...etc會設有token&amp;#65292;所謂token就是利用演算法算出一組unique key&amp;#65292;再經由md5加密送出&amp;#65292;user做任何動作都需要token驗證&amp;#65292;使駭客無從偽造&amp;#65292;因為他沒有使用你當前的瀏覽器就無法得知你目前的token是什麼&amp;#12290;
+當然你會說&amp;#65292;md5加密還是可以破解&amp;#65292;沒錯&amp;#65281;所以重點在於演算法的精密度&amp;#65292;越精密的演算法&amp;#65292;駭客越無從猜測&amp;#65292;也就無從破解&amp;#12290;
+目前ASP.Net 的mvc上的CSRF防禦已經非常普遍化了&amp;#65292;可以利用簡單的程式碼計算token&amp;#65292;加以防禦簡單的CSFR攻擊&amp;#12290;
+經由以上簡單的CSRF滲透測試&amp;#65292;雖然現今大部分網頁服務都有防禦CSRF&amp;#65292;但是我們必須知道如果不使用的話&amp;#65292;盡可能登出網頁服務&amp;#65292;就可以避免造成不必要的風險&amp;#12290;</description>
+    </item>
+    
+    <item>
+      <title>SQL Server 無固定IP架設教學(使用DDNS)</title>
+      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</link>
+      <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</guid>
+      <description>以SQL Server 2008 及no-ip為範例
+1.上no-ip註冊一個帳號
+&amp;nbsp; &amp;nbsp;&amp;nbsp;http://www.noip.com/
+2.下載no-ip桌面管理程式,並讓他開機自動啟動
+&amp;nbsp; &amp;nbsp; &amp;nbsp;如此一來,他就會自動偵測當前IP
+3.稍微講解一下網路架構
+&amp;nbsp; &amp;nbsp; &amp;nbsp;家用網路線在最常見的都是使用中華的數據機+無線AP
+&amp;nbsp; &amp;nbsp; &amp;nbsp;而這種架構基本上就是中華給你一個實體對外IP,這是那台數據機的IP
+&amp;nbsp; &amp;nbsp; &amp;nbsp;然後數據機建立一個內網,使用192.168.X.X分配IP給家裡免一個使用者
+&amp;nbsp; &amp;nbsp; &amp;nbsp;這種IP是虛擬的,所以對我們要架設伺服器一點幫助也沒有
+&amp;nbsp; &amp;nbsp; &amp;nbsp;你需要做的事就是進到數據機的管理模式
+&amp;nbsp; &amp;nbsp; &amp;nbsp;將router mode 切換成 bridge mode
+&amp;nbsp; &amp;nbsp; &amp;nbsp;如此一來,每一來電腦就會直接拿到實體IP,而不是192.168.X.X
+&amp;nbsp; &amp;nbsp; &amp;nbsp;這樣的作法就是將你的IP暴露在外,方便架設伺服器
+&amp;nbsp; &amp;nbsp; &amp;nbsp;當然,也方便駭客入侵,但是資安不再本篇的討論重點,所以先帶過.
+&amp;nbsp; &amp;nbsp; 如果說你的AP無法切換到bridge mode,或是你很懶,請直接去刷dd-wrt !
+&amp;nbsp; &amp;nbsp;&amp;nbsp;http://www.dd-wrt.com/site/index
+4.然後安裝SQL server 2008
+&amp;nbsp; &amp;nbsp;安裝步驟就先帶過,如果有任何問題我之後會再開一板教學
+5.測試連線伺服器名稱請打 你的no-ip\SQLEXPRESS,應該就可以了
+此篇的重點就是使用DDNS來取代浮動IP的困擾
+那如果SQL無法連接請檢查:
+1.進到SQL 組態設定,查看SQL Server以及SQL Server Browser是否開啟及正常運作
+2.進到SQL組態設定,查看TCP/IP 及具名管道 以及 Share memory是否為開啟狀態
+&amp;nbsp; &amp;nbsp; 這邊開啟的用意就是讓外面的人可以連進來,因為SQL預設是不開放的</description>
+    </item>
+    
+  </channel>
+</rss>
