@@ -85,7 +85,7 @@ publishDir              = "docs"
   [[menu.main]]
     name              = "Home"
     identifier        = "home"
-    url               = "/"
+    url               = "https://davidh83110.com"
     pre               = "<i class='fa fa-home'></i>"
     weight            = 1
 
