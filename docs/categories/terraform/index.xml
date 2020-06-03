@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Terraform on David&#39;s Blog</title>
-    <link>blog.davidh83110.com/categories/terraform/</link>
+    <link>/categories/terraform/</link>
     <description>Recent content in Terraform on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Mon, 30 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="blog.davidh83110.com/categories/terraform/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/terraform/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>EKS Building &amp; Troubleshooting</title>
-      <link>blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</link>
+      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</link>
       <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</guid>
+      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</guid>
       <description>This is the full map of EKS and we&amp;rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&amp;rsquo;s go!
 Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;amp;&amp;amp; make plan &amp;amp;&amp;amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave.</description>
     </item>
     
     <item>
       <title>Terraform Module Private Registries - Bitbucket</title>
-      <link>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</link>
+      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</link>
       <pubDate>Sun, 03 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</guid>
+      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</guid>
       <description>在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。
 Due to less information on the internet when I am searching how terraform module access remote private registry, so I decide to share this.
 先講講 Terraform module 是如何運作。其實就是直接 clone 一份下來，所以等於你去 git clone。

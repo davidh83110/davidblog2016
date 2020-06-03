@@ -3,30 +3,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>blog.davidh83110.com/zh-tw/categories/</loc>
+    <loc>/zh-tw/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="blog.davidh83110.com/categories/"
+                href="/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-tw"
-                href="blog.davidh83110.com/zh-tw/categories/"
+                href="/zh-tw/categories/"
                 />
   </url>
   
   <url>
-    <loc>blog.davidh83110.com/zh-tw/</loc>
+    <loc>/zh-tw/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="blog.davidh83110.com/"
+                href="/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-tw"
-                href="blog.davidh83110.com/zh-tw/"
+                href="/zh-tw/"
                 />
   </url>
   

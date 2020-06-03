@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on David&#39;s Blog</title>
-    <link>blog.davidh83110.com/categories/python/</link>
+    <link>/categories/python/</link>
     <description>Recent content in Python on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 21 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="blog.davidh83110.com/categories/python/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>How to Import data to Elasticsearch (Nginx Access logs)</title>
-      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</link>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</link>
       <pubDate>Sat, 21 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</guid>
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</guid>
       <description>因為統計流量的需求，需要將nginx access log放進elasticsearch方便做統計。 對ELS不是很熟的我，也花了一點時間釐清觀念，就寫進來當作notes吧。 也希望對剛接觸ELS的朋友有一些幫助。
 
 Preparation  Elasticsearch Server == 6.3.0 (host by AWS) Python == 3.6 elasticsearch python module == 6.3.0  
@@ -27,10 +27,10 @@ Because I just wanna get the rid of instance management lol</description>
     
     <item>
       <title>Python發送警告訊息(Nagios &amp; Dingtalk)</title>
-      <link>blog.davidh83110.com/blog/2017-07-08-python-nagios-dingtalk/</link>
+      <link>/blog/2017-07-08-python-nagios-dingtalk/</link>
       <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/blog/2017-07-08-python-nagios-dingtalk/</guid>
+      <guid>/blog/2017-07-08-python-nagios-dingtalk/</guid>
       <description>退伍已經過了一個多月，生活漸漸步入軌道
 狂寫python練技術，卻有點不知道目標是什麼
 為了技術，有的人願意放棄80k月薪
@@ -50,10 +50,10 @@ Because I just wanna get the rid of instance management lol</description>
     
     <item>
       <title>Python套件urllib2簡介</title>
-      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</link>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</link>
       <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</guid>
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</guid>
       <description>這裡就像哈利波特裡的儲思盆
 趁著我在當兵前還沒完全放空的時候
 把這些東西倒出來
