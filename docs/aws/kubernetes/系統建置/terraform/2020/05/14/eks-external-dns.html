@@ -24,7 +24,7 @@ External-DNS 官方介紹：
 External-DNS 官方介紹：
  Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" />
+<meta property="og:url" content="blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" />
 <meta property="og:image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10" />
 <meta property="article:published_time" content="2020-05-14T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-05-14T00:00:00+00:00" />
@@ -36,14 +36,14 @@ External-DNS 官方介紹：
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
 External-DNS 官方介紹：
  Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records."/>
-<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/blog.davidh83110.com/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/blog.davidh83110.com/css/add-on.css">
 </head>
 
   <body>
     <header id="site-header">
   <nav id="site-nav">
     <h1 class="nav-title">
-      <a href="/">
+      <a href="/blog.davidh83110.com/">
         
           
             Blog
@@ -63,28 +63,28 @@ External-DNS 官方介紹：
         
           
           
-            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+            <a href="/blog.davidh83110.com/about/" class="link"><i class='fa fa-code'></i> About</a>
           
         
       
         
           
           
-            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+            <a href="/blog.davidh83110.com/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
           
         
       
         
           
           
-            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+            <a href="/blog.davidh83110.com/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
           
         
       
         
           
           
-            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+            <a href="/blog.davidh83110.com/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
           
         
       
@@ -104,7 +104,7 @@ External-DNS 官方介紹：
       
     
       
-        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+        <a href="/blog.davidh83110.com/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
       
     
   
@@ -119,13 +119,19 @@ External-DNS 官方介紹：
 
 
   
-        <a href="//www.linkedin.com/shareArticle?url=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html&amp;title=EKS%20External-DNS%20Cross%20Account%20Route53%20Setup" target="_blank" rel="noopener" class="share-btn linkedin">
+      <a href="//www.facebook.com/sharer/sharer.php?u=blog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=blog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html&amp;title=EKS%20External-DNS%20Cross%20Account%20Route53%20Setup" target="_blank" rel="noopener" class="share-btn linkedin">
             <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
           </a>
   
 
   
-        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" class="share-btn email" data-proofer-ignore>
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=blog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" class="share-btn email" data-proofer-ignore>
           <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
         </a>
   
@@ -137,7 +143,7 @@ External-DNS 官方介紹：
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <a href="/blog.davidh83110.com/"><img src="blog.davidh83110.com/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
   <header>
     <h1>David Hsu</h1>
   </header>
@@ -210,7 +216,7 @@ External-DNS 官方介紹：
   <header>
   <div class="title">
     
-      <h2><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h2>
+      <h2><a href="blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h2>
     
     
   </div>
@@ -230,13 +236,19 @@ External-DNS 官方介紹：
 
 
   
-        <a href="//www.linkedin.com/shareArticle?url=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html&amp;title=EKS%20External-DNS%20Cross%20Account%20Route53%20Setup" target="_blank" rel="noopener" class="share-btn linkedin">
+      <a href="//www.facebook.com/sharer/sharer.php?u=blog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=blog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html&amp;title=EKS%20External-DNS%20Cross%20Account%20Route53%20Setup" target="_blank" rel="noopener" class="share-btn linkedin">
             <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
           </a>
   
 
   
-        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" class="share-btn email" data-proofer-ignore>
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=blog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" class="share-btn email" data-proofer-ignore>
           <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
         </a>
   
@@ -244,7 +256,7 @@ External-DNS 官方介紹：
 
   </section>
   
-  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+  <a href="blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
     
     <p style="text-align: center;">
       <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
@@ -490,7 +502,7 @@ External-DNS 官方介紹：
 </code></pre></div></li>
 </ul>
 
-    <iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" width="80%" frameborder=0></iframe>
+    <iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=blog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" width="80%" frameborder=0></iframe>
 
   </div>
   <footer>
@@ -502,10 +514,10 @@ External-DNS 官方介紹：
         <ul>
           
             
-            <li><a class="article-category-link" href="/categories/aws">AWS</a></li>
+            <li><a class="article-category-link" href="blog.davidh83110.com/categories/aws">AWS</a></li>
           
             
-            <li><a class="article-category-link" href="/categories/kubernetes">Kubernetes</a></li>
+            <li><a class="article-category-link" href="blog.davidh83110.com/categories/kubernetes">Kubernetes</a></li>
           
         </ul>
       </li>
@@ -551,7 +563,7 @@ External-DNS 官方介紹：
 
 <div class="pagination">
   
-    <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="button"><div class="previous"><div>EKS Building &amp; Troubleshooting</div></div></a>
+    <a href="blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="button"><div class="previous"><div>EKS Building &amp; Troubleshooting</div></div></a>
   
   
 </div>
@@ -569,7 +581,7 @@ External-DNS 官方介紹：
     
       <section id="categories">
         <header>
-          <h1><a href="/categories">Categories</a></h1>
+          <h1><a href="/blog.davidh83110.com/categories">Categories</a></h1>
         </header>
         <ul>
           
@@ -578,57 +590,57 @@ External-DNS 官方介紹：
           
           <li>
             
-              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
+              <a href="/blog.davidh83110.com/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
             
           
           <li>
             
-              <a href="/categories/aws/">aws<span class="count">6</span></a>
+              <a href="/blog.davidh83110.com/categories/aws/">aws<span class="count">6</span></a>
             
           
           <li>
             
-              <a href="/categories/owasp/">owasp<span class="count">3</span></a>
+              <a href="/blog.davidh83110.com/categories/owasp/">owasp<span class="count">3</span></a>
             
           
           <li>
             
-              <a href="/categories/python/">python<span class="count">3</span></a>
+              <a href="/blog.davidh83110.com/categories/python/">python<span class="count">3</span></a>
             
           
           <li>
             
-              <a href="/categories/security/">security<span class="count">3</span></a>
+              <a href="/blog.davidh83110.com/categories/security/">security<span class="count">3</span></a>
             
           
           <li>
             
-              <a href="/categories/architecture/">architecture<span class="count">2</span></a>
+              <a href="/blog.davidh83110.com/categories/architecture/">architecture<span class="count">2</span></a>
             
           
           <li>
             
-              <a href="/categories/kubernetes/">kubernetes<span class="count">2</span></a>
+              <a href="/blog.davidh83110.com/categories/kubernetes/">kubernetes<span class="count">2</span></a>
             
           
           <li>
             
-              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+              <a href="/blog.davidh83110.com/categories/terraform/">terraform<span class="count">2</span></a>
             
           
           <li>
             
-              <a href="/categories/linux/">linux<span class="count">1</span></a>
+              <a href="/blog.davidh83110.com/categories/linux/">linux<span class="count">1</span></a>
             
           
           <li>
             
-              <a href="/categories/mongodb/">mongodb<span class="count">1</span></a>
+              <a href="/blog.davidh83110.com/categories/mongodb/">mongodb<span class="count">1</span></a>
             
           
           <li>
             
-              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+              <a href="/blog.davidh83110.com/categories/serverless/">serverless<span class="count">1</span></a>
             
           
           </li>
@@ -647,7 +659,7 @@ External-DNS 官方介紹：
       <article class="mini-post">
         <section>
           
-  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+  <a href="blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
     
     <p style="text-align: center;">
       <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
@@ -658,7 +670,7 @@ External-DNS 官方介紹：
 
         </section>
         <header>
-          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <h4><a href="blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
           <time class="published" datetime="">May 14, 2020</time>
         </header>
       </article>
@@ -666,7 +678,7 @@ External-DNS 官方介紹：
       <article class="mini-post">
         <section>
           
-  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+  <a href="blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
     
     <p style="text-align: center;">
       <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
@@ -677,7 +689,7 @@ External-DNS 官方介紹：
 
         </section>
         <header>
-          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <h4><a href="blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
           <time class="published" datetime="">March 30, 2020</time>
         </header>
       </article>
@@ -685,7 +697,7 @@ External-DNS 官方介紹：
       <article class="mini-post">
         <section>
           
-  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+  <a href="blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
     
     <p style="text-align: center;">
       <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
@@ -696,7 +708,7 @@ External-DNS 官方介紹：
 
         </section>
         <header>
-          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <h4><a href="blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
           <time class="published" datetime="">March 5, 2020</time>
         </header>
       </article>
@@ -707,7 +719,7 @@ External-DNS 官方介紹：
 
         </section>
         <header>
-          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <h4><a href="blog.davidh83110.com/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
           <time class="published" datetime="">February 15, 2020</time>
         </header>
       </article>
@@ -715,7 +727,7 @@ External-DNS 官方介紹：
       <article class="mini-post">
         <section>
           
-  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
+  <a href="blog.davidh83110.com/aws/2019/12/05/aws-saa-pass.html" class="image featured">
     
     <p style="text-align: center;">
       <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
@@ -726,7 +738,7 @@ External-DNS 官方介紹：
 
         </section>
         <header>
-          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
+          <h4><a href="blog.davidh83110.com/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
           <time class="published" datetime="">December 5, 2019</time>
         </header>
       </article>
@@ -737,14 +749,14 @@ External-DNS 官方介紹：
 
         </section>
         <header>
-          <h4><a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html">Terraform Module Private Registries - Bitbucket</a></h4>
+          <h4><a href="blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html">Terraform Module Private Registries - Bitbucket</a></h4>
           <time class="published" datetime="">February 3, 2019</time>
         </header>
       </article>
       
       
         <footer>
-          <a href="/blog/" class="button">See more</a>
+          <a href="/blog.davidh83110.com/blog/" class="button">See more</a>
         </footer>
       
     </section>
@@ -813,10 +825,10 @@ External-DNS 官方介紹：
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
-      <script src="/js/highlight.js"></script>
+      <script src="/blog.davidh83110.com/js/highlight.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
-    <script src="/js/add-on.js"></script>
+    <script>hljs.initLineNumbersOnLoad();</script><script src="/blog.davidh83110.com/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script src="/blog.davidh83110.com/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
