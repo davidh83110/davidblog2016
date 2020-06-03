@@ -8,6 +8,7 @@
       <main id="site-main">
         {{ .Render "content-single"}}
       </main>
+      {{ partial "liker.html" . }}
       {{ partial "site-sidebar" . }}
       {{ partial "site-footer" . }}
       {{ partial "scripts" . }}

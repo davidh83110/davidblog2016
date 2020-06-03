@@ -27,6 +27,7 @@ publishDir              = "docs"
   viewMorePostsLink     = "/blog/"
   readingTime           = false
   socialShare           = ["facebook", "linkedin", "email"]
+  likerID = "davidh83110"
 
   [params.meta]
     description         = ""
