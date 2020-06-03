@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>jibber-jabber on David&#39;s Blog</title>
-    <link>blog.davidh83110.com/categories/jibber-jabber/</link>
+    <link>/categories/jibber-jabber/</link>
     <description>Recent content in jibber-jabber on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 05 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="blog.davidh83110.com/categories/jibber-jabber/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/jibber-jabber/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>SaaS/Managed Services &amp; Self-Hosted 衍伸思考</title>
-      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</link>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</link>
       <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</guid>
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</guid>
       <description>Let&amp;rsquo;s talk about SaaS/Managed Services and Self-Hosted today! SaaS/Managed Services派的人會說，我不想管機器。
 自架派的會說，我喜歡掌握所有東西的感覺。
 但到底哪個好？
@@ -35,10 +35,10 @@ Managed Service 是指託管在雲上的服務。 像是 EKS/Elasticache/Elastic
     
     <item>
       <title>MacOS Mojave Upgrade Issues and Solutions / MacOS Mojave 更新災情及解決方法</title>
-      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</link>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</link>
       <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</guid>
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</guid>
       <description>MacOS Mojave 於今日2018/09/25正式上線提供正式版給全球用戶下載
 我就打了頭陣搶先更新，沒想到更新完遇到一連串的問題
 慶幸的是有找到解決的方法，就讓我來分享一下吧！ 先說整個更新的過程，花費約30min。
@@ -72,19 +72,19 @@ sudo xcodebuild -license accept
     
     <item>
       <title>Docker Note (Nginx&#43;uwsgi&#43;Letsencrypt)</title>
-      <link>blog.davidh83110.com/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</link>
+      <link>/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</link>
       <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</guid>
+      <guid>/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</guid>
       <description>docker筆記    nginx+uwsgi+flask+letsencrypt    Env: Python3    Line串接API使用，需執行crontab更新憑證(簽署期限為30天)       note:    certbot-auto可單一clone此檔案就好    產生憑證： (docker裡執行)  certbot-auto certonly --webroot --webroot-path=WEB_ROOT -d DOMAIN_NAME    更新憑證：&amp;nbsp;  docker exec -it CONTAINER_ID /opt/letsencrypt/certbot-auto renew --quiet --renew-hook &#34;/etc/init.d/nginx restart&#34;    啟動程序：&amp;nbsp;  docker run -p 80:80 -p 443:443 CONTAINER_ID /opt/start. &amp;amp;     /opt/start.</description>
     </item>
     
     <item>
       <title>AI人工智慧講座筆記</title>
-      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</link>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</link>
       <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</guid>
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</guid>
       <description>今天聽了願景工程主辦的AI講座
 最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗
 杜奕瑾是誰呢 相信各位鄉民應該不陌生
@@ -131,20 +131,20 @@ AI經過學習(machine learning or deep learning)之後可以做得比人還好
     
     <item>
       <title>後端工程(Back-End)簡介</title>
-      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</link>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</link>
       <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</guid>
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</guid>
       <description>新年快樂，雞年行大運。 快當兵了趕緊來寫文章，以免當完兵變笨全忘光光
    今天補一下一直沒時間寫的後端工程    前面已經先提過前端工程，就是常見的HTML、Javascript。  如果硬要區分前端以及後端的話，可以用外觀來分辨      你肉眼所見的網頁、很美的素材、動畫都是前端  你所使用的功能、結帳、訂房、訂餐這些動作都牽扯到後端的程式。      後端常見語言：Java、PHP、Python、Ruby、.Net、C#....等等       後端工程(Back-End)  顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到  舉個例子    小時候應該大家都玩過無名小站吧  那你在挑選的網誌的樣板的時候，是否記得都會有一個CSS可以修改？  沒錯，那就是前端(Front-End)    那你想過為什麼你可以發表文章，朋友可以來留言嗎？ 這些東西又放在哪？    發表文章以及留言還有建立相簿鎖密碼之一類的事情  都有一個共同點  那就是需要邏輯判斷，那就是需要程式來幫忙做這些事，這是你在那些CSS/HTML代碼中所看不到的    那這些東西放在哪？  這些資料放在DataBase，常見有Oracle、MS SQL，不是本章重點就不多提。        前端後端區分大致上就是這樣      那後端語言Java一般來說為企業愛用語言，原因無他  架構很多，常見有spring、struts，雖然入門很難  但只要會寫，新手跟老手寫出來並無太大差異  而且擴充性強，產品一條龍    最常見的就是使用  weblogic/jboss/wildfly/tomcat 去搭配 Java程式  使用起來非常順手，因為這些後端server就是為了java程式而設計的。      那PHP呢？  PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈  但php使用者還是偏小型公司開發小型網站使用  也因為入手簡單，無太多架構  新手跟老手寫出來的一看就知道  非常危險          新年快樂就不講太多了</description>
     </item>
     
     <item>
       <title>前端工程(Front-End)簡介</title>
-      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</link>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</link>
       <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</guid>
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</guid>
       <description>簡介網站架構 (Front-End)
    一般來說，我們瀏覽的網站都會分為前端以及後端    何謂前端？何謂後端？ &amp;nbsp;其實到現在快2017還是存在一點界定的爭議。  但我們通常會以程式功能來區別前後端，前端後端適當的整合才能架構出優良使用者體驗的網站。    前端工程(Front-End)   簡單來說，我們瀏覽的所有網站，不分大小，使用者(Client)端肉眼可見的全都稱為&#34;前端&#34;。  前端設計需要兼顧美感與實用，隨著近年來行動裝置的竄起，如何相容於不同裝置也成為一個重要課題。
 優秀的前端工程師寫的程式通常會相容於各大瀏覽器以及行動裝置，並同時兼顧美感和實用。
@@ -164,10 +164,10 @@ W3C大家應該不陌生，就是World Wide Web Consortium，簡稱W3C，中文�
     
     <item>
       <title>SQL Server 無固定IP架設教學(使用DDNS)</title>
-      <link>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</link>
+      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</link>
       <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</guid>
+      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</guid>
       <description>以SQL Server 2008 及no-ip為範例
 1.上no-ip註冊一個帳號
 &amp;nbsp; &amp;nbsp;&amp;nbsp;http://www.noip.com/

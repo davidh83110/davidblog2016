@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux on David&#39;s Blog</title>
-    <link>blog.davidh83110.com/categories/linux/</link>
+    <link>/categories/linux/</link>
     <description>Recent content in Linux on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 25 Jan 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="blog.davidh83110.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Linux指令 - ln 慘痛的教訓</title>
-      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</link>
+      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</link>
       <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</guid>
+      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</guid>
       <description>用慘痛教訓換來經驗
 常常使用Linux做為系統的工程師應該都不陌生ln這個指令
 ln是對資料夾建立超連結的指令
