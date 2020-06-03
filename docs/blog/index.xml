@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on David&#39;s Blog</title>
-    <link>/blog/</link>
+    <link>blog.davidh83110.com/blog/</link>
     <description>Recent content in Posts on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="blog.davidh83110.com/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>EKS External-DNS Cross Account Route53 Setup</title>
-      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</link>
+      <link>blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</link>
       <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</guid>
+      <guid>blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html</guid>
       <description>External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
 External-DNS 官方介紹：
@@ -25,20 +25,20 @@ External-DNS 官方介紹：
     
     <item>
       <title>EKS Building &amp; Troubleshooting</title>
-      <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</link>
+      <link>blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</link>
       <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</guid>
+      <guid>blog.davidh83110.com/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</guid>
       <description>This is the full map of EKS and we&amp;rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&amp;rsquo;s go!
 Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;amp;&amp;amp; make plan &amp;amp;&amp;amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave.</description>
     </item>
     
     <item>
       <title>SaaS/Managed Services &amp; Self-Hosted 衍伸思考</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</link>
       <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</guid>
       <description>Let&amp;rsquo;s talk about SaaS/Managed Services and Self-Hosted today! SaaS/Managed Services派的人會說，我不想管機器。
 自架派的會說，我喜歡掌握所有東西的感覺。
 但到底哪個好？
@@ -57,10 +57,10 @@ Managed Service 是指託管在雲上的服務。 像是 EKS/Elasticache/Elastic
     
     <item>
       <title>Cloud-Native LOG 儲存以及分析方案</title>
-      <link>/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html</link>
+      <link>blog.davidh83110.com/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html</link>
       <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html</guid>
+      <guid>blog.davidh83110.com/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html</guid>
       <description>隨著 Microservices 的蓬勃發展，從以前的一體式架構慢慢演變成了現今的動輒數十數百個服務同時在線，Log 的量也以很可怕的速度成長中，面對巨量的 Log ，要存在哪裡、要怎麼去利用這些資料反而是現今架構上的難題。
 利用這些 Log 我們可以輕易的去提早發現服務的異常，也可以拿來做分析，產出更珍貴的資源，像是 BI。 最重要的是可以協助 Debug, 除錯, 還有做 Audit.
  我認為 Logging 就是一件很容易被大家認為不重要的事，但他其實很重要，也是很珍貴的資產，絕對值得我們花時間好好處理以及規劃。
@@ -76,10 +76,10 @@ A. ELK 這套適合成長中的組織，有足夠人力也有足夠彈性可以�
     
     <item>
       <title>AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</title>
-      <link>/aws/2019/12/05/aws-saa-pass.html</link>
+      <link>blog.davidh83110.com/aws/2019/12/05/aws-saa-pass.html</link>
       <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/aws/2019/12/05/aws-saa-pass.html</guid>
+      <guid>blog.davidh83110.com/aws/2019/12/05/aws-saa-pass.html</guid>
       <description>AWS Solutions Architect Associate (SAA) - [PASSED]  經過了幾週的準備，終於通過了SAA的考試 (82% PASS)。以此紀錄以及分享一下準備的過程。
 With a few weeks of preparation, I passed the AWS SAA certificate exam with an 82% score. And I will step by step to introduce how I prepare it.
 
@@ -90,10 +90,10 @@ The first time I use AWS was in 2016, those services below are I&amp;rsquo;ve be
     
     <item>
       <title>Terraform Module Private Registries - Bitbucket</title>
-      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</link>
+      <link>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</link>
       <pubDate>Sun, 03 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</guid>
+      <guid>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html</guid>
       <description>在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。
 Due to less information on the internet when I am searching how terraform module access remote private registry, so I decide to share this.
 先講講 Terraform module 是如何運作。其實就是直接 clone 一份下來，所以等於你去 git clone。
@@ -104,10 +104,10 @@ And we know that you can clone a git repo by HTTP(S) and SSH, so I will also int
     
     <item>
       <title>MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions</title>
-      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html</link>
+      <link>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html</link>
       <pubDate>Sat, 01 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html</guid>
+      <guid>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html</guid>
       <description>由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.
 踩過的雷很多，該碰到的問題也都碰到了，卻只花了短短的一個多禮拜，果然壓力使人迅速成長，也見證了一句話，「所謂大神，不過就是雷踩得比較多」。
 MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近年多數資料庫使用的 Replica Set (Primary and Sceondary) 架構, 取代舊有的 Shard Cluster (Master and Slave). 進而增加許多優勢，像是自動故障恢復、讀寫控制等等。
@@ -118,10 +118,10 @@ There&amp;rsquo;s a big difference of Mongodb 3.</description>
     
     <item>
       <title>MacOS Mojave Upgrade Issues and Solutions / MacOS Mojave 更新災情及解決方法</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</link>
       <pubDate>Tue, 25 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/09/25/macos-mojave-bugs.html</guid>
       <description>MacOS Mojave 於今日2018/09/25正式上線提供正式版給全球用戶下載
 我就打了頭陣搶先更新，沒想到更新完遇到一連串的問題
 慶幸的是有找到解決的方法，就讓我來分享一下吧！ 先說整個更新的過程，花費約30min。
@@ -155,10 +155,10 @@ sudo xcodebuild -license accept
     
     <item>
       <title>How to Import data to Elasticsearch (Nginx Access logs)</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</link>
       <pubDate>Sat, 21 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/aws/python/2018/07/21/import-els.html</guid>
       <description>因為統計流量的需求，需要將nginx access log放進elasticsearch方便做統計。 對ELS不是很熟的我，也花了一點時間釐清觀念，就寫進來當作notes吧。 也希望對剛接觸ELS的朋友有一些幫助。
 
 Preparation  Elasticsearch Server == 6.3.0 (host by AWS) Python == 3.6 elasticsearch python module == 6.3.0  
@@ -169,10 +169,10 @@ Because I just wanna get the rid of instance management lol</description>
     
     <item>
       <title>20180329 Serverless event NOTE</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/serverless/2018/04/21/srverless.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/serverless/2018/04/21/srverless.html</link>
       <pubDate>Sat, 21 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/serverless/2018/04/21/srverless.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/serverless/2018/04/21/srverless.html</guid>
       <description>Serverless for Monitoring how to debug on serverless ? how&amp;rsquo;s the security for using serverless ? hoe&amp;rsquo;s the latency ? how&amp;rsquo;s the cost ? &amp;ldquo;Less is More&amp;rdquo; we have to focus on other things not just only code when using serverless
 
 Structure is Changing During the application structure is changing to CaaS, we have to reduce the instances which are not for application layer as possible as we can, to avoid launching more and more instances which unnecessary to save cost.</description>
@@ -180,10 +180,10 @@ Structure is Changing During the application structure is changing to CaaS, we h
     
     <item>
       <title>AWS EC2 Container Service (ECS) Note</title>
-      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/2017/10/27/aws-ecs.html</link>
+      <link>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/2017/10/27/aws-ecs.html</link>
       <pubDate>Fri, 27 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/2017/10/27/aws-ecs.html</guid>
+      <guid>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/aws/2017/10/27/aws-ecs.html</guid>
       <description>AWS EC2 Container Service (ECS) Note
 There are three way to create a cluster and instance, via ecs-cli and aws cli as well as AWS Console. And ecs-cli via CloudFormation Stack to create, so I will use aws cli to create it.
 First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back-End Service
@@ -192,19 +192,19 @@ First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back
     
     <item>
       <title>Docker Note (Nginx&#43;uwsgi&#43;Letsencrypt)</title>
-      <link>/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</link>
+      <link>blog.davidh83110.com/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</link>
       <pubDate>Thu, 31 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</guid>
+      <guid>blog.davidh83110.com/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/08/31/docker-note.html</guid>
       <description>docker筆記    nginx+uwsgi+flask+letsencrypt    Env: Python3    Line串接API使用，需執行crontab更新憑證(簽署期限為30天)       note:    certbot-auto可單一clone此檔案就好    產生憑證： (docker裡執行)  certbot-auto certonly --webroot --webroot-path=WEB_ROOT -d DOMAIN_NAME    更新憑證：&amp;nbsp;  docker exec -it CONTAINER_ID /opt/letsencrypt/certbot-auto renew --quiet --renew-hook &#34;/etc/init.d/nginx restart&#34;    啟動程序：&amp;nbsp;  docker run -p 80:80 -p 443:443 CONTAINER_ID /opt/start. &amp;amp;     /opt/start.</description>
     </item>
     
     <item>
       <title>AI人工智慧講座筆記</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</link>
       <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7/2017/07/23/ai-venue.html</guid>
       <description>今天聽了願景工程主辦的AI講座
 最吸引我想去的就是可以聽到創世神 杜奕瑾 分享他的經驗
 杜奕瑾是誰呢 相信各位鄉民應該不陌生
@@ -251,10 +251,10 @@ AI經過學習(machine learning or deep learning)之後可以做得比人還好
     
     <item>
       <title>Python發送警告訊息(Nagios &amp; Dingtalk)</title>
-      <link>/blog/2017-07-08-python-nagios-dingtalk/</link>
+      <link>blog.davidh83110.com/blog/2017-07-08-python-nagios-dingtalk/</link>
       <pubDate>Sat, 08 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2017-07-08-python-nagios-dingtalk/</guid>
+      <guid>blog.davidh83110.com/blog/2017-07-08-python-nagios-dingtalk/</guid>
       <description>退伍已經過了一個多月，生活漸漸步入軌道
 狂寫python練技術，卻有點不知道目標是什麼
 為了技術，有的人願意放棄80k月薪
@@ -274,10 +274,10 @@ AI經過學習(machine learning or deep learning)之後可以做得比人還好
     
     <item>
       <title>Python套件urllib2簡介</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</link>
       <pubDate>Sun, 05 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/python/2017/02/05/urllib2-intro.html</guid>
       <description>這裡就像哈利波特裡的儲思盆
 趁著我在當兵前還沒完全放空的時候
 把這些東西倒出來
@@ -302,20 +302,20 @@ AI經過學習(machine learning or deep learning)之後可以做得比人還好
     
     <item>
       <title>後端工程(Back-End)簡介</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</link>
       <pubDate>Sat, 28 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html</guid>
       <description>新年快樂，雞年行大運。 快當兵了趕緊來寫文章，以免當完兵變笨全忘光光
    今天補一下一直沒時間寫的後端工程    前面已經先提過前端工程，就是常見的HTML、Javascript。  如果硬要區分前端以及後端的話，可以用外觀來分辨      你肉眼所見的網頁、很美的素材、動畫都是前端  你所使用的功能、結帳、訂房、訂餐這些動作都牽扯到後端的程式。      後端常見語言：Java、PHP、Python、Ruby、.Net、C#....等等       後端工程(Back-End)  顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到  舉個例子    小時候應該大家都玩過無名小站吧  那你在挑選的網誌的樣板的時候，是否記得都會有一個CSS可以修改？  沒錯，那就是前端(Front-End)    那你想過為什麼你可以發表文章，朋友可以來留言嗎？ 這些東西又放在哪？    發表文章以及留言還有建立相簿鎖密碼之一類的事情  都有一個共同點  那就是需要邏輯判斷，那就是需要程式來幫忙做這些事，這是你在那些CSS/HTML代碼中所看不到的    那這些東西放在哪？  這些資料放在DataBase，常見有Oracle、MS SQL，不是本章重點就不多提。        前端後端區分大致上就是這樣      那後端語言Java一般來說為企業愛用語言，原因無他  架構很多，常見有spring、struts，雖然入門很難  但只要會寫，新手跟老手寫出來並無太大差異  而且擴充性強，產品一條龍    最常見的就是使用  weblogic/jboss/wildfly/tomcat 去搭配 Java程式  使用起來非常順手，因為這些後端server就是為了java程式而設計的。      那PHP呢？  PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈  但php使用者還是偏小型公司開發小型網站使用  也因為入手簡單，無太多架構  新手跟老手寫出來的一看就知道  非常危險          新年快樂就不講太多了</description>
     </item>
     
     <item>
       <title>Linux指令 - ln 慘痛的教訓</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</link>
       <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E9%9B%9C%E4%B8%83%E9%9B%9C%E5%85%AB/2017/01/25/linux-ln-exp.html</guid>
       <description>用慘痛教訓換來經驗
 常常使用Linux做為系統的工程師應該都不陌生ln這個指令
 ln是對資料夾建立超連結的指令
@@ -337,10 +337,10 @@ root@David-MacBook: tmp $ ll home/ total 0 -rw-r--r-- 1 root whell 0 Jan 25 23:1
     
     <item>
       <title>前端工程(Front-End)簡介</title>
-      <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</link>
+      <link>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</link>
       <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</guid>
+      <guid>blog.davidh83110.com/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/2016/12/05/web-intro-1.html</guid>
       <description>簡介網站架構 (Front-End)
    一般來說，我們瀏覽的網站都會分為前端以及後端    何謂前端？何謂後端？ &amp;nbsp;其實到現在快2017還是存在一點界定的爭議。  但我們通常會以程式功能來區別前後端，前端後端適當的整合才能架構出優良使用者體驗的網站。    前端工程(Front-End)   簡單來說，我們瀏覽的所有網站，不分大小，使用者(Client)端肉眼可見的全都稱為&#34;前端&#34;。  前端設計需要兼顧美感與實用，隨著近年來行動裝置的竄起，如何相容於不同裝置也成為一個重要課題。
 優秀的前端工程師寫的程式通常會相容於各大瀏覽器以及行動裝置，並同時兼顧美感和實用。
@@ -360,10 +360,10 @@ W3C大家應該不陌生，就是World Wide Web Consortium，簡稱W3C，中文�
     
     <item>
       <title>XSS (Cross-Site Scripting) 跨站腳本攻擊簡介和實作</title>
-      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</link>
+      <link>blog.davidh83110.com/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</link>
       <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</guid>
+      <guid>blog.davidh83110.com/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</guid>
       <description>XSS (Cross-Site Scripting) 跨站腳本攻擊&amp;#65292;目前在網路上仍非常常見&amp;#12290;
 何謂XSS&amp;#65311; 所謂XSS泛指惡意攻擊者在Web網頁上插入惡意html代碼&amp;#65292;以達到特殊目的&amp;#65288;控制網站元素&amp;#12289;取走cookies&amp;#65289;&amp;#12290;
 很多人會說XSS就是能在Web上跳出警告視窗並修改其內容&amp;#65292;其實是不完全正確的&amp;#12290;
@@ -415,10 +415,10 @@ Stage4.</description>
     
     <item>
       <title>Directory Traversal - 跨目錄/檔案穿越攻擊 in OWASP</title>
-      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</link>
+      <link>blog.davidh83110.com/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</link>
       <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</guid>
+      <guid>blog.davidh83110.com/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</guid>
       <description>Directory Traversal指的是我們可以在網頁的URL上使用 .. ../.. cat /etc/passwd等探索目錄的行為&amp;#12290;
 很容易理解的一個簡單漏洞&amp;#65292;而會發生這個漏洞原因不外乎是當初設計網站的人忘了將目錄探索功能關閉(像是Apache的FollowSymLinks Deny all;)&amp;#65292;導致惡意人士可以透過輸入網址的方式來瀏覽web端主機內容&amp;#65292;甚至取得全部主機資料&amp;#12289;網站資料&amp;#12290;
 我們今天利用OWASP裡的bWAPP來熟悉這個漏洞&amp;#12290;
@@ -455,10 +455,10 @@ http://172.20.10.5/bWAPP/directory_traversal_1.php?page=/etc/passwd
     
     <item>
       <title>CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP</title>
-      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</link>
+      <link>blog.davidh83110.com/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</link>
       <pubDate>Fri, 09 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</guid>
+      <guid>blog.davidh83110.com/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</guid>
       <description>CSRF全名為Cross-Site-Request-Forgery&amp;#65292;跨站請求偽造攻擊&amp;#12290;
 簡而言之&amp;#65292;駭客利用你瀏覽網站時尚未過期的session來進行偽造&amp;#65292;發送惡意request&amp;#12290;
 舉個例子&amp;#65292;以網路銀行為例&amp;#65292;你向網銀發送帳號密碼進行驗證&amp;#65292;驗證通過後server會回傳驗證成功&amp;#65292;可以進行所有&amp;#8220;登入後才可以進行的動作&amp;#8221;&amp;#12290;
@@ -516,10 +516,10 @@ step4.我們回到剛剛的bWApp帳戶頁面&amp;#65292;重新整理後會發現
     
     <item>
       <title>SQL Server 無固定IP架設教學(使用DDNS)</title>
-      <link>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</link>
+      <link>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</link>
       <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</guid>
+      <guid>blog.davidh83110.com/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html</guid>
       <description>以SQL Server 2008 及no-ip為範例
 1.上no-ip註冊一個帳號
 &amp;nbsp; &amp;nbsp;&amp;nbsp;http://www.noip.com/
