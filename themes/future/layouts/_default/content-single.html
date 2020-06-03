@@ -6,6 +6,7 @@
   {{ .Render "featured" }}
   <div class="content">
     {{ .Content }}
+    {{ partial "liker.html" . }}
   </div>
   <footer>
     {{ .Render "stats" }}
