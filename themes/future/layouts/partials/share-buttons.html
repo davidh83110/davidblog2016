@@ -9,7 +9,7 @@
         <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
       </a>
   {{ else if eq . "facebook" }}
-      <a href="//www.facebook.com/sharer/sharer.php?u={{ $permalink | absURL }}" target="_blank" rel="noopener" class="share-btn facebook">
+      <a href="//www.facebook.com/sharer/sharer.php?u={{ $permalink }}" target="_blank" rel="noopener" class="share-btn facebook">
         <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
         </a>
   {{ else if eq . "reddit" }}
