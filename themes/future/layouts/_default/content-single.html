@@ -1,13 +1,14 @@
 <article class="post">
   {{ .Render "header" }}
-  <section id="socnet-share">
-    {{ partial "share-buttons" . }}
-  </section>
   {{ .Render "featured" }}
   <div class="content">
     {{ .Content }}
     {{ partial "liker.html" . }}
   </div>
+  <section id="socnet-share" style="justify-content: center; margin: 1em 1em 2em;">
+    {{ partial "share-buttons" . }}
+    <br />
+  </section>
   <footer>
     {{ .Render "stats" }}
   </footer>

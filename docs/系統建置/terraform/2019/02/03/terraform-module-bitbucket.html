@@ -251,7 +251,40 @@ And we know that you can clone a git repo by HTTP(S) and SSH, so I will also int
   </div>
 </header>
 
-  <section id="socnet-share">
+  
+
+  <div class="content">
+    <p>在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。<br>
+Due to less information on the internet when I am searching <code>how terraform module access remote private registry</code>, so I decide to share this.</p>
+<p>先講講 Terraform module 是如何運作。其實就是直接 clone 一份下來，所以等於你去 git clone。<br>
+First, we need to know how Terraform module work, that is <code>git clone</code>, Terraform will clone the module repo which you use.</p>
+<p>而我們都知道，git分為 HTTP(S) 以及 SSH 兩種clone方式，所以在這邊兩種方式都會介紹 (居然連stackoverflow都找不到到資料 T_T)<br>
+And we know that you can clone a git repo by <code>HTTP(S)</code> and <code>SSH</code>, so I will also introduce both of these two ways.</p>
+<p>For HTTP(S) Protocol:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">module <span style="color:#e6db74">&#34;base&#34;</span> {
+    source <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;git::https://bitbucket.org/davidh83110/terraform_modules.git/ec2&#34;</span>
+}
+</code></pre></div><p>For SSH Protocol:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">module <span style="color:#e6db74">&#34;base&#34;</span> {
+    source <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;git::ssh://git@bitbucket.org/davidh83110/terraform_modules.git//ec2&#34;</span>
+}
+</code></pre></div><blockquote>
+<p>在 SSH clone 方式裡，請使用 <code>//</code> 雙斜線來表示目錄 (i.e. //ec2)<br>
+Please use a double slash (<code>//</code>) to clone a directory (i.e. //ec2).</p>
+</blockquote>
+<p>That&rsquo;s all.</p>
+<p><br /></p>
+<div style="text-align: right;">
+2019-02-19 16:11 , David in Taipei</div>
+<p><br />
+<br />
+<br /></p>
+
+    <br /><br />
+<iframe class="LikeCoin" height="200" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2019%2f02%2f03%2fterraform-module-bitbucket.html" width="55%" frameborder=0></iframe>
+
+  </div>
+  <section id="socnet-share" style="justify-content: center; margin: 1em 1em 2em;">
     
 
 
@@ -296,40 +329,8 @@ And we know that you can clone a git repo by HTTP(S) and SSH, so I will also int
   
 
 
+    <br />
   </section>
-  
-
-  <div class="content">
-    <p>在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。<br>
-Due to less information on the internet when I am searching <code>how terraform module access remote private registry</code>, so I decide to share this.</p>
-<p>先講講 Terraform module 是如何運作。其實就是直接 clone 一份下來，所以等於你去 git clone。<br>
-First, we need to know how Terraform module work, that is <code>git clone</code>, Terraform will clone the module repo which you use.</p>
-<p>而我們都知道，git分為 HTTP(S) 以及 SSH 兩種clone方式，所以在這邊兩種方式都會介紹 (居然連stackoverflow都找不到到資料 T_T)<br>
-And we know that you can clone a git repo by <code>HTTP(S)</code> and <code>SSH</code>, so I will also introduce both of these two ways.</p>
-<p>For HTTP(S) Protocol:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">module <span style="color:#e6db74">&#34;base&#34;</span> {
-    source <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;git::https://bitbucket.org/davidh83110/terraform_modules.git/ec2&#34;</span>
-}
-</code></pre></div><p>For SSH Protocol:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">module <span style="color:#e6db74">&#34;base&#34;</span> {
-    source <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;git::ssh://git@bitbucket.org/davidh83110/terraform_modules.git//ec2&#34;</span>
-}
-</code></pre></div><blockquote>
-<p>在 SSH clone 方式裡，請使用 <code>//</code> 雙斜線來表示目錄 (i.e. //ec2)<br>
-Please use a double slash (<code>//</code>) to clone a directory (i.e. //ec2).</p>
-</blockquote>
-<p>That&rsquo;s all.</p>
-<p><br /></p>
-<div style="text-align: right;">
-2019-02-19 16:11 , David in Taipei</div>
-<p><br />
-<br />
-<br /></p>
-
-    <br /><br />
-<iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2019%2f02%2f03%2fterraform-module-bitbucket.html" width="65%" frameborder=0></iframe>
-
-  </div>
   <footer>
     <ul class="stats">
   
@@ -650,8 +651,7 @@ Please use a double slash (<code>//</code>) to clone a directory (i.e. //ec2).</
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <script>hljs.initLineNumbersOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;
