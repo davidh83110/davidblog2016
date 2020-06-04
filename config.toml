@@ -26,8 +26,9 @@ publishDir              = "docs"
   highlightjsLang       = ["html", "css", "js", "toml"]
   viewMorePostsLink     = "/blog/"
   readingTime           = false
-  socialShare           = ["facebook", "linkedin", "email"]
-  likerID = "davidh83110"
+  socialShare           = ["facebook", "linkedin", "email", "twitter"]
+  likerID               = "davidh83110"
+  hostnameForShare      = "https://blog.davidh83110.com" # slash no needed
 
   [params.meta]
     description         = ""
