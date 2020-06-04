@@ -1,5 +1,5 @@
 
-{{ $permalink := .Permalink | absURL }}
+{{ $permalink := printf "%s" .Permalink | absURL }}
 {{ $title := $.Scratch.Get "Title" }}
 {{ $author := $.Scratch.Get "Author" }}
 {{ $tags := $.Scratch.Get "Tags" }}
