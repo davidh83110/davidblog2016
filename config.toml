@@ -26,7 +26,7 @@ publishDir              = "docs"
   highlightjsLang       = ["html", "css", "js", "toml"]
   viewMorePostsLink     = "/blog/"
   readingTime           = false
-  socialShare           = ["facebook", "linkedin", "email", "twitter"]
+  socialShare           = ["telegram", "line", "facebook", "linkedin", "email", "twitter"]
   likerID               = "davidh83110"
   hostnameForShare      = "https://blog.davidh83110.com" # slash no needed
 
@@ -89,21 +89,21 @@ publishDir              = "docs"
     identifier        = "home"
     url               = "https://davidh83110.com"
     pre               = "<i class='fa fa-home'></i>"
-    weight            = 1
+    weight            = 2
 
   [[menu.main]]
     name              = "About"
     identifier        = "about"
     url               = "/about/"
     pre               = "<i class='fa fa-code'></i>"
-    weight            = 2
+    weight            = 3
 
   [[menu.main]]
     name              = "Blog"
     identifier        = "blog"
     url               = "/blog/"
     pre               = "<i class='fa fa-hashtag'></i>"
-    weight            = 3
+    weight            = 1
 
   [[menu.main]]
     name              = "Categories"

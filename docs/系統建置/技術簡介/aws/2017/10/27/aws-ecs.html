@@ -32,7 +32,7 @@ First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back
 There are three way to create a cluster and instance, via ecs-cli and aws cli as well as AWS Console. And ecs-cli via CloudFormation Stack to create, so I will use aws cli to create it.
 First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back-End Service
 # aws ecs create-cluster --cluster-name $CLUSTER_FLASK Step2. Create an instance for Cluster a. Create user-data."/>
-<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.135af797a0b304db7579ca98671913e2815ae3b6bbe102ffbc450ed087e36f89.css" integrity="sha256-E1r3l6CzBNt1ecqYZxkT4oFa47a74QL/vEUO0Ifjb4k="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -52,6 +52,13 @@ First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back
         
           
           
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
             <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
           
         
@@ -60,13 +67,6 @@ First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back
           
           
             <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
-          
-        
-      
-        
-          
-          
-            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
           
         
       
@@ -114,6 +114,18 @@ First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back
 
 
 
+
+  
+    <a href="https://telegram.me/share/url?text=AWS%20EC2%20Container%20Service%20%28ECS%29%20Note&url=https%3a%2f%2fblog.davidh83110.com%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2faws%2f2017%2f10%2f27%2faws-ecs.html" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2faws%2f2017%2f10%2f27%2faws-ecs.html" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
 
   
       <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2faws%2f2017%2f10%2f27%2faws-ecs.html" target="_blank" rel="noopener" class="share-btn facebook">
@@ -239,6 +251,18 @@ First, We create a Back-End Service (Use Flask) Step1. Create a Cluster for Back
 
 
 
+
+  
+    <a href="https://telegram.me/share/url?text=AWS%20EC2%20Container%20Service%20%28ECS%29%20Note&url=https%3a%2f%2fblog.davidh83110.com%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2faws%2f2017%2f10%2f27%2faws-ecs.html" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2faws%2f2017%2f10%2f27%2faws-ecs.html" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
 
   
       <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2faws%2f2017%2f10%2f27%2faws-ecs.html" target="_blank" rel="noopener" class="share-btn facebook">
@@ -517,7 +541,8 @@ containerName must the same with family name that Step13 you create
 <br />
 <br /></p>
 
-    <iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2faws%2f2017%2f10%2f27%2faws-ecs.html" width="80%" frameborder=0></iframe>
+    <br /><br />
+<iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2f%25E6%258A%2580%25E8%25A1%2593%25E7%25B0%25A1%25E4%25BB%258B%2faws%2f2017%2f10%2f27%2faws-ecs.html" width="65%" frameborder=0></iframe>
 
   </div>
   <footer>

@@ -708,6 +708,16 @@ table {
     outline: none; }
 
 /* Share Branding */
+.share-btn.telegram {
+  background: #0088CC; }
+  .share-btn.telegram:hover {
+    background: steelblue; }
+
+.share-btn.line {
+  background: #00B900; }
+  .share-btn.line:hover {
+    background: #328004; }
+
 .share-btn.twitter {
   background: #55acee; }
   .share-btn.twitter:hover {
@@ -1181,7 +1191,7 @@ table {
     #share-menu.flyout-menu .share-btn {
       height: 50px; }
       #share-menu.flyout-menu .share-btn i {
-        font-size: 1.5em; }
+        font-size: 2em; }
 
 /* Intro */
 #site-intro {
@@ -1349,7 +1359,7 @@ table {
       #socnet-share a {
         margin-right: .25em; } }
     #socnet-share a i {
-      font-size: 1em; }
+      font-size: 1.15em; }
   #socnet-share p {
     display: none; }
 

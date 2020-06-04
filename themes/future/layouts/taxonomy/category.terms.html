@@ -13,21 +13,23 @@
         {{ end }}
         <ul class="posts">
           <header>
-            <h1>{{ i18n .Data.Plural }}</h1>
+            <h1>{{ i18n .Data.Plural }}</h1><br />
           </header>
           {{ $data := .Data }}
           {{ range $key, $value:= $.Scratch.Get "categories" }}
-          <li>
-            <article>
-              <header>
-                {{ if ne $value.Name "" }}
-                  <a href="{{ printf "/%s/%s" $data.Plural $value.Name | urlize | relLangURL }}">{{ $value.Name }}<span style="float:right;">{{ $value.Count }}</span></a>
-                {{ else }}
-                  {{ i18n "uncategorized" }}<span style="float:right;">{{ $value.Count }}</span>
-                {{ end }}
-              </header>
-            </article>
-          </li>
+          <div calss="inner" style="margin-left: 1.5em;margin-right: 1.5em;">
+            <li>
+              <article>
+                <header>
+                  {{ if ne $value.Name "" }}
+                    <a href="{{ printf "/%s/%s" $data.Plural $value.Name | urlize | relLangURL }}">{{ $value.Name }}<span style="float:right;">{{ $value.Count }}</span></a>
+                  {{ else }}
+                    {{ i18n "uncategorized" }}<span style="float:right;">{{ $value.Count }}</span>
+                  {{ end }}
+                </header>
+              </article>
+            </li>
+          </div>
         {{ end }}
         </ul>
       </main>      

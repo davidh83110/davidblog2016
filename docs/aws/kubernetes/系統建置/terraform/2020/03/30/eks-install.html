@@ -30,7 +30,7 @@ Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-qu
 <meta name="twitter:title" content="EKS Building &amp; Troubleshooting"/>
 <meta name="twitter:description" content="This is the full map of EKS and we&rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&rsquo;s go!
 Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;&amp; make plan &amp;&amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave."/>
-<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.135af797a0b304db7579ca98671913e2815ae3b6bbe102ffbc450ed087e36f89.css" integrity="sha256-E1r3l6CzBNt1ecqYZxkT4oFa47a74QL/vEUO0Ifjb4k="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -50,6 +50,13 @@ Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-qu
         
           
           
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
             <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
           
         
@@ -58,13 +65,6 @@ Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-qu
           
           
             <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
-          
-        
-      
-        
-          
-          
-            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
           
         
       
@@ -112,6 +112,18 @@ Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-qu
 
 
 
+
+  
+    <a href="https://telegram.me/share/url?text=EKS%20Building%20%26%20Troubleshooting&url=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f03%2f30%2feks-install.html" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f03%2f30%2feks-install.html" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
 
   
       <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f03%2f30%2feks-install.html" target="_blank" rel="noopener" class="share-btn facebook">
@@ -237,6 +249,18 @@ Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-qu
 
 
 
+
+  
+    <a href="https://telegram.me/share/url?text=EKS%20Building%20%26%20Troubleshooting&url=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f03%2f30%2feks-install.html" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f03%2f30%2feks-install.html" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
 
   
       <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f03%2f30%2feks-install.html" target="_blank" rel="noopener" class="share-btn facebook">
@@ -585,7 +609,8 @@ The alternative way would be specify the SG rules for ALB Ingress.</p>
 <h3 id="q-cluster-autoscler-didnt-trigger-scale-down"><strong>Q: Cluster Autoscler didn&rsquo;t trigger scale down</strong></h3>
 <p>A: Don&rsquo;t worry, normally it would cost around 10min to let the CA calculate which Pods should be moved to which Node. It really takes time bus I can&rsquo;t really realize why, seems the calculation not complicated at all.</p>
 
-    <iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f03%2f30%2feks-install.html" width="80%" frameborder=0></iframe>
+    <br /><br />
+<iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f03%2f30%2feks-install.html" width="65%" frameborder=0></iframe>
 
   </div>
   <footer>

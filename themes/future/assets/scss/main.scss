@@ -917,6 +917,18 @@ textarea {
  /* Share Branding */
 
  .share-btn {
+  &.telegram {
+    background: #0088CC;
+    &:hover {
+      background: steelblue;
+    }
+  }
+  &.line {
+    background: #00B900;
+    &:hover {
+      background: #328004;
+    }
+  }
    &.twitter {
      background: #55acee;
      &:hover {
@@ -1522,7 +1534,7 @@ textarea {
      .share-btn {
        height: 50px;
        i {
-         font-size: 1.5em;
+         font-size: 2em;
        }
      }
    }
@@ -1747,7 +1759,7 @@ textarea {
        margin-right: .25em;
      }
      i {
-       font-size: 1em;
+       font-size: 1.15em;
      }
    }
    p {

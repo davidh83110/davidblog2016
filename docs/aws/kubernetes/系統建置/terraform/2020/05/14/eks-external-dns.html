@@ -36,7 +36,7 @@ External-DNS 官方介紹：
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
 External-DNS 官方介紹：
  Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records."/>
-<link rel="stylesheet" href="/css/bundle.min.ba4cdb0ec1a3b09c01c2f8b96975ac19035777ae16d7fe603241d8fb4e0f0fb4.css" integrity="sha256-ukzbDsGjsJwBwvi5aXWsGQNXd64W1/5gMkHY&#43;04PD7Q="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.135af797a0b304db7579ca98671913e2815ae3b6bbe102ffbc450ed087e36f89.css" integrity="sha256-E1r3l6CzBNt1ecqYZxkT4oFa47a74QL/vEUO0Ifjb4k="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -56,6 +56,13 @@ External-DNS 官方介紹：
         
           
           
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
             <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
           
         
@@ -64,13 +71,6 @@ External-DNS 官方介紹：
           
           
             <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
-          
-        
-      
-        
-          
-          
-            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
           
         
       
@@ -118,6 +118,18 @@ External-DNS 官方介紹：
 
 
 
+
+  
+    <a href="https://telegram.me/share/url?text=EKS%20External-DNS%20Cross%20Account%20Route53%20Setup&url=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
 
   
       <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn facebook">
@@ -243,6 +255,18 @@ External-DNS 官方介紹：
 
 
 
+
+  
+    <a href="https://telegram.me/share/url?text=EKS%20External-DNS%20Cross%20Account%20Route53%20Setup&url=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
 
   
       <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" target="_blank" rel="noopener" class="share-btn facebook">
@@ -518,7 +542,8 @@ External-DNS 官方介紹：
 </code></pre></div></li>
 </ul>
 
-    <iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" width="80%" frameborder=0></iframe>
+    <br /><br />
+<iframe class="LikeCoin" height="235" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2faws%2fkubernetes%2f%25E7%25B3%25BB%25E7%25B5%25B1%25E5%25BB%25BA%25E7%25BD%25AE%2fterraform%2f2020%2f05%2f14%2feks-external-dns.html" width="65%" frameborder=0></iframe>
 
   </div>
   <footer>
