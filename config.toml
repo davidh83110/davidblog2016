@@ -11,6 +11,9 @@ pluralizeListTitles     = false
 disableLanguages        = ["fr", "pt", "zh-CN", "es", "de", "ja", "pl"]
 publishDir              = "docs"
 
+[permalinks]
+  posts = "/:year/:month/:title"
+
 [markup.goldmark.renderer]
   unsafe= true
 
