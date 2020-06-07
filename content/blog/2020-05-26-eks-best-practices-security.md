@@ -15,9 +15,9 @@ images: ["https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg"]
 ---
 不久前 AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，但從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。 由於目前只有 Security 的部分，也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。  
 
-根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 `盡量` 安全的使用 EKS。由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。  
+根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 `盡量` 安全的使用 EKS。由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給自己當成筆記。
 
-我看的滿仔細的，還提交了 5 個 PR，想說以此做個筆記以便日後回來看，寫下來的筆記整理永遠是很好的複習跟加深記憶的方式。 
+覺得自己看的滿仔細的，還提交了 5 個 PR，想說以此做個筆記以便日後回來看，寫下來的筆記整理永遠是很好的複習跟加深記憶的方式。 
 
 這裡附上原 Repository 跟原文 Mkdocs Site。
 
