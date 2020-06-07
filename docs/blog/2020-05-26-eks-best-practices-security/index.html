@@ -7,59 +7,50 @@
 
 
 <meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="EKS Best Practices - Security">
-<meta itemprop="description" content="Introduction  AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。
-由於目前只有 Security 的部分，我也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。
-雖然其實大部分都滿基本的，但我還是很推薦都是高手的大家去看看，搞不好有意外的收穫。
-根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 盡量 安全的使用 EKS。
-由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。
-我看的滿仔細的，還提交了 5 個 PR，應該是盡量可以捕捉到作者所要提的重點。
+<meta itemprop="description" content="Introduction  不久前 AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，但從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。 由於目前只有 Security 的部分，也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。
+根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 盡量 安全的使用 EKS。由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。
+我看的滿仔細的，還提交了 5 個 PR，想說以此做個筆記以便日後回來看，寫下來的筆記整理永遠是很好的複習跟加深記憶的方式。
 這裡附上原 Repository 跟原文 Mkdocs Site。
 Github - https://github.com/aws/aws-eks-best-practices
 Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
 
 目錄  以下內容會分成幾個部分來講，盡量 Follow 原文的結構。
- EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Runtime Security EKS Infrastructure(Worker Node) Security">
-<meta itemprop="datePublished" content="2020-06-04T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-06-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="764">
+ EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Security Groups EKS Runtime Security EKS Infrastructure(Worker Node) Security">
+<meta itemprop="datePublished" content="2020-06-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1470">
 <meta itemprop="image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg">
 
 
 
 <meta itemprop="keywords" content="" /><meta property="og:title" content="EKS Best Practices - Security" />
-<meta property="og:description" content="Introduction  AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。
-由於目前只有 Security 的部分，我也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。
-雖然其實大部分都滿基本的，但我還是很推薦都是高手的大家去看看，搞不好有意外的收穫。
-根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 盡量 安全的使用 EKS。
-由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。
-我看的滿仔細的，還提交了 5 個 PR，應該是盡量可以捕捉到作者所要提的重點。
+<meta property="og:description" content="Introduction  不久前 AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，但從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。 由於目前只有 Security 的部分，也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。
+根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 盡量 安全的使用 EKS。由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。
+我看的滿仔細的，還提交了 5 個 PR，想說以此做個筆記以便日後回來看，寫下來的筆記整理永遠是很好的複習跟加深記憶的方式。
 這裡附上原 Repository 跟原文 Mkdocs Site。
 Github - https://github.com/aws/aws-eks-best-practices
 Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
 
 目錄  以下內容會分成幾個部分來講，盡量 Follow 原文的結構。
- EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Runtime Security EKS Infrastructure(Worker Node) Security" />
+ EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Security Groups EKS Runtime Security EKS Infrastructure(Worker Node) Security" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/2020-05-26-eks-best-practices-security/" />
 <meta property="og:image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg" />
-<meta property="article:published_time" content="2020-06-04T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-06-04T00:00:00+00:00" />
+<meta property="article:published_time" content="2020-06-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-07T00:00:00+00:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg"/>
 
 <meta name="twitter:title" content="EKS Best Practices - Security"/>
-<meta name="twitter:description" content="Introduction  AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。
-由於目前只有 Security 的部分，我也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。
-雖然其實大部分都滿基本的，但我還是很推薦都是高手的大家去看看，搞不好有意外的收穫。
-根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 盡量 安全的使用 EKS。
-由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。
-我看的滿仔細的，還提交了 5 個 PR，應該是盡量可以捕捉到作者所要提的重點。
+<meta name="twitter:description" content="Introduction  不久前 AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，但從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。 由於目前只有 Security 的部分，也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。
+根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 盡量 安全的使用 EKS。由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。
+我看的滿仔細的，還提交了 5 個 PR，想說以此做個筆記以便日後回來看，寫下來的筆記整理永遠是很好的複習跟加深記憶的方式。
 這裡附上原 Repository 跟原文 Mkdocs Site。
 Github - https://github.com/aws/aws-eks-best-practices
 Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
 
 目錄  以下內容會分成幾個部分來講，盡量 Follow 原文的結構。
- EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Runtime Security EKS Infrastructure(Worker Node) Security"/>
+ EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Security Groups EKS Runtime Security EKS Infrastructure(Worker Node) Security"/>
 <link rel="stylesheet" href="/css/bundle.min.135af797a0b304db7579ca98671913e2815ae3b6bbe102ffbc450ed087e36f89.css" integrity="sha256-E1r3l6CzBNt1ecqYZxkT4oFa47a74QL/vEUO0Ifjb4k="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
@@ -265,8 +256,8 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
     
   </div>
   <div class="meta">
-    <time class="published" datetime="2020-06-04 00:00:00 &#43;0000 UTC">
-      June 4, 2020
+    <time class="published" datetime="2020-06-07 00:00:00 &#43;0000 UTC">
+      June 7, 2020
     </time>
     <span class="author">David</span>
     
@@ -286,12 +277,9 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
   <div class="content">
     <h2 id="introduction">Introduction</h2>
 <hr>
-<p>AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。</p>
-<p>由於目前只有 Security 的部分，我也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。</p>
-<p>雖然其實大部分都滿基本的，但我還是很推薦都是高手的大家去看看，搞不好有意外的收穫。</p>
-<p>根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 <code>盡量</code> 安全的使用 EKS。</p>
-<p>由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。</p>
-<p>我看的滿仔細的，還提交了 5 個 PR，應該是盡量可以捕捉到作者所要提的重點。</p>
+<p>不久前 AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，但從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。 由於目前只有 Security 的部分，也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。</p>
+<p>根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 <code>盡量</code> 安全的使用 EKS。由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給有需要的朋友作參考，或是當懶人包看也可以。</p>
+<p>我看的滿仔細的，還提交了 5 個 PR，想說以此做個筆記以便日後回來看，寫下來的筆記整理永遠是很好的複習跟加深記憶的方式。</p>
 <p>這裡附上原 Repository 跟原文 Mkdocs Site。</p>
 <p><a href="https://github.com/aws/aws-eks-best-practices">Github - https://github.com/aws/aws-eks-best-practices</a><br>
 <a href="https://aws.github.io/aws-eks-best-practices/">Mkdocs Site - https://aws.github.io/aws-eks-best-practices/</a></p>
@@ -303,11 +291,12 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
 <li><a href="#EKS-IAM">EKS &amp; IAM</a></li>
 <li><a href="#EKS-IRSA">EKS IAM Role for ServiceAccounts (IRSA)</a></li>
 <li><a href="#EKS-POD">EKS Pod Security</a></li>
-<li>EKS Tenant Security</li>
-<li>EKS Detective Control</li>
-<li>EKS Network Security</li>
-<li>EKS Runtime Security</li>
-<li>EKS Infrastructure(Worker Node) Security</li>
+<li><a href="#EKS-TENANT">EKS Tenant Security</a></li>
+<li><a href="#EKS-DETECTIVE">EKS Detective Control</a></li>
+<li><a href="#EKS-Network-Security">EKS Network Security</a></li>
+<li><a href="#EKS-SG">EKS Security Groups</a></li>
+<li><a href="#EKS-RUNTIME">EKS Runtime Security</a></li>
+<li><a href="#EKS-HOST">EKS Infrastructure(Worker Node) Security</a></li>
 </ul>
 <p><br /></p>
 <h2 id="EKS-IAM">EKS &amp; IAM</h2>
@@ -537,6 +526,238 @@ e.g. 多容器間 Memory 是不能共享的，但 CPU 可以。</p>
 <p>Memory Request 則不受到 cgroup 影響，但如上面所說如果 Node 有壓力還是會被終止的。</p>
 </li>
 </ul>
+<p><br /></p>
+<h2 id="EKS-TENANT">EKS Tenant Security</h2>
+<hr>
+<p>Kubernetes 在多租戶 (Multiple Tenant) 的應用下，要怎麼去做到對每個租戶的<code>隔離</code>，是很重要的一件事。
+所謂<code>多租戶</code>，就是指一組應用程式所使用的計算，網絡，存儲等資源組成的工作負載集合。也就是說會有需要不同資源的不同應用程式跑在同一個 Kubernetes Cluster。</p>
+<p>那既然我們把不同的應用程式跑再一起，<code>隔離</code> 就相當重要了。如何適當隔離不同應用，以保護彼此的安全，就是這個 section 要探討的。</p>
+<p>Kubernetes 本身是單租戶的形式，但我們可以透過一些限制使他邏輯上成為多租戶的形式。 也就是說本來只能一個叢集跑一個應用一個 deployment，但我們透過對 Namespace 隔離等等的手段，使得我們可以讓多個應用跑在同一個 cluster，並確保彼此之間不會互相影響。</p>
+<p><br /></p>
+<h3 id="soft-multi-tenant">Soft Multi-Tenant</h3>
+<p>Soft 顧名思義就是上述所講的透過邏輯層隔離的方式來達到這個目的。</p>
+<ul>
+<li>RBAC</li>
+<li>Quotas</li>
+<li>Limit ranges</li>
+<li>Different Namespace</li>
+</ul>
+<p>以上這些都是基本的，但卻不能阻止 Pod 共享一個 Instance。 為什麼不能共享 Instance? 因為機器裡有我們的 secret / configmap / volume 資訊，萬一掉了一台，可能就一次掉了好幾個應用程式的機密資訊。但這一切端看使用者對於隔離的 <code>需要性</code>，要做到強度多高的隔離，完全是依照本身的需求跟限制去執行的，沒有標準答案。</p>
+<p>如果需要更強大的隔離，可以考慮以下方法：</p>
+<ul>
+<li>Node Selector</li>
+<li>Anti-Affinity Rules</li>
+<li>Taints / Tolerations</li>
+</ul>
+<p>這些方式可以讓 Pod 只部署在特定的機器上，以達到底層機器隔離的效果。</p>
+<p>Kiosk 是一款可以協助我們導入 soft multi-tenancy 的工具  <a href="https://github.com/kiosk-sh/kiosk">https://github.com/kiosk-sh/kiosk</a></p>
+<p><br /></p>
+<h3 id="hard-multi-tenant">Hard Multi-Tenant</h3>
+<p>Hard 就是很硬的把每個 deployment 放在不同的 cluster，當然這是最有效的資源隔離方式，也是所謂 0 信任。<br>
+但我們必須要考慮到：</p>
+<ul>
+<li>會變很貴</li>
+<li>導致資源利用不足</li>
+<li>很難管理</li>
+</ul>
+<p><br /></p>
+<h3 id="conclusion">Conclusion</h3>
+<pre><code>所以一般情況下還是考量 Soft multi-tenancy 就可以了。
+</code></pre><p>考量到企業多半是採取 <code>半信任(semi-trusted)</code>，人是不可信的情況下，必須得要做適當的隔離。一般來說系統管理員負責切分 Namespace ( by Application) ，並賦予每個 Team 最小所需的權限（只給需要的Namespace）並搭配 PSP 使用。</p>
+<p>而考量到 Soft/Hard 都各有優缺點的情況下，Multi-Tenancy Special Interest Group (SIG) 正在改善 Soft/Hard 的不足。
+正朝著以下方向邁進：</p>
+<ul>
+<li>Namespace 加入繼承的概念 (subnamespace)</li>
+<li>Virtual Cluster (不同 service 可以建立個別的 Nodes，Node 裡包含 API / controller / scheduler，就是所謂<code>Kubernetes on Kubernetes</code>)</li>
+</ul>
+<p><br /></p>
+<h2 id="EKS-DETECTIVE">EKS Detective Control</h2>
+<hr>
+<h3 id="auditing-and-logging">Auditing and Logging</h3>
+<ul>
+<li>稽核 Log 通常可以分析及發現很多問題</li>
+<li>建議啟用 AuditLog on EKS, 就會送到 CloudwatchLogs (但要收費)</li>
+</ul>
+<h3 id="利用-audit-log">利用 Audit Log</h3>
+<p>Kubernetes audit log 會包含兩個 annotations</p>
+<ul>
+<li><a href="http://authorization.k8s.io/decision"><code>authorization.k8s.io/decision</code></a> → 指出 request 是否已授權</li>
+<li><a href="http://authorization.k8s.io/reason"><code>authorization.k8s.io/reason</code></a> → 授權原因</li>
+<li>善用兩個 annotations 去驗證 API Call 是否合法</li>
+</ul>
+<h3 id="建立-cloudwatch-alarm">建立 CloudWatch Alarm</h3>
+<ul>
+<li>建立 CW Alarm 偵測 401 / 403 Forbidden 的 API Call 數量，並在有 403/401 的時候報警。</li>
+<li>然後使用 host / sourceIP / k8s_user.username 去找出是哪個地方的漏洞。</li>
+<li>或是使用 CloudwatchLog Insight 去監控</li>
+<li>CloudTrail Log 也需要監控 (因為必須要知道 IRSA 的使用 e.g. 是誰從Pod打了 AWS API Call 到 S3)。</li>
+</ul>
+<h3 id="log-的管理">Log 的管理</h3>
+<p>Log 一直長大，管理跟過濾變得越來越麻煩跟昂貴。可以考慮用 <code>Falco</code> (CNCF) (Runtime security tool) 分析 audit log 分析異常現象 <a href="https://github.com/falcosecurity/falco">https://github.com/falcosecurity/falco</a></p>
+<h4 id="--falco">- Falco</h4>
+<ul>
+<li>用 Helm 安裝在 EKS 裡就可以，還有包含預設的 Rules</li>
+<li>串接 Lambda 發送 Alarm</li>
+<li>官方教程： <a href="https://aws.amazon.com/cn/blogs/china/securing-amazon-eks-lambda-falco/">https://aws.amazon.com/cn/blogs/china/securing-amazon-eks-lambda-falco/</a></li>
+<li>還可以用 ekscloudwatch 將 log 從 CWLogs 送到 Falco 去做分析 <a href="https://github.com/sysdiglabs/ekscloudwatch">https://github.com/sysdiglabs/ekscloudwatch</a></li>
+<li>另一個選項是 S3 + SegaMaker</li>
+</ul>
+<p><br /></p>
+<h2 id="EKS-Network-Security">EKS Network Security</h2>
+<hr>
+<p>Pod 之間預設是可以交流的，這並不安全。 所以 Kuberentes Network 提供我們在 Pod 之間網路做限制的方法 (東西向流量), 或是 Pod 跟外部服務溝通的網路限制方法。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">簡單來說就是 Kubernetes 自己的 Security Group，只是有些包含到 OSI Layer 3 - 4。
+</code></pre></div><p>常見的有以下幾種：</p>
+<ul>
+<li>Calico</li>
+<li>Tigera</li>
+<li>Cilium</li>
+</ul>
+<h3 id="encryption-in-transit-傳輸時加密">Encryption in Transit (傳輸時加密)</h3>
+<ul>
+<li>Nitro Instance (C5n, G4, I3en, M5dn, M5n, P3dn, R5dn, R5n) 是預設傳輸加密的。</li>
+<li>CNI 的選擇 (使用 WeaveNet 也會自動加密)</li>
+<li>Service Mesh 也可以做到
+<ul>
+<li>AWS App Mesh → SSL (使用 ACM Private Certificate )</li>
+<li>Linkerd → SSL</li>
+<li>Istio → SSL</li>
+</ul>
+</li>
+<li>使用 Ingress Controller with HTTPS
+<ul>
+<li>ALB / NLB / CLB</li>
+<li>如果你要 Pod 到 Pod 走 HTTPS 流量加密，是很吃 CPU 資源的，因為你會需要在 Pod 做加解密並建立 handshake，而這很浪費資源，因為 Pod 資源理論上是要給應用程式做使用的。要盡量在 Ingress (最上層）去做完這件事就可以了。</li>
+</ul>
+</li>
+</ul>
+<h3 id="recommendations-2">Recommendations</h3>
+<ul>
+<li>建立 K8S Network Policy 或 <code>Calico</code> 裡限制 inbound/outbound 流量。
+<ul>
+<li>Kubernets Network Policy</li>
+<li>Calico Global Network Policy</li>
+</ul>
+</li>
+<li>盡量讓 Pod 之間使用 DNS 溝通，並建立允許 DNS (port: 53) 流量的規則。</li>
+<li>只允許必要的流量。</li>
+<li>NLB / ALB 要加上 SSL Certificate。</li>
+</ul>
+<p><br /></p>
+<h2 id="EKS-SG">EKS Security Groups</h2>
+<hr>
+<p>官方建議：<a href="https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html">https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html</a></p>
+<p>Node / Control Panel :<br>
+- <strong>10250</strong> (kubelet needs)<br>
+- <strong>443</strong> (API needs)
+- 這兩個 port 一定要開。</p>
+<p>當我們建立 cluster 的時候, SG 會自動幫我們建立。</p>
+<ul>
+<li>為簡單起見，建議 <code>將 Control Panel 的 SG 直接加到 Worker SG</code> 確保溝通上沒有問題。</li>
+<li>如果需要跟外部服務溝通，可以使用 Network Policy Engine (e.g. Cilium 使用 DNS 去溝通) or (Calico 使用 network policy 去幫你建立 SG)</li>
+<li>或是使用 Service Mesh (Istio, app mesh) 也可以控制 egress gateway</li>
+<li><code>不要在 Control Panel &amp; Managed Node Group 上面掛同一個 SG</code>，會引發無法刪除 Node Group 的 Bug。 <a href="https://docs.aws.amazon.com/eks/latest/APIReference/API_Issue.html">https://docs.aws.amazon.com/eks/latest/APIReference/API_Issue.html</a></li>
+</ul>
+<blockquote>
+<p>建議使用 Network Policy 去控制的原因是因為我們不會在一台 Instance 上只跑一個 Pod ，所以使用控制 VM Level 的 SG 去控制 Pod 會有點粗糙，畢竟我們還無法把 SG 套用在個別的 Pod 身上。</p>
+</blockquote>
+<p><br /></p>
+<h2 id="EKS-RUNTIME">EKS Runtime Security</h2>
+<hr>
+<blockquote>
+<p>目的是為了防止在 container 內的惡意攻擊，防止被從 container 內做 system call 打到底層的 host kernel。</p>
+</blockquote>
+<p>為了達到目的，我們應該限縮 application 利用到 system call 的範圍。
+而我們可以利用 <code>seccomp (secure cimputing)</code> 來協助。 seccomp 是 Linux 的一個工具，可以限制 process 只能呼叫特定的 system call。</p>
+<ul>
+<li>syscall2seccomp  <a href="https://github.com/antitree/syscall2seccomp">https://github.com/antitree/syscall2seccomp</a></li>
+</ul>
+<p>跟 SELinux 不一樣，<code>seccomp</code> 不是要獨立容器，他是要保護 host kernel 不要被未授權的執行 syscall。他會只允許在 whitelist 內的 syscall。而 Docker 有預設的 seccomp profile 可以去使用並符合大部分的需求。</p>
+<ul>
+<li>seccomp 在 kubelet 上是 alpha feature, 可以使用 <code>--seccomp-profile-root</code> 去啟用。</li>
+<li>使用 3rd 方案保護 runtime
+<ul>
+<li>Apparmor</li>
+<li>seccomp profile</li>
+</ul>
+</li>
+</ul>
+<p>補充資料[Docker Seccomp Profile 配置]：
+<a href="https://blog.csdn.net/kikajack/article/details/79596843">https://blog.csdn.net/kikajack/article/details/79596843</a></p>
+<p><br /></p>
+<h2 id="EKS-HOST">EKS Infrastructure(Worker Node) Security</h2>
+<hr>
+<ul>
+<li>
+<p><strong>定期汰換 Node</strong></p>
+<ul>
+<li>升級時不要 in-place，<code>直接把 Node 都換成新的機器</code> (Managed Node Group 推薦這樣做)。</li>
+<li>Node Group 整組換掉自動化步驟，以免人為失誤（這很常有失誤。
+<ul>
+<li>建立新的 Group</li>
+<li>Drain containers</li>
+<li>Terminate Old Instances</li>
+</ul>
+</li>
+<li>Fargate 會自動在每次啟動都使用新的，這也是一種方法（原本就是 Fargate 的優點。
+<ul>
+<li>但會常常被 reschedule，建議都使用 deployment / statefulset。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>定期檢查 cluster 是否合乎安全規範</strong></p>
+<ul>
+<li>kube-bench  <a href="https://github.com/aquasecurity/kube-bench#running-in-an-eks-cluster">https://github.com/aquasecurity/kube-bench#running-in-an-eks-cluster</a></li>
+<li>kube-bench 目前 EKS AMI 會有假陽性問題，正在 issue 裡等待修復</li>
+</ul>
+</li>
+<li>
+<p><strong>最小化 Node 權限</strong></p>
+<ul>
+<li>使用 SSM Session Manager 取代 SSH (反正 For Production 理論上也不會常進去)。</li>
+<li>但 SSM Session Manager 目前有問題，你會需要在 Host 上安裝 SSM-Agent，那如果你一開始就拔掉 SSH，又要怎麼去安裝？ (<code>雞生蛋、蛋生雞問題</code>)
+<ul>
+<li>目前可以使用一個 Privileged 的 DaemonSet 去跑 Shell Script 去安裝，但跑完就要把這個 DaemonSet 刪掉</li>
+<li>等到官方正式支援就可以不用幹這件事了 QQ</li>
+<li>The DaemonSet 參考安裝：  <a href="https://github.com/jicowan/ssm-agent-daemonset">https://github.com/jicowan/ssm-agent-daemonset</a></li>
+<li>原理是利用 <code>nsenter</code> 進到別的 namespace 去提權安裝 （hack自己)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>把 Worker Nodes 放在 Private Subnets</strong></p>
+<ul>
+<li>在 4/22, 2020 之前建立的 NodeGroup 都預設會給 Node Pulic IP, 如果是這樣你可以透過 SG 限制。</li>
+<li>之後的都會根據 Subnet 來決定要不要給 Public IP，所以把 Worker Node 放在 Private Subnet 就 ok 了。</li>
+</ul>
+</li>
+<li>
+<p><strong>使用 Amazon Inspector 來檢驗是否有漏洞</strong><br>
+<a href="https://docs.aws.amazon.com/zh_tw/inspector/latest/userguide/inspector_introduction.html">https://docs.aws.amazon.com/zh_tw/inspector/latest/userguide/inspector_introduction.html</a><br>
+Amazon Inspector 會測試 Amazon EC2 instances 的網路存取能力，以及這些執行個體上執行的應用程式安全性狀態。Amazon Inspector 會評估應用程式是否有漏洞與弱點，以及是否偏離最佳實務。執行評估後，會產生安全調查結果的詳細清單，並依嚴重程度排列。</p>
+<ul>
+<li>會需要安裝一個 deployment 去監控機器上的活動。</li>
+<li>如果你用 NodeGroup 的話目前不支援你使用自己的 AMI，所以你會需要在 NodeGroup 幫你啟動 (bootstrapped) 前先將 Agent 安裝好。</li>
+<li>Fargate 不能跑 Inspector。</li>
+</ul>
+</li>
+<li>
+<p><strong>使用優化的 OS (Container 專用)</strong></p>
+<ul>
+<li>RancherOS</li>
+<li>Bottlerocket 🔥</li>
+</ul>
+</li>
+<li>
+<p><strong>其他替代做法： 使用 SELinux</strong><br>
+<a href="https://platform9.com/blog/selinux-kubernetes-rbac-and-shipping-security-policies-for-on-prem-applications/">SELinux, Kubernetes RBAC, and Shipping Security Policies for On-prem Applications</a></p>
+</li>
+</ul>
+<p><br />
+<br /></p>
 
     <br /><br />
 <iframe class="LikeCoin" height="200" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2fblog%2f2020-05-26-eks-best-practices-security%2f" width="55%" frameborder=0></iframe>
@@ -755,7 +976,7 @@ e.g. 多容器間 Memory 是不能共享的，但 CPU 可以。</p>
         </section>
         <header>
           <h4><a href="/blog/2020-05-26-eks-best-practices-security/">EKS Best Practices - Security</a></h4>
-          <time class="published" datetime="">June 4, 2020</time>
+          <time class="published" datetime="">June 7, 2020</time>
         </header>
       </article>
       
