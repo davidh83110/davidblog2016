@@ -18,7 +18,7 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
  EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Security Groups EKS Runtime Security EKS Infrastructure(Worker Node) Security">
 <meta itemprop="datePublished" content="2020-06-07T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-06-07T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1514">
+<meta itemprop="wordCount" content="1511">
 <meta itemprop="image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg">
 
 
@@ -342,8 +342,8 @@ EKS Endpoint 預設是 public，其實也是安全，因為還有 IAM Auth 的�
 <a href="https://github.com/aquasecurity/kubectl-who-can">https://github.com/aquasecurity/kubectl-who-can</a></p>
 </li>
 <li>
-<p><strong>除了 IAM，也可以使用 OIDC 授權 Github 使用 OAUTH 存取 EKS (或是 AWS SSO)</strong><br>
-不過一般情況下還是推薦使用 IAM （權限比較可以集中單一管理，不易發散）。 不過如果有 Kubernetes-Dashboard / Kibana 這一類的需求，也可以用 OIDC 做 OAuth 來做證認。</p>
+<p><strong>除了 IAM，也可以使用 OIDC（做認證），Github 使用 OAUTH（做授權）存取 EKS (或是 AWS SSO)</strong><br>
+不過我自己一般情況下還是偏向盡量使用 IAM（偏向權限比較可以盡量集中單一管理，較不易發散）。 但是也有看到 Kubernetes-Dashboard / Kibana 使用 OIDC 的案例，也是挺不錯的（我覺得如果只有要做 read，而大家權限都可以給一樣 readonly 的話，是滿適合的）。</p>
 <ul>
 <li>Kubernetes Dashboard SSO with OIDC <a href="https://thenewstack.io/single-sign-on-for-kubernetes-dashboard-experience/">https://thenewstack.io/single-sign-on-for-kubernetes-dashboard-experience/</a></li>
 <li>EKS with Github  <a href="https://aws.amazon.com/blogs/opensource/authenticating-eks-github-credentials-teleport/">https://aws.amazon.com/blogs/opensource/authenticating-eks-github-credentials-teleport/</a></li>

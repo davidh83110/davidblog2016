@@ -88,8 +88,8 @@ AWS 建議我們在 IAM 的部分注意以下幾件事
         [https://github.com/FairwindsOps/rbac-lookup](https://github.com/FairwindsOps/rbac-lookup)  
         [https://github.com/aquasecurity/kubectl-who-can](https://github.com/aquasecurity/kubectl-who-can)
 
-- **除了 IAM，也可以使用 OIDC 授權 Github 使用 OAUTH 存取 EKS (或是 AWS SSO)**  
-    不過一般情況下還是推薦使用 IAM （權限比較可以集中單一管理，不易發散）。 不過如果有 Kubernetes-Dashboard / Kibana 這一類的需求，也可以用 OIDC 做 OAuth 來做證認。  
+- **除了 IAM，也可以使用 OIDC（做認證），Github 使用 OAUTH（做授權）存取 EKS (或是 AWS SSO)**  
+    不過我自己一般情況下還是偏向盡量使用 IAM（偏向權限比較可以盡量集中單一管理，較不易發散）。 但是也有看到 Kubernetes-Dashboard / Kibana 使用 OIDC 的案例，也是挺不錯的（我覺得如果只有要做 read，而大家權限都可以給一樣 readonly 的話，是滿適合的）。  
     - Kubernetes Dashboard SSO with OIDC [https://thenewstack.io/single-sign-on-for-kubernetes-dashboard-experience/](https://thenewstack.io/single-sign-on-for-kubernetes-dashboard-experience/)  
     - EKS with Github  [https://aws.amazon.com/blogs/opensource/authenticating-eks-github-credentials-teleport/](https://aws.amazon.com/blogs/opensource/authenticating-eks-github-credentials-teleport/)  
     - OIDC Proxy [https://aws.amazon.com/blogs/opensource/consistent-oidc-authentication-across-multiple-eks-clusters-using-kube-oidc-proxy/](https://aws.amazon.com/blogs/opensource/consistent-oidc-authentication-across-multiple-eks-clusters-using-kube-oidc-proxy/)
