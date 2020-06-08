@@ -89,7 +89,8 @@ AWS 建議我們在 IAM 的部分注意以下幾件事
         [https://github.com/aquasecurity/kubectl-who-can](https://github.com/aquasecurity/kubectl-who-can)
 
 - **除了 IAM，也可以使用 OIDC 授權 Github 使用 OAUTH 存取 EKS (或是 AWS SSO)**  
-    不過當然還是推薦使用 IAM。 綁其他 3rd OAuth 如果不是有特定原因真的不太建議。  
+    不過一般情況下還是推薦使用 IAM （權限比較可以集中單一管理，不易發散）。 不過如果有 Kubernetes-Dashboard / Kibana 這一類的需求，也可以用 OIDC 做 OAuth 來做證認。  
+    - Kubernetes Dashboard SSO with OIDC [https://thenewstack.io/single-sign-on-for-kubernetes-dashboard-experience/](https://thenewstack.io/single-sign-on-for-kubernetes-dashboard-experience/)  
     - EKS with Github  [https://aws.amazon.com/blogs/opensource/authenticating-eks-github-credentials-teleport/](https://aws.amazon.com/blogs/opensource/authenticating-eks-github-credentials-teleport/)  
     - OIDC Proxy [https://aws.amazon.com/blogs/opensource/consistent-oidc-authentication-across-multiple-eks-clusters-using-kube-oidc-proxy/](https://aws.amazon.com/blogs/opensource/consistent-oidc-authentication-across-multiple-eks-clusters-using-kube-oidc-proxy/)
 
@@ -252,17 +253,20 @@ QoS 很重要，不僅是資源利用跟效率的問題，設定上的失誤也�
 
 ## EKS Tenant Security {#EKS-TENANT}
 ---
-Kubernetes 在多租戶 (Multiple Tenant) 的應用下，要怎麼去做到對每個租戶的`隔離`，是很重要的一件事。
-所謂`多租戶`，就是指一組應用程式所使用的計算，網絡，存儲等資源組成的工作負載集合。也就是說會有需要不同資源的不同應用程式跑在同一個 Kubernetes Cluster。  
+Kubernetes 在多租戶 (Multiple Tenant) 的應用下，要怎麼去做到對每個租戶的`隔離`，是很重要的一件事。 所謂`多租戶`，就是指一組應用程式所使用的計算，網絡，存儲等資源組成的工作負載集合。也就是說會有需要不同資源的不同應用程式跑在同一個 Kubernetes Cluster。 而如何適當隔離不同應用，避免惡意的租戶去對其他租戶做攻擊，並保證租戶間可以分配到各自合適的資源，就是這個 section 要探討的。  
 
-那既然我們把不同的應用程式跑再一起，`隔離` 就相當重要了。如何適當隔離不同應用，以保護彼此的安全，就是這個 section 要探討的。  
+Kubernetes Control Panel 本身是單租戶的形式 (一個 control panel 給所有租戶共用)，但在 Kubernetes 集群中我們可以透過一些限制達到相對安全的多租戶應用的形式，以便更有效率地利用資源。  
 
-Kubernetes 本身是單租戶的形式，但我們可以透過一些限制使他邏輯上成為多租戶的形式。 也就是說本來只能一個叢集跑一個應用一個 deployment，但我們透過對 Namespace 隔離等等的手段，使得我們可以讓多個應用跑在同一個 cluster，並確保彼此之間不會互相影響。
+我覺得這邊解釋應該是說：安全性理想狀況下，一個 Kubernetes 環境中只運行一個應用程式，這是`單租戶`。 但我們透過對 Namespace 隔離等等的手段，使得我們可以讓多個應用程式跑在同一個 cluster，並確保彼此之間不會互相影響以達成運行多個應用在同一個 Kubernetes 環境的需求，這是`多租戶`。  
+
+單/多租戶可以想成是房子的住戶形式。一棟透天厝只住一戶就會相對安全，也不用搶資源（單租戶）。 如果是一棟公寓裡面住了很多戶，要怎麼安排每位住戶的資源分配跟每一戶的隔離性，就會是問題了（多租戶）。（總不能讓 A 隨便穿牆可以跑到 B 家，或是 A 要洗澡 B 就不能洗碗這類的狀況發生） 
+
+我自己在日常實踐中也多是 Soft 多租戶，切不同的 Namespace 並用 RBAC / Limits 來做限制給不同的應用程式或是 Team 做使用。  
 
 <br />
 
 ### Soft Multi-Tenant
-Soft 顧名思義就是上述所講的透過邏輯層隔離的方式來達到這個目的。  
+Soft 就是透過邏輯層隔離的方式來達到這個目的。  
 - RBAC
 - Quotas
 - Limit ranges
