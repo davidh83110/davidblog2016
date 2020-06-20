@@ -773,7 +773,9 @@ table {
   grid-area: footer; }
 
 #wrapper {
-  overflow: hidden;
+  display: grid;
+  grid-template-areas: 'intro' 'main' 'sidebar' 'footer';
+  grid-template-rows: auto 1fr auto auto;
   margin: 0 5%;
   max-width: 90em;
   min-height: 100vh;
