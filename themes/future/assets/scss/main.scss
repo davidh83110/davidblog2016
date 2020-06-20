@@ -1005,13 +1005,14 @@ textarea {
  }
 
  #wrapper {
-   display: grid;
-   grid-template-areas:
-     'intro'
-     'main'
-     'sidebar'
-     'footer';
-   grid-template-rows: auto 1fr auto auto;
+  //  display: grid;
+  //  grid-template-areas:
+  //    'intro'
+  //    'main'
+  //    'sidebar'
+  //    'footer';
+  //  grid-template-rows: auto 1fr auto auto;
+   overflow: hidden;
    margin: 0 5%;
    max-width: 90em;
    min-height: 100vh;

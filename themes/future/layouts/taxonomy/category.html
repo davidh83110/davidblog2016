@@ -6,7 +6,9 @@
     <div id="wrapper">
       {{ partial "site-intro" . }}
       <main id="site-main">
-        <h1>{{ .Title }}</h1>
+        <header>
+          <h1>{{ .Title }}</h1>
+        </header>
         {{ $paginator := .Paginate (where .Data.Pages "Type" "in" site.Params.mainSections) }}
         {{ range $paginator.Pages }}
             {{ .Render "content-list" }}
