@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="EKS Best Practices - Security">
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="EKS Best Practices - Security">
 <meta itemprop="description" content="Introduction  不久前 AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，但從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。 由於目前只有 Security 的部分，也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。
 根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 盡量 安全的使用 EKS。由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給自己當成筆記。
 覺得自己看的滿仔細的，還提交了 5 個 PR，想說以此做個筆記以便日後回來看，寫下來的筆記整理永遠是很好的複習跟加深記憶的方式。
@@ -15,9 +15,14 @@ Github - https://github.com/aws/aws-eks-best-practices
 Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
 
 目錄  以下內容會分成幾個部分來講，盡量 Follow 原文的結構。
- EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Security Groups EKS Runtime Security EKS Infrastructure(Worker Node) Security"><meta itemprop="datePublished" content="2020-06-07T00:00:00&#43;00:00" />
+ EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Security Groups EKS Runtime Security EKS Infrastructure(Worker Node) Security">
+<meta itemprop="datePublished" content="2020-06-07T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-06-07T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1511"><meta itemprop="image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg">
+<meta itemprop="wordCount" content="1511">
+<meta itemprop="image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg">
+
+
+
 <meta itemprop="keywords" content="" /><meta property="og:title" content="EKS Best Practices - Security" />
 <meta property="og:description" content="Introduction  不久前 AWS 出了一本 EKS Best Practices (Mkdocs)，目前只有釋出 Security 的部分，但從 Repository 可以看到未來應該還會有 Cost optimization / Operation / Performance / Reliability 的部分。 由於目前只有 Security 的部分，也就花了幾天把它看完，發現這真的個好東西，那種感覺差不多是你就跟著他跟你說的實踐去做，初學者也不會太偏離軌道。
 根據 AWS 自己說的 AWS 會負責雲的安全 (security of the cloud)，但使用者要負責自己在雲上的安全 (security in the cloud)。 所以我們就來看看我們需要做到哪些事才可以 盡量 安全的使用 EKS。由於這份文件說長不長，說短不短，看完還是要一點時間，尤其又是英文，所以我看完後整理了一下重點跟翻譯可以給自己當成筆記。
@@ -29,10 +34,10 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
 目錄  以下內容會分成幾個部分來講，盡量 Follow 原文的結構。
  EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Security Groups EKS Runtime Security EKS Infrastructure(Worker Node) Security" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/2020-05-26-eks-best-practices-security/" /><meta property="og:image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg" /><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2020-06-07T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-06-07T00:00:00&#43;00:00" />
-
+<meta property="og:url" content="/blog/2020-05-26-eks-best-practices-security/" />
+<meta property="og:image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg" />
+<meta property="article:published_time" content="2020-06-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-07T00:00:00+00:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg"/>
 
@@ -46,7 +51,7 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
 
 目錄  以下內容會分成幾個部分來講，盡量 Follow 原文的結構。
  EKS &amp; IAM EKS IAM Role for ServiceAccounts (IRSA) EKS Pod Security EKS Tenant Security EKS Detective Control EKS Network Security EKS Security Groups EKS Runtime Security EKS Infrastructure(Worker Node) Security"/>
-<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -62,6 +67,41 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
       </a>
     </h1>
     <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
       
       <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
       
@@ -344,35 +384,35 @@ EKS Endpoint 預設是 public，其實也是安全，因為還有 IAM Auth 的�
 </li>
 <li>
 <p><strong>使用非 Root 的用戶來啟動 Containers (<code>runAsUser</code> / <code>runAsGroup</code>)</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">security-context-demo</span>
-<span style="color:#f92672">spec</span>:
-  <span style="color:#f92672">securityContext</span>:
-    <span style="color:#f92672">runAsUser</span>: <span style="color:#ae81ff">1000</span>
-    <span style="color:#f92672">runAsGroup</span>: <span style="color:#ae81ff">3000</span>
-  <span style="color:#f92672">containers</span>:
-  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">sec-ctx-demo</span>
-    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
-    <span style="color:#f92672">command</span>: [ <span style="color:#e6db74">&#34;sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;sleep 1h&#34;</span> ]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: Pod
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: security-context-demo
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">securityContext</span>:
+    <span style="color:#66d9ef">runAsUser</span>: <span style="color:#ae81ff">1000</span>
+    <span style="color:#66d9ef">runAsGroup</span>: <span style="color:#ae81ff">3000</span>
+  <span style="color:#66d9ef">containers</span>:
+  - <span style="color:#66d9ef">name</span>: sec-ctx-demo
+    <span style="color:#66d9ef">image</span>: busybox
+    <span style="color:#66d9ef">command</span>: [ <span style="color:#e6db74">&#34;sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;sleep 1h&#34;</span> ]
 </code></pre></div></li>
 <li>
 <p><strong>IRSA 的 Role Trusted Relationship 盡量綁定 service account</strong><br>
 這是指 trusted relationship 那邊的設定，建完 Role 之後要手動去改 （建立的時候沒有這選項）
 範例中就是將這個 Role 限制在 <code>deault namespace</code> 的 <code>exteranl-dns service account</code></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{
-  <span style="color:#f92672">&#34;Version&#34;: </span><span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
-  <span style="color:#f92672">&#34;Statement&#34;: </span>[
+  <span style="color:#66d9ef">&#34;Version&#34;: </span><span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+  <span style="color:#66d9ef">&#34;Statement&#34;: </span>[
     {
-      <span style="color:#f92672">&#34;Effect&#34;: </span><span style="color:#e6db74">&#34;Allow&#34;</span>,
-      <span style="color:#f92672">&#34;Principal&#34;: </span>{
-        <span style="color:#f92672">&#34;Federated&#34;: </span><span style="color:#e6db74">&#34;arn:aws:iam::xx:oidc-provider/oidc.eks.ap-northeast-1.amazonaws.com/id/xxx&#34;</span>
+      <span style="color:#66d9ef">&#34;Effect&#34;: </span><span style="color:#e6db74">&#34;Allow&#34;</span>,
+      <span style="color:#66d9ef">&#34;Principal&#34;: </span>{
+        <span style="color:#66d9ef">&#34;Federated&#34;: </span><span style="color:#e6db74">&#34;arn:aws:iam::xx:oidc-provider/oidc.eks.ap-northeast-1.amazonaws.com/id/xxx&#34;</span>
       },
-      <span style="color:#f92672">&#34;Action&#34;: </span><span style="color:#e6db74">&#34;sts:AssumeRoleWithWebIdentity&#34;</span>,
-      <span style="color:#f92672">&#34;Condition&#34;: </span>{
-        <span style="color:#f92672">&#34;StringEquals&#34;: </span>{
-          <span style="color:#f92672">&#34;oidc.eks.ap-northeast-1.amazonaws.com/id/xx:sub&#34;: </span><span style="color:#e6db74">&#34;system:serviceaccount:default:external-dns&#34;</span>
+      <span style="color:#66d9ef">&#34;Action&#34;: </span><span style="color:#e6db74">&#34;sts:AssumeRoleWithWebIdentity&#34;</span>,
+      <span style="color:#66d9ef">&#34;Condition&#34;: </span>{
+        <span style="color:#66d9ef">&#34;StringEquals&#34;: </span>{
+          <span style="color:#66d9ef">&#34;oidc.eks.ap-northeast-1.amazonaws.com/id/xx:sub&#34;: </span><span style="color:#e6db74">&#34;system:serviceaccount:default:external-dns&#34;</span>
         }
       }
     }
@@ -416,12 +456,12 @@ EKS Endpoint 預設是 public，其實也是安全，因為還有 IAM Auth 的�
 在 Serverless 的角度，我也覺得盡量不要存東西在 Host 上，可以考慮 EFS 或直接使用 Fargate。
 AWS 在這邊是說真的要用的話記得要注意權限 (readonly 該給的要給)。<br>
 另外也可以在 PSP 先做好限制（如下面範例）。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">allowedHostPaths</span>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">allowedHostPaths</span>:
 <span style="color:#75715e"># This allows &#34;/foo&#34;, &#34;/foo/&#34;, &#34;/foo/bar&#34; etc., but</span>
 <span style="color:#75715e"># disallows &#34;/fool&#34;, &#34;/etc/foo&#34; etc.</span>
 <span style="color:#75715e"># &#34;/foo/../&#34; is never valid.</span>
-- <span style="color:#f92672">pathPrefix</span>: <span style="color:#e6db74">&#34;/foo&#34;</span>
-    <span style="color:#f92672">readOnly</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># only allow read-only mounts</span>
+- <span style="color:#66d9ef">pathPrefix</span>: <span style="color:#e6db74">&#34;/foo&#34;</span>
+    <span style="color:#66d9ef">readOnly</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># only allow read-only mounts</span>
 </code></pre></div></li>
 </ul>
 <p><br /></p>
@@ -1097,13 +1137,13 @@ Amazon Inspector 會測試 Amazon EC2 instances 的網路存取能力，以及�
         David&#39;s Blog
       
     . <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;

@@ -6,15 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions">
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions">
 <meta itemprop="description" content="由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.
 踩過的雷很多，該碰到的問題也都碰到了，卻只花了短短的一個多禮拜，果然壓力使人迅速成長，也見證了一句話，「所謂大神，不過就是雷踩得比較多」。
 MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近年多數資料庫使用的 Replica Set (Primary and Sceondary) 架構, 取代舊有的 Shard Cluster (Master and Slave). 進而增加許多優勢，像是自動故障恢復、讀寫控制等等。
 本篇文章以 mongodb-org 3.0 以及 3.2 為主, 這兩個版本最大的差異就是在 ReplicaSet。 升級上官方也提供非常詳盡的documents, 不得不稱讚mongodb的文件，真的很完整。
 This post is mainly for describing the processes and experiences to upgrade Mongodb from 3.0 to 3.2 on Shopline which is our company.
-There&rsquo;s a big difference of Mongodb 3."><meta itemprop="datePublished" content="2018-12-01T00:00:00&#43;00:00" />
+There&rsquo;s a big difference of Mongodb 3.">
+<meta itemprop="datePublished" content="2018-12-01T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-12-01T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1552"><meta itemprop="image" content="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png">
+<meta itemprop="wordCount" content="1552">
+<meta itemprop="image" content="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png">
+
+
+
 <meta itemprop="keywords" content="" /><meta property="og:title" content="MongoDB 簡介與Replica Set架設以及常見雷點 / MongoDB Introduce ,Replica Set Setup and Error Soultions" />
 <meta property="og:description" content="由於敝司 Shopline 使用的 Mongodb 的 Shard 以及 Configsvr 版本不一致，此次升級主要會將版本一致升級到3.2, 並全部採用 Replica Set.
 踩過的雷很多，該碰到的問題也都碰到了，卻只花了短短的一個多禮拜，果然壓力使人迅速成長，也見證了一句話，「所謂大神，不過就是雷踩得比較多」。
@@ -23,10 +28,10 @@ MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近�
 This post is mainly for describing the processes and experiences to upgrade Mongodb from 3.0 to 3.2 on Shopline which is our company.
 There&rsquo;s a big difference of Mongodb 3." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html" /><meta property="og:image" content="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png" /><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2018-12-01T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2018-12-01T00:00:00&#43;00:00" />
-
+<meta property="og:url" content="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2018/12/01/mongodb-introduction-upgrade.html" />
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png" />
+<meta property="article:published_time" content="2018-12-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-12-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://cdn-images-1.medium.com/max/2000/1*Ce0gUe0LbnhL7ebnDGTp5w.png"/>
 
@@ -37,7 +42,7 @@ MongoDB 為近年來很火紅的No SQL Databese, 在新版本中也快採用近�
 本篇文章以 mongodb-org 3.0 以及 3.2 為主, 這兩個版本最大的差異就是在 ReplicaSet。 升級上官方也提供非常詳盡的documents, 不得不稱讚mongodb的文件，真的很完整。
 This post is mainly for describing the processes and experiences to upgrade Mongodb from 3.0 to 3.2 on Shopline which is our company.
 There&rsquo;s a big difference of Mongodb 3."/>
-<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -53,6 +58,41 @@ There&rsquo;s a big difference of Mongodb 3."/>
       </a>
     </h1>
     <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
       
       <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
       
@@ -530,7 +570,7 @@ And please insert another data to test whether succeed.</p>
 <p>Absolutely not, 3.0 doesn&rsquo;t support replica mode<br>
 mongos 3.0 是不允許連接到 3.2 或以上版本的 configsvr的。</p>
 <p><br /></p>
-<h4 id="q-setshardversion-failed-when-mongos-configdb-endpoint-has-been-changed"><strong>Q: setShardVersion failed&quot; when mongos configDB endpoint has been changed</strong></h4>
+<h4 id="q-setshardversion-failed-when-mongos-configdb-endpoint-has-been-changed"><strong>Q: setShardVersion failed&rdquo; when mongos configDB endpoint has been changed</strong></h4>
 <pre><code>mongos&gt; db.users.find()
 Error: error: {
     &quot;$err&quot; : &quot;setShardVersion failed shard: shard1:shard1/ip-10-0-0-122:27018,ip-10-0-0-166:27018 { configdb: { stored: \&quot;10.0.0.45:27019,10.0.0.45:27020,10.0.0.45:27021\&quot;, given: \&quot;ip-10-0-0-45:27019,ip-10-0-0-45:27020,ip-10-0-0-45:27021\&quot; }, ok: 0.0, errmsg: \&quot;mongos specified a different config database string : stored : 10.0.0.45:27019,10.0.0.45:27020,10.0.0.45:27021 vs given : ip-10-0-0-45:27019,ip-10-0-0...\&quot;, $gleStats: { lastOpTime: Timestamp 0|0, electionId: ObjectId('5bffb069a4b240083f2691cb') } }&quot;,
@@ -959,13 +999,13 @@ I will reply all questions if I can help. <br /></p>
         David&#39;s Blog
       
     . <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;

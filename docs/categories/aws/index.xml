@@ -6,7 +6,11 @@
     <description>Recent content in AWS on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 24 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/aws/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Jun 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/aws/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update</title>
       <link>/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/</link>
@@ -47,7 +51,7 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
       <description>External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
 External-DNS 官方介紹：
- Inspired by Kubernetes DNS, Kubernetes&#39; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.</description>
+ Inspired by Kubernetes DNS, Kubernetes&amp;rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.</description>
     </item>
     
     <item>

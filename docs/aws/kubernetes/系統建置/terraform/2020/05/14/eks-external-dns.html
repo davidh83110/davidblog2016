@@ -6,23 +6,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="EKS External-DNS Cross Account Route53 Setup">
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="EKS External-DNS Cross Account Route53 Setup">
 <meta itemprop="description" content="External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
 External-DNS 官方介紹：
- Inspired by Kubernetes DNS, Kubernetes&#39; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records."><meta itemprop="datePublished" content="2020-05-14T00:00:00&#43;00:00" />
+ Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.">
+<meta itemprop="datePublished" content="2020-05-14T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-14T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="658"><meta itemprop="image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10">
+<meta itemprop="wordCount" content="658">
+<meta itemprop="image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10">
+
+
+
 <meta itemprop="keywords" content="" /><meta property="og:title" content="EKS External-DNS Cross Account Route53 Setup" />
 <meta property="og:description" content="External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
 External-DNS 官方介紹：
- Inspired by Kubernetes DNS, Kubernetes&#39; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records." />
+ Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" /><meta property="og:image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10" /><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2020-05-14T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-05-14T00:00:00&#43;00:00" />
-
+<meta property="og:url" content="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" />
+<meta property="og:image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10" />
+<meta property="article:published_time" content="2020-05-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-14T00:00:00+00:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg width=10"/>
 
@@ -30,8 +35,8 @@ External-DNS 官方介紹：
 <meta name="twitter:description" content="External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
 External-DNS 官方介紹：
- Inspired by Kubernetes DNS, Kubernetes&#39; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records."/>
-<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
+ Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records."/>
+<link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -47,6 +52,41 @@ External-DNS 官方介紹：
       </a>
     </h1>
     <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
       
       <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
       
@@ -224,7 +264,7 @@ External-DNS 官方介紹：
 <p>當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。</p>
 <p>External-DNS 官方介紹：</p>
 <blockquote>
-<p>Inspired by Kubernetes DNS, Kubernetes' cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records. Unlike KubeDNS, however, it&rsquo;s not a DNS server itself, but merely configures other DNS providers accordingly—e.g. AWS Route 53 or Google Cloud DNS.</p>
+<p>Inspired by Kubernetes DNS, Kubernetes&rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records. Unlike KubeDNS, however, it&rsquo;s not a DNS server itself, but merely configures other DNS providers accordingly—e.g. AWS Route 53 or Google Cloud DNS.</p>
 <p>In a broader sense, ExternalDNS allows you to control DNS records dynamically via Kubernetes resources in a DNS provider-agnostic way.</p>
 </blockquote>
 <ul>
@@ -380,79 +420,79 @@ External-DNS 官方介紹：
 <ul>
 <li>
 <p>External-DNS YAML</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ServiceAccount</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">external-dns</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: ServiceAccount
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: external-dns
   <span style="color:#75715e"># If you&#39;re using Amazon EKS with IAM Roles for Service Accounts, specify the following annotation.</span>
   <span style="color:#75715e"># Otherwise, you may safely omit it.</span>
-  <span style="color:#f92672">annotations</span>:
+  <span style="color:#66d9ef">annotations</span>:
     <span style="color:#75715e"># Substitute your account ID and IAM service role name below.</span>
-    <span style="color:#f92672">eks.amazonaws.com/role-arn</span>: <span style="color:#ae81ff">arn:aws:iam::{{ account_id }}:role/{{ iam_service_role_name }}</span>
+    <span style="color:#66d9ef">eks.amazonaws.com/role-arn</span>: arn:aws:iam::{{ account_id }}:role/{{ iam_service_role_name }}
 ---
-<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">rbac.authorization.k8s.io/v1beta1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterRole</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">external-dns</span>
-<span style="color:#f92672">rules</span>:
-- <span style="color:#f92672">apiGroups</span>: [<span style="color:#e6db74">&#34;&#34;</span>]
-  <span style="color:#f92672">resources</span>: [<span style="color:#e6db74">&#34;services&#34;</span>,<span style="color:#e6db74">&#34;endpoints&#34;</span>,<span style="color:#e6db74">&#34;pods&#34;</span>]
-  <span style="color:#f92672">verbs</span>: [<span style="color:#e6db74">&#34;get&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>,<span style="color:#e6db74">&#34;list&#34;</span>]
-- <span style="color:#f92672">apiGroups</span>: [<span style="color:#e6db74">&#34;extensions&#34;</span>]
-  <span style="color:#f92672">resources</span>: [<span style="color:#e6db74">&#34;ingresses&#34;</span>]
-  <span style="color:#f92672">verbs</span>: [<span style="color:#e6db74">&#34;get&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>,<span style="color:#e6db74">&#34;list&#34;</span>]
-- <span style="color:#f92672">apiGroups</span>: [<span style="color:#e6db74">&#34;&#34;</span>]
-  <span style="color:#f92672">resources</span>: [<span style="color:#e6db74">&#34;nodes&#34;</span>]
-  <span style="color:#f92672">verbs</span>: [<span style="color:#e6db74">&#34;list&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>]
+<span style="color:#66d9ef">apiVersion</span>: rbac.authorization.k8s.io/v1beta1
+<span style="color:#66d9ef">kind</span>: ClusterRole
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: external-dns
+<span style="color:#66d9ef">rules</span>:
+- <span style="color:#66d9ef">apiGroups</span>: [<span style="color:#e6db74">&#34;&#34;</span>]
+  <span style="color:#66d9ef">resources</span>: [<span style="color:#e6db74">&#34;services&#34;</span>,<span style="color:#e6db74">&#34;endpoints&#34;</span>,<span style="color:#e6db74">&#34;pods&#34;</span>]
+  <span style="color:#66d9ef">verbs</span>: [<span style="color:#e6db74">&#34;get&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>,<span style="color:#e6db74">&#34;list&#34;</span>]
+- <span style="color:#66d9ef">apiGroups</span>: [<span style="color:#e6db74">&#34;extensions&#34;</span>]
+  <span style="color:#66d9ef">resources</span>: [<span style="color:#e6db74">&#34;ingresses&#34;</span>]
+  <span style="color:#66d9ef">verbs</span>: [<span style="color:#e6db74">&#34;get&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>,<span style="color:#e6db74">&#34;list&#34;</span>]
+- <span style="color:#66d9ef">apiGroups</span>: [<span style="color:#e6db74">&#34;&#34;</span>]
+  <span style="color:#66d9ef">resources</span>: [<span style="color:#e6db74">&#34;nodes&#34;</span>]
+  <span style="color:#66d9ef">verbs</span>: [<span style="color:#e6db74">&#34;list&#34;</span>,<span style="color:#e6db74">&#34;watch&#34;</span>]
 ---
-<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">rbac.authorization.k8s.io/v1beta1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterRoleBinding</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">external-dns-viewer</span>
-<span style="color:#f92672">roleRef</span>:
-  <span style="color:#f92672">apiGroup</span>: <span style="color:#ae81ff">rbac.authorization.k8s.io</span>
-  <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterRole</span>
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">external-dns</span>
-<span style="color:#f92672">subjects</span>:
-- <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ServiceAccount</span>
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">external-dns</span>
-  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+<span style="color:#66d9ef">apiVersion</span>: rbac.authorization.k8s.io/v1beta1
+<span style="color:#66d9ef">kind</span>: ClusterRoleBinding
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: external-dns-viewer
+<span style="color:#66d9ef">roleRef</span>:
+  <span style="color:#66d9ef">apiGroup</span>: rbac.authorization.k8s.io
+  <span style="color:#66d9ef">kind</span>: ClusterRole
+  <span style="color:#66d9ef">name</span>: external-dns
+<span style="color:#66d9ef">subjects</span>:
+- <span style="color:#66d9ef">kind</span>: ServiceAccount
+  <span style="color:#66d9ef">name</span>: external-dns
+  <span style="color:#66d9ef">namespace</span>: default
 ---
-<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">external-dns</span>
-<span style="color:#f92672">spec</span>:
-  <span style="color:#f92672">strategy</span>:
-    <span style="color:#f92672">type</span>: <span style="color:#ae81ff">Recreate</span>
-  <span style="color:#f92672">selector</span>:
-    <span style="color:#f92672">matchLabels</span>:
-      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">external-dns</span>
-  <span style="color:#f92672">template</span>:
-    <span style="color:#f92672">metadata</span>:
-      <span style="color:#f92672">labels</span>:
-        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">external-dns</span>
+<span style="color:#66d9ef">apiVersion</span>: apps/v1
+<span style="color:#66d9ef">kind</span>: Deployment
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: external-dns
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">strategy</span>:
+    <span style="color:#66d9ef">type</span>: Recreate
+  <span style="color:#66d9ef">selector</span>:
+    <span style="color:#66d9ef">matchLabels</span>:
+      <span style="color:#66d9ef">app</span>: external-dns
+  <span style="color:#66d9ef">template</span>:
+    <span style="color:#66d9ef">metadata</span>:
+      <span style="color:#66d9ef">labels</span>:
+        <span style="color:#66d9ef">app</span>: external-dns
       <span style="color:#75715e"># If you&#39;re using kiam or kube2iam, specify the following annotation.</span>
       <span style="color:#75715e"># Otherwise, you may safely omit it.</span>
-      <span style="color:#f92672">annotations</span>:
-        <span style="color:#f92672">iam.amazonaws.com/role</span>: <span style="color:#ae81ff">arn:aws:iam::{{ account_id }}:role/{{ iam_service_role_name }}</span>
-    <span style="color:#f92672">spec</span>:
-      <span style="color:#f92672">serviceAccountName</span>: <span style="color:#ae81ff">external-dns</span>
-      <span style="color:#f92672">nodeSelector</span>:
-        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">system</span>
-      <span style="color:#f92672">containers</span>:
-      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">external-dns</span>
-        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">registry.opensource.zalan.do/teapot/external-dns:latest</span>
-        <span style="color:#f92672">args</span>:
-        - --<span style="color:#ae81ff">source=service</span>
-        - --<span style="color:#ae81ff">source=ingress</span>
-        - --<span style="color:#ae81ff">provider=aws</span>
-        - --<span style="color:#ae81ff">policy=upsert-only</span> <span style="color:#75715e"># would prevent ExternalDNS from deleting any records, omit to enable full synchronization</span>
-        - --<span style="color:#ae81ff">aws-zone-type=public</span> <span style="color:#75715e"># only look at public hosted zones (valid values are public, private or no value for both)</span>
-        - --<span style="color:#ae81ff">registry=txt</span>
-        - --<span style="color:#ae81ff">txt-owner-id=my-hostedzone-identifier</span>
-      <span style="color:#f92672">securityContext</span>:
-        <span style="color:#f92672">fsGroup</span>: <span style="color:#ae81ff">65534</span> <span style="color:#75715e"># For ExternalDNS to be able to read Kubernetes and AWS token files</span>
+      <span style="color:#66d9ef">annotations</span>:
+        <span style="color:#66d9ef">iam.amazonaws.com/role</span>: arn:aws:iam::{{ account_id }}:role/{{ iam_service_role_name }}
+    <span style="color:#66d9ef">spec</span>:
+      <span style="color:#66d9ef">serviceAccountName</span>: external-dns
+      <span style="color:#66d9ef">nodeSelector</span>:
+        <span style="color:#66d9ef">app</span>: system
+      <span style="color:#66d9ef">containers</span>:
+      - <span style="color:#66d9ef">name</span>: external-dns
+        <span style="color:#66d9ef">image</span>: registry.opensource.zalan.do/teapot/external-dns:latest
+        <span style="color:#66d9ef">args</span>:
+        - --source=service
+        - --source=ingress
+        - --provider=aws
+        - --policy=upsert-only <span style="color:#75715e"># would prevent ExternalDNS from deleting any records, omit to enable full synchronization</span>
+        - --aws-zone-type=public <span style="color:#75715e"># only look at public hosted zones (valid values are public, private or no value for both)</span>
+        - --registry=txt
+        - --txt-owner-id=my-hostedzone-identifier
+      <span style="color:#66d9ef">securityContext</span>:
+        <span style="color:#66d9ef">fsGroup</span>: <span style="color:#ae81ff">65534</span> <span style="color:#75715e"># For ExternalDNS to be able to read Kubernetes and AWS token files</span>
 </code></pre></div></li>
 </ul>
 
@@ -832,13 +872,13 @@ External-DNS 官方介紹：
         David&#39;s Blog
       
     . <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;

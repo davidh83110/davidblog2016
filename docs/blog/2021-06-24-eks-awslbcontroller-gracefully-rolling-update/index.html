@@ -6,15 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update">
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update">
 <meta itemprop="description" content="Introduction  我們都知道 AWS LoadBalancer Controller 有個很嚴重的問題，就是當我們 trigger 一個 release 的時候，一般情況下 Pod 會被 Terminated 而且 draining from ALB Target Group。這就會導致 更新不平滑，因為新的 Pod 還沒 ready 也還沒 healthy(在 Target Group)，流量就會進來，那當然就會出現 502。
 白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
 本文適用以下情況：
  在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
 Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
-明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。"><meta itemprop="datePublished" content="2021-06-24T00:00:00&#43;00:00" />
+明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。">
+<meta itemprop="datePublished" content="2021-06-24T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-24T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="329"><meta itemprop="image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg">
+<meta itemprop="wordCount" content="329">
+<meta itemprop="image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg">
+
+
+
 <meta itemprop="keywords" content="" /><meta property="og:title" content="Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update" />
 <meta property="og:description" content="Introduction  我們都知道 AWS LoadBalancer Controller 有個很嚴重的問題，就是當我們 trigger 一個 release 的時候，一般情況下 Pod 會被 Terminated 而且 draining from ALB Target Group。這就會導致 更新不平滑，因為新的 Pod 還沒 ready 也還沒 healthy(在 Target Group)，流量就會進來，那當然就會出現 502。
 白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
@@ -23,10 +28,10 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
 Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
 明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" /><meta property="og:image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" /><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2021-06-24T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-06-24T00:00:00&#43;00:00" />
-
+<meta property="og:url" content="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" />
+<meta property="og:image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" />
+<meta property="article:published_time" content="2021-06-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-24T00:00:00+00:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg"/>
 
@@ -37,7 +42,7 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
  在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
 Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
 明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。"/>
-<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -53,6 +58,41 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
       </a>
     </h1>
     <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
       
       <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
       
@@ -261,10 +301,10 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
 <p>那整個過程就很平滑了，當 Release 觸發的時候 Pod 不會立即接受到 <code>SIGTERM</code> ，而是會等到新的 Pod Healthy 再去發送 SIGTERM。</p>
 <p><strong>如何使用？</strong><br>
 使用方式很簡單，在目標 Namespace 加上一個 Label 就啟用了。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">...<span style="color:#ae81ff">(skip)</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">labels</span>: 
-    <span style="color:#f92672">elbv2.k8s.aws/pod-readiness-gate-inject</span>: <span style="color:#ae81ff">enabled</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">...(skip)
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">labels</span>: 
+    <span style="color:#66d9ef">elbv2.k8s.aws/pod-readiness-gate-inject</span>: enabled
 </code></pre></div><p>他實現的原理是會讓 AWS LoadBalancer Controller 去輪詢 TargetGroup 的狀態，等到 new Pod healthy 才會做替換的動作。</p>
 <p><br /></p>
 <h2 id="issue-solved">Issue Solved?</h2>
@@ -276,10 +316,10 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
 我們可以利用 <code>Kubernets Lifecycle PreStop Hook</code>。</p>
 <p><a href="https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/">https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/</a></p>
 <p>顧名思義，就是在送出 SIGTERM 跟真正終止 Pod 之間要執行的任務，我們可以讓他 sleep 一段時間來延長 Pod 的終止時間。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">lifecycle</span>:
-  <span style="color:#f92672">preStop</span>:
-    <span style="color:#f92672">exec</span>:
-      <span style="color:#f92672">command</span>: [<span style="color:#e6db74">&#34;/bin/sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;sleep 100s&#34;</span>]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">lifecycle</span>:
+  <span style="color:#66d9ef">preStop</span>:
+    <span style="color:#66d9ef">exec</span>:
+      <span style="color:#66d9ef">command</span>: [<span style="color:#e6db74">&#34;/bin/sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;sleep 100s&#34;</span>]
 </code></pre></div><p>但是因為 Kubernetes 還有個東西叫做 <code>terminationGracePeriodSeconds</code>，他會看傳送 SIGTERM 之後過了多久，如果超出設定值，那就會直接強制 Kill Pod。<br>
 而這個值預設是 <code>30s</code>。 所以如果 <code>preStop hook sleep seconds &gt; terminationGracePeriodSeconds</code> ，那 Pod 就會提前被 Killed。<br>
 那我們就是要確保 terminationGracePeriodSeconds 大於我們 Sleep 的時間就可以了。</p>
@@ -676,13 +716,13 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
         David&#39;s Blog
       
     . <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;

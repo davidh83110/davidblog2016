@@ -6,13 +6,17 @@
     <description>Recent content in Security on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 10 Oct 2016 00:00:00 +0000</lastBuildDate><atom:link href="/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Oct 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>XSS (Cross-Site Scripting) 跨站腳本攻擊簡介和實作</title>
-      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/10/10/xss.html</link>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</link>
       <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/10/10/xss.html</guid>
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/10/xss.html</guid>
       <description>XSS (Cross-Site Scripting) 跨站腳本攻擊&amp;#65292;目前在網路上仍非常常見&amp;#12290;
 何謂XSS&amp;#65311; 所謂XSS泛指惡意攻擊者在Web網頁上插入惡意html代碼&amp;#65292;以達到特殊目的&amp;#65288;控制網站元素&amp;#12289;取走cookies&amp;#65289;&amp;#12290;
 很多人會說XSS就是能在Web上跳出警告視窗並修改其內容&amp;#65292;其實是不完全正確的&amp;#12290;
@@ -64,10 +68,10 @@ Stage4.</description>
     
     <item>
       <title>Directory Traversal - 跨目錄/檔案穿越攻擊 in OWASP</title>
-      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/10/07/directory-traversal.html</link>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</link>
       <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/10/07/directory-traversal.html</guid>
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/10/07/directory-traversal.html</guid>
       <description>Directory Traversal指的是我們可以在網頁的URL上使用 .. ../.. cat /etc/passwd等探索目錄的行為&amp;#12290;
 很容易理解的一個簡單漏洞&amp;#65292;而會發生這個漏洞原因不外乎是當初設計網站的人忘了將目錄探索功能關閉(像是Apache的FollowSymLinks Deny all;)&amp;#65292;導致惡意人士可以透過輸入網址的方式來瀏覽web端主機內容&amp;#65292;甚至取得全部主機資料&amp;#12289;網站資料&amp;#12290;
 我們今天利用OWASP裡的bWAPP來熟悉這個漏洞&amp;#12290;
@@ -104,10 +108,10 @@ http://172.20.10.5/bWAPP/directory_traversal_1.php?page=/etc/passwd
     
     <item>
       <title>CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP</title>
-      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/09/09/csrf.html</link>
+      <link>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</link>
       <pubDate>Fri, 09 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/09/09/csrf.html</guid>
+      <guid>/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp-top10/2016/09/09/csrf.html</guid>
       <description>CSRF全名為Cross-Site-Request-Forgery&amp;#65292;跨站請求偽造攻擊&amp;#12290;
 簡而言之&amp;#65292;駭客利用你瀏覽網站時尚未過期的session來進行偽造&amp;#65292;發送惡意request&amp;#12290;
 舉個例子&amp;#65292;以網路銀行為例&amp;#65292;你向網銀發送帳號密碼進行驗證&amp;#65292;驗證通過後server會回傳驗證成功&amp;#65292;可以進行所有&amp;#8220;登入後才可以進行的動作&amp;#8221;&amp;#12290;

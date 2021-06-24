@@ -6,24 +6,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="後端工程(Back-End)簡介">
+<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="後端工程(Back-End)簡介">
 <meta itemprop="description" content="新年快樂，雞年行大運。 快當兵了趕緊來寫文章，以免當完兵變笨全忘光光
-   今天補一下一直沒時間寫的後端工程    前面已經先提過前端工程，就是常見的HTML、Javascript。  如果硬要區分前端以及後端的話，可以用外觀來分辨      你肉眼所見的網頁、很美的素材、動畫都是前端  你所使用的功能、結帳、訂房、訂餐這些動作都牽扯到後端的程式。      後端常見語言：Java、PHP、Python、Ruby、.Net、C#....等等       後端工程(Back-End)  顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到  舉個例子    小時候應該大家都玩過無名小站吧  那你在挑選的網誌的樣板的時候，是否記得都會有一個CSS可以修改？  沒錯，那就是前端(Front-End)    那你想過為什麼你可以發表文章，朋友可以來留言嗎？ 這些東西又放在哪？    發表文章以及留言還有建立相簿鎖密碼之一類的事情  都有一個共同點  那就是需要邏輯判斷，那就是需要程式來幫忙做這些事，這是你在那些CSS/HTML代碼中所看不到的    那這些東西放在哪？  這些資料放在DataBase，常見有Oracle、MS SQL，不是本章重點就不多提。        前端後端區分大致上就是這樣      那後端語言Java一般來說為企業愛用語言，原因無他  架構很多，常見有spring、struts，雖然入門很難  但只要會寫，新手跟老手寫出來並無太大差異  而且擴充性強，產品一條龍    最常見的就是使用  weblogic/jboss/wildfly/tomcat 去搭配 Java程式  使用起來非常順手，因為這些後端server就是為了java程式而設計的。      那PHP呢？  PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈  但php使用者還是偏小型公司開發小型網站使用  也因為入手簡單，無太多架構  新手跟老手寫出來的一看就知道  非常危險          新年快樂就不講太多了"><meta itemprop="datePublished" content="2017-01-28T00:00:00&#43;00:00" />
+   今天補一下一直沒時間寫的後端工程    前面已經先提過前端工程，就是常見的HTML、Javascript。  如果硬要區分前端以及後端的話，可以用外觀來分辨      你肉眼所見的網頁、很美的素材、動畫都是前端  你所使用的功能、結帳、訂房、訂餐這些動作都牽扯到後端的程式。      後端常見語言：Java、PHP、Python、Ruby、.Net、C#....等等       後端工程(Back-End)  顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到  舉個例子    小時候應該大家都玩過無名小站吧  那你在挑選的網誌的樣板的時候，是否記得都會有一個CSS可以修改？  沒錯，那就是前端(Front-End)    那你想過為什麼你可以發表文章，朋友可以來留言嗎？ 這些東西又放在哪？    發表文章以及留言還有建立相簿鎖密碼之一類的事情  都有一個共同點  那就是需要邏輯判斷，那就是需要程式來幫忙做這些事，這是你在那些CSS/HTML代碼中所看不到的    那這些東西放在哪？  這些資料放在DataBase，常見有Oracle、MS SQL，不是本章重點就不多提。        前端後端區分大致上就是這樣      那後端語言Java一般來說為企業愛用語言，原因無他  架構很多，常見有spring、struts，雖然入門很難  但只要會寫，新手跟老手寫出來並無太大差異  而且擴充性強，產品一條龍    最常見的就是使用  weblogic/jboss/wildfly/tomcat 去搭配 Java程式  使用起來非常順手，因為這些後端server就是為了java程式而設計的。      那PHP呢？  PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈  但php使用者還是偏小型公司開發小型網站使用  也因為入手簡單，無太多架構  新手跟老手寫出來的一看就知道  非常危險          新年快樂就不講太多了">
+<meta itemprop="datePublished" content="2017-01-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-01-28T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="47">
+
+
+
 <meta itemprop="keywords" content="" /><meta property="og:title" content="後端工程(Back-End)簡介" />
 <meta property="og:description" content="新年快樂，雞年行大運。 快當兵了趕緊來寫文章，以免當完兵變笨全忘光光
    今天補一下一直沒時間寫的後端工程    前面已經先提過前端工程，就是常見的HTML、Javascript。  如果硬要區分前端以及後端的話，可以用外觀來分辨      你肉眼所見的網頁、很美的素材、動畫都是前端  你所使用的功能、結帳、訂房、訂餐這些動作都牽扯到後端的程式。      後端常見語言：Java、PHP、Python、Ruby、.Net、C#....等等       後端工程(Back-End)  顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到  舉個例子    小時候應該大家都玩過無名小站吧  那你在挑選的網誌的樣板的時候，是否記得都會有一個CSS可以修改？  沒錯，那就是前端(Front-End)    那你想過為什麼你可以發表文章，朋友可以來留言嗎？ 這些東西又放在哪？    發表文章以及留言還有建立相簿鎖密碼之一類的事情  都有一個共同點  那就是需要邏輯判斷，那就是需要程式來幫忙做這些事，這是你在那些CSS/HTML代碼中所看不到的    那這些東西放在哪？  這些資料放在DataBase，常見有Oracle、MS SQL，不是本章重點就不多提。        前端後端區分大致上就是這樣      那後端語言Java一般來說為企業愛用語言，原因無他  架構很多，常見有spring、struts，雖然入門很難  但只要會寫，新手跟老手寫出來並無太大差異  而且擴充性強，產品一條龍    最常見的就是使用  weblogic/jboss/wildfly/tomcat 去搭配 Java程式  使用起來非常順手，因為這些後端server就是為了java程式而設計的。      那PHP呢？  PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈  但php使用者還是偏小型公司開發小型網站使用  也因為入手簡單，無太多架構  新手跟老手寫出來的一看就知道  非常危險          新年快樂就不講太多了" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html" /><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2017-01-28T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2017-01-28T00:00:00&#43;00:00" />
-
+<meta property="og:url" content="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B/2017/01/28/back-end-intro-2.html" />
+<meta property="article:published_time" content="2017-01-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-01-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="後端工程(Back-End)簡介"/>
 <meta name="twitter:description" content="新年快樂，雞年行大運。 快當兵了趕緊來寫文章，以免當完兵變笨全忘光光
    今天補一下一直沒時間寫的後端工程    前面已經先提過前端工程，就是常見的HTML、Javascript。  如果硬要區分前端以及後端的話，可以用外觀來分辨      你肉眼所見的網頁、很美的素材、動畫都是前端  你所使用的功能、結帳、訂房、訂餐這些動作都牽扯到後端的程式。      後端常見語言：Java、PHP、Python、Ruby、.Net、C#....等等       後端工程(Back-End)  顧名思義，後端就是你眼睛看不到，前端就是眼睛看得到  舉個例子    小時候應該大家都玩過無名小站吧  那你在挑選的網誌的樣板的時候，是否記得都會有一個CSS可以修改？  沒錯，那就是前端(Front-End)    那你想過為什麼你可以發表文章，朋友可以來留言嗎？ 這些東西又放在哪？    發表文章以及留言還有建立相簿鎖密碼之一類的事情  都有一個共同點  那就是需要邏輯判斷，那就是需要程式來幫忙做這些事，這是你在那些CSS/HTML代碼中所看不到的    那這些東西放在哪？  這些資料放在DataBase，常見有Oracle、MS SQL，不是本章重點就不多提。        前端後端區分大致上就是這樣      那後端語言Java一般來說為企業愛用語言，原因無他  架構很多，常見有spring、struts，雖然入門很難  但只要會寫，新手跟老手寫出來並無太大差異  而且擴充性強，產品一條龍    最常見的就是使用  weblogic/jboss/wildfly/tomcat 去搭配 Java程式  使用起來非常順手，因為這些後端server就是為了java程式而設計的。      那PHP呢？  PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈  但php使用者還是偏小型公司開發小型網站使用  也因為入手簡單，無太多架構  新手跟老手寫出來的一看就知道  非常危險          新年快樂就不講太多了"/>
-<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -39,6 +42,41 @@
       </a>
     </h1>
     <menu id="site-nav-menu" class="flyout-menu">
+      
+        
+          
+          
+            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
+          
+        
+      
+        
+          
+          
+            <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
+          
+        
+      
+        
+          
+          
+            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
+          
+        
+      
+        
+          
+          
+            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
+          
+        
+      
+        
+          
+          
+            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
+          
+        
       
       <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
       
@@ -714,13 +752,13 @@ PHP通常是一些小網站會用，雖然facebook也用PHP為架構 哈哈</div
         David&#39;s Blog
       
     . <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;
