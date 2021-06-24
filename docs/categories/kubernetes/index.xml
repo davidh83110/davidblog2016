@@ -6,10 +6,20 @@
     <description>Recent content in Kubernetes on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Jun 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Thu, 24 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update</title>
+      <link>/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/</link>
+      <pubDate>Thu, 24 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/</guid>
+      <description>Introduction  我們都知道 AWS LoadBalancer Controller 有個很嚴重的問題，就是當我們 trigger 一個 release 的時候，一般情況下 Pod 會被 Terminated 而且 draining from ALB Target Group。這就會導致 更新不平滑，因為新的 Pod 還沒 ready 也還沒 healthy(在 Target Group)，流量就會進來，那當然就會出現 502。
+白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
+本文適用以下情況：
+ 在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
+Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
+明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。</description>
+    </item>
     
     <item>
       <title>EKS Best Practices - Security</title>
@@ -37,7 +47,7 @@ Mkdocs Site - https://aws.github.io/aws-eks-best-practices/
       <description>External-DNS 是一款可以讓我們建立 ALB Ingress 的時候，自動將 ALB DNS 在 Route53 建立一組 DNS 的實用套件。
 當然他也支援在 GCP/Azure 上面建立，只是這邊就只介紹 AWS 上如何做設定，以及如果 Route53 在另一個 Account 的話要怎麼做。 在 EKS 1.14 以上使用了 OIDC ，所以如果跨帳號就會需要使用 OIDC 做授權。
 External-DNS 官方介紹：
- Inspired by Kubernetes DNS, Kubernetes&amp;rsquo; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.</description>
+ Inspired by Kubernetes DNS, Kubernetes&#39; cluster-internal DNS server, ExternalDNS makes Kubernetes resources discoverable via public DNS servers. Like KubeDNS, it retrieves a list of resources (Services, Ingresses, etc.) from the Kubernetes API to determine a desired list of DNS records.</description>
     </item>
     
     <item>

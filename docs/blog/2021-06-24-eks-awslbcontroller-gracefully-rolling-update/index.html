@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update">
+<meta itemprop="description" content="Introduction  我們都知道 AWS LoadBalancer Controller 有個很嚴重的問題，就是當我們 trigger 一個 release 的時候，一般情況下 Pod 會被 Terminated 而且 draining from ALB Target Group。這就會導致 更新不平滑，因為新的 Pod 還沒 ready 也還沒 healthy(在 Target Group)，流量就會進來，那當然就會出現 502。
+白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
+本文適用以下情況：
+ 在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
+Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
+明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。"><meta itemprop="datePublished" content="2021-06-24T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-24T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="329"><meta itemprop="image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update" />
+<meta property="og:description" content="Introduction  我們都知道 AWS LoadBalancer Controller 有個很嚴重的問題，就是當我們 trigger 一個 release 的時候，一般情況下 Pod 會被 Terminated 而且 draining from ALB Target Group。這就會導致 更新不平滑，因為新的 Pod 還沒 ready 也還沒 healthy(在 Target Group)，流量就會進來，那當然就會出現 502。
+白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
+本文適用以下情況：
+ 在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
+Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
+明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" /><meta property="og:image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-06-24T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-24T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg"/>
+
+<meta name="twitter:title" content="Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update"/>
+<meta name="twitter:description" content="Introduction  我們都知道 AWS LoadBalancer Controller 有個很嚴重的問題，就是當我們 trigger 一個 release 的時候，一般情況下 Pod 會被 Terminated 而且 draining from ALB Target Group。這就會導致 更新不平滑，因為新的 Pod 還沒 ready 也還沒 healthy(在 Target Group)，流量就會進來，那當然就會出現 502。
+白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
+本文適用以下情況：
+ 在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
+Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
+明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。"/>
+<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+
+  
+    <a href="https://telegram.me/share/url?text=Solved%20-%20AWS%20LoadBalancer%20Controller%20Cannot%20Gracefully%20Rolling%20Update&url=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f&amp;title=Solved%20-%20AWS%20LoadBalancer%20Controller%20Cannot%20Gracefully%20Rolling%20Update" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+  
+    
+    <a href="//twitter.com/share?text=Solved%20-%20AWS%20LoadBalancer%20Controller%20Cannot%20Gracefully%20Rolling%20Update&amp;url=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+      <ul style="padding: 0;">
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank">
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px></a>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/">Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2021-06-24 00:00:00 &#43;0000 UTC">
+      June 24, 2021
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  
+  <a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+  <div class="content">
+    <h2 id="introduction">Introduction</h2>
+<hr>
+<p>我們都知道 AWS LoadBalancer Controller 有個很嚴重的問題，就是當我們 trigger 一個 release 的時候，一般情況下 Pod 會被 Terminated 而且 draining from ALB Target Group。這就會導致 <code>更新不平滑</code>，因為新的 Pod 還沒 ready 也還沒 healthy(在 Target Group)，流量就會進來，那當然就會出現 <code>502</code>。</p>
+<p>白話來說，就是更新不平滑，導致的原因就是 <code>ALB Target Group 的狀態跟 Pod 並沒有連動</code>。</p>
+<p>本文適用以下情況：</p>
+<ul>
+<li>在 Target Group 裡永遠只有一個 Pod</li>
+<li>Rollout Strategy 是一次把所有 Pod 全部替換</li>
+<li>Rolling Update 的速度太快</li>
+<li>或是任何 Target Group 裡可能會暫時沒有 <code>Healthy Pods</code> 的情況</li>
+</ul>
+<p><br /></p>
+<h2 id="issue">Issue</h2>
+<hr>
+<p>我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。</p>
+<p><img src="https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg" alt="original"></p>
+<p>明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。</p>
+<p>原因就是因為 <code>如果沒有任何 healthy targets 在 Target Group，那 ALB 就還是會將 Traffic 送到 Unhealthy 或是正在啟動的 Pod</code>，那想當然 ALB 就會將 traffic 送到你正在啟動 healthcheck 的 Pod 了。</p>
+<p><br /></p>
+<h2 id="solution">Solution</h2>
+<hr>
+<p>要解決的問題是:</p>
+<ul>
+<li>讓 Target 通過 HealthCheck 後再接受流量</li>
+</ul>
+<p><strong>那這個問題換言之就是要讓 <code>先讓新的 Pod Ready 再去 Draining 舊的 Pod</code> 。</strong></p>
+<p>這時候就需要用到 AWS LoadBalancer Controller 的一個新功能了，也就是 <code>Pod Readiness Gate</code>。<br>
+這是什麼？ 簡單來說這是可以讓 Pod 狀態跟 Target Group 連動的一個 feature。</p>
+<blockquote>
+<p>如果啟用了 Reaniness Gate，舊的 Pod 會等到新的 Pod 在 Target Group 是 healthy 的狀態再去 Draining &amp; Terminating 舊的 Pod。</p>
+</blockquote>
+<p><img src="https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg" alt="readinessProbe"></p>
+<p>那整個過程就很平滑了，當 Release 觸發的時候 Pod 不會立即接受到 <code>SIGTERM</code> ，而是會等到新的 Pod Healthy 再去發送 SIGTERM。</p>
+<p><strong>如何使用？</strong><br>
+使用方式很簡單，在目標 Namespace 加上一個 Label 就啟用了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">...<span style="color:#ae81ff">(skip)</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">labels</span>: 
+    <span style="color:#f92672">elbv2.k8s.aws/pod-readiness-gate-inject</span>: <span style="color:#ae81ff">enabled</span>
+</code></pre></div><p>他實現的原理是會讓 AWS LoadBalancer Controller 去輪詢 TargetGroup 的狀態，等到 new Pod healthy 才會做替換的動作。</p>
+<p><br /></p>
+<h2 id="issue-solved">Issue Solved?</h2>
+<hr>
+<p>上面的解法聽起來很完美，但是有注意到嗎？ <code>Pod Terminated 的比 Draining 還要早</code>，如果我們有一些還沒有處理完的任務，這樣一搞就直接中斷了，還是會有 502 的機率。<br>
+因為 <code>一旦新 Pod Healthy 之後馬上會送 SIGTERM 到舊的 Pod，舊的 Pod 接收到就立即執行 Terminate</code>。</p>
+<p>要解決這問題，只要 <code>延長 Pod Terminating 的時間</code> 就可以了，<code>Terminating 務必比 Target Group Deregistration Delay 還有 Application Keepalive 的時間長</code>，確保事情都有做完。</p>
+<p>Application Keepalive 因為每個 Application 不一樣，就不贅述。 那延長 Pod Terminating 的時間要怎麼做？<br>
+我們可以利用 <code>Kubernets Lifecycle PreStop Hook</code>。</p>
+<p><a href="https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/">https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/</a></p>
+<p>顧名思義，就是在送出 SIGTERM 跟真正終止 Pod 之間要執行的任務，我們可以讓他 sleep 一段時間來延長 Pod 的終止時間。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">lifecycle</span>:
+  <span style="color:#f92672">preStop</span>:
+    <span style="color:#f92672">exec</span>:
+      <span style="color:#f92672">command</span>: [<span style="color:#e6db74">&#34;/bin/sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;sleep 100s&#34;</span>]
+</code></pre></div><p>但是因為 Kubernetes 還有個東西叫做 <code>terminationGracePeriodSeconds</code>，他會看傳送 SIGTERM 之後過了多久，如果超出設定值，那就會直接強制 Kill Pod。<br>
+而這個值預設是 <code>30s</code>。 所以如果 <code>preStop hook sleep seconds &gt; terminationGracePeriodSeconds</code> ，那 Pod 就會提前被 Killed。<br>
+那我們就是要確保 terminationGracePeriodSeconds 大於我們 Sleep 的時間就可以了。</p>
+<p>整體來說設定要是這樣的:</p>
+<blockquote>
+<p>terminationGracePeriodSeconds &gt; preStop sleep time &gt; Application KeepAlive time &gt; ALB deregistration delay</p>
+</blockquote>
+<p>最後的流程應該是像這樣的
+<img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="final"></p>
+<p><br /></p>
+<h2 id="conclusion">Conclusion</h2>
+<hr>
+<p>簡單來說要解決這個問題就是以下方式：</p>
+<ul>
+<li>使用 Readiness Gate (在 Namespace 加上 Label 去啟用)</li>
+<li>加上 preStop lifecycle hook</li>
+<li>加上 terminationGracePeriodSeconds</li>
+<li>terminationGracePeriodSeconds &gt; preStop sleep time &gt; Application KeepAlive time &gt; ALB deregistration delay</li>
+</ul>
+<p><br />
+<br /></p>
+
+    <br /><br />
+<iframe class="LikeCoin" height="200" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" width="55%" frameborder=0></iframe>
+
+  </div>
+  <section id="socnet-share" style="justify-content: center; margin: 1em 1em 2em;">
+    
+
+
+
+
+
+  
+    <a href="https://telegram.me/share/url?text=Solved%20-%20AWS%20LoadBalancer%20Controller%20Cannot%20Gracefully%20Rolling%20Update&url=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f&amp;title=Solved%20-%20AWS%20LoadBalancer%20Controller%20Cannot%20Gracefully%20Rolling%20Update" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+  
+    
+    <a href="//twitter.com/share?text=Solved%20-%20AWS%20LoadBalancer%20Controller%20Cannot%20Gracefully%20Rolling%20Update&amp;url=https%3a%2f%2fblog.davidh83110.com%2fblog%2f2021-06-24-eks-awslbcontroller-gracefully-rolling-update%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+
+    <br />
+  </section>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/aws">AWS</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/kubernetes">Kubernetes</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+    <a href="/blog/2020-05-26-eks-best-practices-security/" class="button"><div class="previous"><div>EKS Best Practices - Security</div></div></a>
+  
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">8</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp/">owasp<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/security/">security<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/architecture/">architecture<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linux/">linux<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/mongodb/">mongodb<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/">Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update</a></h4>
+          <time class="published" datetime="">June 24, 2021</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2020-05-26-eks-best-practices-security/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2020-05-26-eks-best-practices-security/">EKS Best Practices - Security</a></h4>
+          <time class="published" datetime="">June 7, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2021
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
+    <script src="/js/add-on.js"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-85468802-6', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    </div>
+  </body>
+</html>

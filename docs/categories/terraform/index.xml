@@ -6,11 +6,7 @@
     <description>Recent content in Terraform on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 30 Mar 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/terraform/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 30 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/terraform/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>EKS Building &amp; Troubleshooting</title>
       <link>/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html</link>

@@ -6,19 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="Terraform Module Private Registries - Bitbucket">
+<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="Terraform Module Private Registries - Bitbucket">
 <meta itemprop="description" content="在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。
 Due to less information on the internet when I am searching how terraform module access remote private registry, so I decide to share this.
 先講講 Terraform module 是如何運作。其實就是直接 clone 一份下來，所以等於你去 git clone。
 First, we need to know how Terraform module work, that is git clone, Terraform will clone the module repo which you use.
 而我們都知道，git分為 HTTP(S) 以及 SSH 兩種clone方式，所以在這邊兩種方式都會介紹 (居然連stackoverflow都找不到到資料 T_T)
-And we know that you can clone a git repo by HTTP(S) and SSH, so I will also introduce both of these two ways.">
-<meta itemprop="datePublished" content="2019-02-03T00:00:00&#43;00:00" />
+And we know that you can clone a git repo by HTTP(S) and SSH, so I will also introduce both of these two ways."><meta itemprop="datePublished" content="2019-02-03T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-19T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="141">
-
-
-
 <meta itemprop="keywords" content="" /><meta property="og:title" content="Terraform Module Private Registries - Bitbucket" />
 <meta property="og:description" content="在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。
 Due to less information on the internet when I am searching how terraform module access remote private registry, so I decide to share this.
@@ -27,9 +23,10 @@ First, we need to know how Terraform module work, that is git clone, Terraform w
 而我們都知道，git分為 HTTP(S) 以及 SSH 兩種clone方式，所以在這邊兩種方式都會介紹 (居然連stackoverflow都找不到到資料 T_T)
 And we know that you can clone a git repo by HTTP(S) and SSH, so I will also introduce both of these two ways." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html" />
-<meta property="article:published_time" content="2019-02-03T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-02-19T00:00:00+00:00" />
+<meta property="og:url" content="/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2019/02/03/terraform-module-bitbucket.html" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-02-03T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-02-19T00:00:00&#43;00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Terraform Module Private Registries - Bitbucket"/>
 <meta name="twitter:description" content="在網路上搜尋很久都很少看到 Terraform module 正確使用 remote private registry 的方式，所以來分享一下。
@@ -38,7 +35,7 @@ Due to less information on the internet when I am searching how terraform module
 First, we need to know how Terraform module work, that is git clone, Terraform will clone the module repo which you use.
 而我們都知道，git分為 HTTP(S) 以及 SSH 兩種clone方式，所以在這邊兩種方式都會介紹 (居然連stackoverflow都找不到到資料 T_T)
 And we know that you can clone a git repo by HTTP(S) and SSH, so I will also introduce both of these two ways."/>
-<link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -54,41 +51,6 @@ And we know that you can clone a git repo by HTTP(S) and SSH, so I will also int
       </a>
     </h1>
     <menu id="site-nav-menu" class="flyout-menu">
-      
-        
-          
-          
-            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
-          
-        
-      
-        
-          
-          
-            <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
-          
-        
-      
-        
-          
-          
-            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
-          
-        
-      
-        
-          
-          
-            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
-          
-        
-      
-        
-          
-          
-            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
-          
-        
       
       <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
       
@@ -415,7 +377,7 @@ Please use a double slash (<code>//</code>) to clone a directory (i.e. //ec2).</
           
           <li>
             
-              <a href="/categories/aws/">aws<span class="count">7</span></a>
+              <a href="/categories/aws/">aws<span class="count">8</span></a>
             
           
           <li>
@@ -425,7 +387,7 @@ Please use a double slash (<code>//</code>) to clone a directory (i.e. //ec2).</
           
           <li>
             
-              <a href="/categories/kubernetes/">kubernetes<span class="count">3</span></a>
+              <a href="/categories/kubernetes/">kubernetes<span class="count">4</span></a>
             
           
           <li>
@@ -480,6 +442,25 @@ Please use a double slash (<code>//</code>) to clone a directory (i.e. //ec2).</
       <header>
         <h1>Recent posts</h1>
       </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/">Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update</a></h4>
+          <time class="published" datetime="">June 24, 2021</time>
+        </header>
+      </article>
       
       <article class="mini-post">
         <section>
@@ -568,25 +549,6 @@ Please use a double slash (<code>//</code>) to clone a directory (i.e. //ec2).</
         </header>
       </article>
       
-      <article class="mini-post">
-        <section>
-          
-  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
-    
-    <p style="text-align: center;">
-      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
-    </p>
-    
-  </a>
-
-
-        </section>
-        <header>
-          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
-          <time class="published" datetime="">December 5, 2019</time>
-        </header>
-      </article>
-      
       
         <footer>
           <a href="/blog/" class="button">See more</a>
@@ -648,18 +610,18 @@ Please use a double slash (<code>//</code>) to clone a directory (i.e. //ec2).</
   
   <p class="copyright">
     
-      &copy; 2020
+      &copy; 2021
       
         David&#39;s Blog
       
     . <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;

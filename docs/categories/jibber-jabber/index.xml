@@ -6,11 +6,7 @@
     <description>Recent content in jibber-jabber on David&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 05 Mar 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/jibber-jabber/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 05 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/jibber-jabber/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SaaS/Managed Services &amp; Self-Hosted 衍伸思考</title>
       <link>/%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B/2020/03/05/saas-self-hosted.html</link>

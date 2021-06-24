@@ -6,31 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="EKS Building &amp; Troubleshooting">
+<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="EKS Building &amp; Troubleshooting">
 <meta itemprop="description" content="This is the full map of EKS and we&rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&rsquo;s go!
-Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;&amp; make plan &amp;&amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave.">
-<meta itemprop="datePublished" content="2020-03-30T00:00:00&#43;00:00" />
+Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;&amp; make plan &amp;&amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave."><meta itemprop="datePublished" content="2020-03-30T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-03-31T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1013">
-<meta itemprop="image" content="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg">
-
-
-
+<meta itemprop="wordCount" content="1013"><meta itemprop="image" content="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg">
 <meta itemprop="keywords" content="" /><meta property="og:title" content="EKS Building &amp; Troubleshooting" />
 <meta property="og:description" content="This is the full map of EKS and we&rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&rsquo;s go!
 Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;&amp; make plan &amp;&amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" />
-<meta property="og:image" content="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" />
-<meta property="article:published_time" content="2020-03-30T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-03-31T00:00:00+00:00" />
+<meta property="og:url" content="/aws/kubernetes/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/terraform/2020/03/30/eks-install.html" /><meta property="og:image" content="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-03-30T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-03-31T00:00:00&#43;00:00" />
+
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg"/>
 
 <meta name="twitter:title" content="EKS Building &amp; Troubleshooting"/>
 <meta name="twitter:description" content="This is the full map of EKS and we&rsquo;ll go through how to install EKS and plugins in this post, as well as the troubles I got. Let&rsquo;s go!
 Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-quickstart cd terraform &amp;&amp; make plan &amp;&amp; make apply cd ansible-playbooks ansible-playbook ./ You will get an EKS cluster and Node Group, also has metrics-server / k8s-dashboard / ALB-Ingress controller / Cluster-Autoscaler (CA) / Prometheus / Grafana / Weave."/>
-<link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.b568954b3ad2854325bb53d8d1161eb3b51346b831d0b53f2b89b9c1e230435d.css" integrity="sha256-tWiVSzrShUMlu1PY0RYes7UTRrgx0LU/K4m5weIwQ10="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -46,41 +41,6 @@ Quick Start an EKS with ADD-ONs  git clone https://github.com/davidh83110/eks-qu
       </a>
     </h1>
     <menu id="site-nav-menu" class="flyout-menu">
-      
-        
-          
-          
-            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
-          
-        
-      
-        
-          
-          
-            <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
-          
-        
-      
-        
-          
-          
-            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
-          
-        
-      
-        
-          
-          
-            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
-          
-        
-      
-        
-          
-          
-            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
-          
-        
       
       <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
       
@@ -377,15 +337,15 @@ Fargate with EKS是沒有Node(worker)的概念的。就像ECS沒有ECS Instance�
 <ul>
 <li>
 <p><strong>Public Subnets</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">kubernetes.io/cluster/${CLUSTER_NAME} = shared
-  
-kubernetes.io/role/elb = <span style="color:#ae81ff">1</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">kubernetes.io/cluster/${CLUSTER_NAME} = shared</span>
+
+<span style="color:#ae81ff">kubernetes.io/role/elb = 1</span>
 </code></pre></div></li>
 <li>
 <p><strong>Private Subnets</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">kubernetes.io/cluster/${CLUSTER_NAME} = shared
-  
-kubernetes.io/role/internal-elb = <span style="color:#ae81ff">1</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">kubernetes.io/cluster/${CLUSTER_NAME} = shared</span>
+
+<span style="color:#ae81ff">kubernetes.io/role/internal-elb = 1</span>
 </code></pre></div></li>
 <li>
 <p><strong>Security Group / Instances / NodeGroup</strong><br>
@@ -479,7 +439,7 @@ Kubernetes Web UI, 提供視覺化的操作以及資源的監控，必須要先�
 <p><strong>ALB Ingress Controller</strong><br>
 與ALB連接的Ingress Controller，可以直接在 ingress yaml 裡直接定義 ALB 的參數。</p>
 <p>比較可怕的是如果自定義 Security Group 的 ID ，會造成 Master SG 沒有自動加入這個 ALB 的 SG 到 Inbound，就會一直是 unhealthy 的狀態，可以透過指定 inbound rule 的方式來避免這個 Bug。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">alb.ingress.kubernetes.io/security-group-inbound-cidrs</span>: <span style="color:#ae81ff">61.67.11.22</span>/<span style="color:#ae81ff">32</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">alb.ingress.kubernetes.io/security-group-inbound-cidrs</span>: <span style="color:#ae81ff">61.67.11.22</span><span style="color:#ae81ff">/32</span>
 </code></pre></div><p><a href="https://docs.aws.amazon.com/zh_tw/eks/latest/userguide/alb-ingress.html">Amazon EKS 上的 ALB 傳入控制器</a><br>
 <a href="https://github.com/kubernetes-sigs/aws-alb-ingress-controller/issues/691">ALB Ingress Security Group&rsquo;s Issue</a></p>
 </li>
@@ -548,17 +508,17 @@ Only <code>10G</code> volume can be used per Fargate; and the maximum of vCPU an
 <p>A: Yes. But the EKS Managed SG might not be changed and it means you have to change by yourself.<br>
 The alternative way would be specify the SG rules for ALB Ingress.</p>
 <p>Example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: extensions/v1beta1
-<span style="color:#66d9ef">kind</span>: Ingress
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: <span style="color:#e6db74">&#34;weave-scope-ingress&#34;</span>
-  <span style="color:#66d9ef">namespace</span>: <span style="color:#e6db74">&#34;weave&#34;</span>
-  <span style="color:#66d9ef">annotations</span>:
-    <span style="color:#66d9ef">kubernetes.io/ingress.class</span>: alb
-    <span style="color:#66d9ef">alb.ingress.kubernetes.io/scheme</span>: internet-facing
-    <span style="color:#66d9ef">alb.ingress.kubernetes.io/target-type</span>: ip
-    <span style="color:#66d9ef">alb.ingress.kubernetes.io/security-group-inbound-cidrs</span>: <span style="color:#ae81ff">61.220.65.15</span>/<span style="color:#ae81ff">32</span>
-...(skip)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">extensions/v1beta1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Ingress</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;weave-scope-ingress&#34;</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#e6db74">&#34;weave&#34;</span>
+  <span style="color:#f92672">annotations</span>:
+    <span style="color:#f92672">kubernetes.io/ingress.class</span>: <span style="color:#ae81ff">alb</span>
+    <span style="color:#f92672">alb.ingress.kubernetes.io/scheme</span>: <span style="color:#ae81ff">internet-facing</span>
+    <span style="color:#f92672">alb.ingress.kubernetes.io/target-type</span>: <span style="color:#ae81ff">ip</span>
+    <span style="color:#f92672">alb.ingress.kubernetes.io/security-group-inbound-cidrs</span>: <span style="color:#ae81ff">61.220.65.15</span><span style="color:#ae81ff">/32</span>
+...<span style="color:#ae81ff">(skip)</span>
 </code></pre></div><p><br /></p>
 <h3 id="q-cluster-autoscler-didnt-trigger-scale-down"><strong>Q: Cluster Autoscler didn&rsquo;t trigger scale down</strong></h3>
 <p>A: Don&rsquo;t worry, normally it would cost around 10min to let the CA calculate which Pods should be moved to which Node. It really takes time bus I can&rsquo;t really realize why, seems the calculation not complicated at all.</p>
@@ -704,7 +664,7 @@ The alternative way would be specify the SG rules for ALB Ingress.</p>
           
           <li>
             
-              <a href="/categories/aws/">aws<span class="count">7</span></a>
+              <a href="/categories/aws/">aws<span class="count">8</span></a>
             
           
           <li>
@@ -714,7 +674,7 @@ The alternative way would be specify the SG rules for ALB Ingress.</p>
           
           <li>
             
-              <a href="/categories/kubernetes/">kubernetes<span class="count">3</span></a>
+              <a href="/categories/kubernetes/">kubernetes<span class="count">4</span></a>
             
           
           <li>
@@ -769,6 +729,25 @@ The alternative way would be specify the SG rules for ALB Ingress.</p>
       <header>
         <h1>Recent posts</h1>
       </header>
+      
+      <article class="mini-post">
+        <section>
+          
+  <a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" class="image featured">
+    
+    <p style="text-align: center;">
+      <img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="">
+    </p>
+    
+  </a>
+
+
+        </section>
+        <header>
+          <h4><a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/">Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update</a></h4>
+          <time class="published" datetime="">June 24, 2021</time>
+        </header>
+      </article>
       
       <article class="mini-post">
         <section>
@@ -857,25 +836,6 @@ The alternative way would be specify the SG rules for ALB Ingress.</p>
         </header>
       </article>
       
-      <article class="mini-post">
-        <section>
-          
-  <a href="/aws/2019/12/05/aws-saa-pass.html" class="image featured">
-    
-    <p style="text-align: center;">
-      <img src="https://live.staticflickr.com/65535/49038426206_83d9c537d2_h.jpg" alt="">
-    </p>
-    
-  </a>
-
-
-        </section>
-        <header>
-          <h4><a href="/aws/2019/12/05/aws-saa-pass.html">AWS Solutions Architect Associate (SAA) - [PASSED] 心得以及攻略</a></h4>
-          <time class="published" datetime="">December 5, 2019</time>
-        </header>
-      </article>
-      
       
         <footer>
           <a href="/blog/" class="button">See more</a>
@@ -937,18 +897,18 @@ The alternative way would be specify the SG rules for ALB Ingress.</p>
   
   <p class="copyright">
     
-      &copy; 2020
+      &copy; 2021
       
         David&#39;s Blog
       
     . <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;
