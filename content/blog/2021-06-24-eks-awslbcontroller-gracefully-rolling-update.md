@@ -30,7 +30,7 @@ images: ["https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg"]
 
 我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
 
-![original](https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg)  
+[![original](https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg)](https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg)
 
 明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。  
 
@@ -56,7 +56,7 @@ images: ["https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg"]
 > 如果啟用了 Reaniness Gate，舊的 Pod 會等到新的 Pod 在 Target Group 是 healthy 的狀態再去 Draining & Terminating 舊的 Pod。
 
 
-![readinessProbe](https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg)
+[![readinessProbe](https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg)](https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg)
 
 
 那整個過程就很平滑了，當 Release 觸發的時候 Pod 不會立即接受到 `SIGTERM` ，而是會等到新的 Pod Healthy 再去發送 SIGTERM。
@@ -116,7 +116,7 @@ lifecycle:
 
 
 最後的流程應該是像這樣的
-![final](https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg)
+[![final](https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg)](https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg)
 
 
 <br />

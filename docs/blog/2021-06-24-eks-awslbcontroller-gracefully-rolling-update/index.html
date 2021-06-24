@@ -11,8 +11,7 @@
 白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
 本文適用以下情況：
  在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
-Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
-明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。">
+Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。">
 <meta itemprop="datePublished" content="2021-06-24T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-24T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="329">
@@ -25,8 +24,7 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
 白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
 本文適用以下情況：
  在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
-Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
-明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。" />
+Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" />
 <meta property="og:image" content="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" />
@@ -40,8 +38,7 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
 白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
 本文適用以下情況：
  在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
-Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
-明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。"/>
+Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。"/>
 <link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
@@ -281,7 +278,7 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
 <h2 id="issue">Issue</h2>
 <hr>
 <p>我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。</p>
-<p><img src="https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg" alt="original"></p>
+<p><a href="https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg"><img src="https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg" alt="original"></a></p>
 <p>明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。</p>
 <p>原因就是因為 <code>如果沒有任何 healthy targets 在 Target Group，那 ALB 就還是會將 Traffic 送到 Unhealthy 或是正在啟動的 Pod</code>，那想當然 ALB 就會將 traffic 送到你正在啟動 healthcheck 的 Pod 了。</p>
 <p><br /></p>
@@ -297,7 +294,7 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
 <blockquote>
 <p>如果啟用了 Reaniness Gate，舊的 Pod 會等到新的 Pod 在 Target Group 是 healthy 的狀態再去 Draining &amp; Terminating 舊的 Pod。</p>
 </blockquote>
-<p><img src="https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg" alt="readinessProbe"></p>
+<p><a href="https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg"><img src="https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg" alt="readinessProbe"></a></p>
 <p>那整個過程就很平滑了，當 Release 觸發的時候 Pod 不會立即接受到 <code>SIGTERM</code> ，而是會等到新的 Pod Healthy 再去發送 SIGTERM。</p>
 <p><strong>如何使用？</strong><br>
 使用方式很簡單，在目標 Namespace 加上一個 Label 就啟用了。</p>
@@ -328,7 +325,7 @@ Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處�
 <p>terminationGracePeriodSeconds &gt; preStop sleep time &gt; Application KeepAlive time &gt; ALB deregistration delay</p>
 </blockquote>
 <p>最後的流程應該是像這樣的
-<img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="final"></p>
+<a href="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg"><img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="final"></a></p>
 <p><br /></p>
 <h2 id="conclusion">Conclusion</h2>
 <hr>

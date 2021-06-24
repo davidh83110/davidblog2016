@@ -21,8 +21,7 @@
 白話來說，就是更新不平滑，導致的原因就是 ALB Target Group 的狀態跟 Pod 並沒有連動。
 本文適用以下情況：
  在 Target Group 裡永遠只有一個 Pod Rollout Strategy 是一次把所有 Pod 全部替換 Rolling Update 的速度太快 或是任何 Target Group 裡可能會暫時沒有 Healthy Pods 的情況  
-Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。
-明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。</description>
+Issue  我們來看看時間軸以及 ALB Target Group 和 Kubernetes 如何處理的。</description>
     </item>
     
     <item>
