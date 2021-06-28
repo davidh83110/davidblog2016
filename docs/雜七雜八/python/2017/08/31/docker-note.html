@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Docker Note (Nginx&#43;uwsgi&#43;Letsencrypt)"/>
 <meta name="twitter:description" content="docker筆記    nginx&#43;uwsgi&#43;flask&#43;letsencrypt    Env: Python3    Line串接API使用，需執行crontab更新憑證(簽署期限為30天)       note:    certbot-auto可單一clone此檔案就好    產生憑證： (docker裡執行)  certbot-auto certonly --webroot --webroot-path=WEB_ROOT -d DOMAIN_NAME    更新憑證：&nbsp;  docker exec -it CONTAINER_ID /opt/letsencrypt/certbot-auto renew --quiet --renew-hook &#34;/etc/init.d/nginx restart&#34;    啟動程序：&nbsp;  docker run -p 80:80 -p 443:443 CONTAINER_ID /opt/start. &amp;     /opt/start."/>
-<link rel="stylesheet" href="/css/bundle.min.688dcd451367e657aad03df855d0ee0085a4d2eb5c9631390c4c8aaeb261a8a1.css" integrity="sha256-aI3NRRNn5leq0D34VdDuAIWk0utcljE5DEyKrrJhqKE="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.61961c7250620c26b0f18d1f0501baa8b0f2ce99ac7f6ef65c06226f8a2018a6.css" integrity="sha256-YZYcclBiDCaw8Y0fBQG6qLDyzpmsf272XAYib4ogGKY="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>

@@ -35,7 +35,7 @@
 [404_pagenotfound]
   other = "Page Not Found"
 [404_sorry]
-  other = "Sorry, but the page you were trying to view does not exist."
+  other = "Sorry, The page you were trying to access does not exist."
 [404_goback]
   other = "GO BACK"
 [blog]

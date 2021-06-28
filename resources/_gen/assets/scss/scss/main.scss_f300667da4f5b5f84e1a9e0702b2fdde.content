@@ -862,7 +862,7 @@ table {
         -ms-transition: -ms-transform 0.2s ease-out;
         -o-transition: -ms-transform 0.2s ease-out;
         transition: transform 0.2s ease-out;
-        width: 75%; }
+        width: 35%; }
   .post > footer {
     display: flex;
     flex-direction: column; }
