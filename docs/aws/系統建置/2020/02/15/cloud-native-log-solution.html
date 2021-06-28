@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.71.1" /><meta itemprop="name" content="Cloud-Native LOG 儲存以及分析方案">
+<meta name="generator" content="Hugo 0.84.0" /><meta itemprop="name" content="Cloud-Native LOG 儲存以及分析方案">
 <meta itemprop="description" content="隨著 Microservices 的蓬勃發展，從以前的一體式架構慢慢演變成了現今的動輒數十數百個服務同時在線，Log 的量也以很可怕的速度成長中，面對巨量的 Log ，要存在哪裡、要怎麼去利用這些資料反而是現今架構上的難題。
 利用這些 Log 我們可以輕易的去提早發現服務的異常，也可以拿來做分析，產出更珍貴的資源，像是 BI。 最重要的是可以協助 Debug, 除錯, 還有做 Audit.
  我認為 Logging 就是一件很容易被大家認為不重要的事，但他其實很重要，也是很珍貴的資產，絕對值得我們花時間好好處理以及規劃。
@@ -17,13 +17,9 @@ Log Level 也是要注意，盡量把 CRITICAL / ERROR / WARNING / INFO &hellip;
 要存在哪裡  這是一個很難的問題，市面是常見的方案有以下幾種
 A. Elasticsearch &#43; Fluentd(Logstash) &#43; Kibana (ELK) B. CloudwatchLogs C. S3 D. Database E. Splunk F. Graylog 
 A. ELK 這套適合成長中的組織，有足夠人力也有足夠彈性可以去維護。
-但是他是 Near-Real-Time 的服務（畢竟中間還要經過 Fluentd），所以會有一定的延遲。">
-<meta itemprop="datePublished" content="2020-02-15T00:00:00&#43;00:00" />
+但是他是 Near-Real-Time 的服務（畢竟中間還要經過 Fluentd），所以會有一定的延遲。"><meta itemprop="datePublished" content="2020-02-15T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-02-15T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="235">
-
-
-
 <meta itemprop="keywords" content="" /><meta property="og:title" content="Cloud-Native LOG 儲存以及分析方案" />
 <meta property="og:description" content="隨著 Microservices 的蓬勃發展，從以前的一體式架構慢慢演變成了現今的動輒數十數百個服務同時在線，Log 的量也以很可怕的速度成長中，面對巨量的 Log ，要存在哪裡、要怎麼去利用這些資料反而是現今架構上的難題。
 利用這些 Log 我們可以輕易的去提早發現服務的異常，也可以拿來做分析，產出更珍貴的資源，像是 BI。 最重要的是可以協助 Debug, 除錯, 還有做 Audit.
@@ -37,9 +33,10 @@ A. Elasticsearch &#43; Fluentd(Logstash) &#43; Kibana (ELK) B. CloudwatchLogs C.
 A. ELK 這套適合成長中的組織，有足夠人力也有足夠彈性可以去維護。
 但是他是 Near-Real-Time 的服務（畢竟中間還要經過 Fluentd），所以會有一定的延遲。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html" />
-<meta property="article:published_time" content="2020-02-15T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-02-15T00:00:00+00:00" />
+<meta property="og:url" content="/aws/%E7%B3%BB%E7%B5%B1%E5%BB%BA%E7%BD%AE/2020/02/15/cloud-native-log-solution.html" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-02-15T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-02-15T00:00:00&#43;00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Cloud-Native LOG 儲存以及分析方案"/>
 <meta name="twitter:description" content="隨著 Microservices 的蓬勃發展，從以前的一體式架構慢慢演變成了現今的動輒數十數百個服務同時在線，Log 的量也以很可怕的速度成長中，面對巨量的 Log ，要存在哪裡、要怎麼去利用這些資料反而是現今架構上的難題。
@@ -53,7 +50,7 @@ Log Level 也是要注意，盡量把 CRITICAL / ERROR / WARNING / INFO &hellip;
 A. Elasticsearch &#43; Fluentd(Logstash) &#43; Kibana (ELK) B. CloudwatchLogs C. S3 D. Database E. Splunk F. Graylog 
 A. ELK 這套適合成長中的組織，有足夠人力也有足夠彈性可以去維護。
 但是他是 Near-Real-Time 的服務（畢竟中間還要經過 Fluentd），所以會有一定的延遲。"/>
-<link rel="stylesheet" href="/css/bundle.min.e1d75036348820992d6678792c1e34a42b08b0e79d420cc28f360046aeee6f37.css" integrity="sha256-4ddQNjSIIJktZnh5LB40pCsIsOedQgzCjzYARq7ubzc="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.688dcd451367e657aad03df855d0ee0085a4d2eb5c9631390c4c8aaeb261a8a1.css" integrity="sha256-aI3NRRNn5leq0D34VdDuAIWk0utcljE5DEyKrrJhqKE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -68,43 +65,36 @@ A. ELK 這套適合成長中的組織，有足夠人力也有足夠彈性可以�
         
       </a>
     </h1>
+
+
     <menu id="site-nav-menu" class="flyout-menu">
-      
-        
-          
-          
-            <a href="/blog/" class="link"><i class='fa fa-hashtag'></i> Blog</a>
-          
-        
-      
-        
-          
-          
-            <a href="https://davidh83110.com" class="link"><i class='fa fa-home'></i> Home</a>
-          
-        
-      
-        
-          
-          
-            <a href="/about/" class="link"><i class='fa fa-code'></i> About</a>
-          
-        
-      
-        
-          
-          
-            <a href="/categories/" class="link"><i class='fa fa-bars'></i> Categories</a>
-          
-        
-      
-        
-          
-          
-            <a href="/archive/" class="link"><i class='fa fa-archive'></i> Archive</a>
-          
-        
-      
+      <a href="/blog/" class="link">
+        <i class='fa fa-hashtag'></i>
+        Blog
+      </a>
+
+      <a href="https://davidh83110.com" class="link">
+        <i class='fa fa-home'></i>
+        Home
+      </a>
+
+      <a href="/about/" class="link">
+        <i class='fa fa-code'></i>
+        Blog
+      </a>
+
+      <a href="/categories/" class="link">
+        <i class='fa fa-bars'></i>
+        Categories
+      </a>
+
+      <a href="/archive/" class="link">
+        <i class='fa fa-archive'></i>
+        Archive
+      </a>
+
+
+    
       <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
       
 
@@ -584,7 +574,7 @@ a. 要自己管理</p>
   <a href="/blog/2021-06-24-eks-awslbcontroller-gracefully-rolling-update/" class="image featured">
     
     <p style="text-align: center;">
-      <img src="https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg" alt="">
+      <img src="https://live.staticflickr.com/65535/51268129541_fa946b0e30_o.png" alt="">
     </p>
     
   </a>
@@ -750,13 +740,13 @@ a. 要自己管理</p>
         David&#39;s Blog
       
     . <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.71.1' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.84.0' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ba01f4c6fd09c8681f5bb9960755a2d29a543735c990ef92c5c97365cbb37a4e.js" integrity="sha256-ugH0xv0JyGgfW7mWB1Wi0ppUNzXJkO&#43;SxclzZcuzek4="></script>
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.3567e1d70532540eb622813fa8aaba80094367cccdee229013d0c464e7b465df.js" integrity="sha256-NWfh1wUyVA62IoE/qKq6gAlDZ8zN7iKQE9DEZOe0Zd8="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;

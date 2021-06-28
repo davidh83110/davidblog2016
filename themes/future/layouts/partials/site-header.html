@@ -38,7 +38,36 @@
         {{ end }}
       </a>
     </h1>
+
+
     <menu id="site-nav-menu" class="flyout-menu">
+      <a href="/blog/" class="link">
+        <i class='fa fa-hashtag'></i>
+        Blog
+      </a>
+
+      <a href="https://davidh83110.com" class="link">
+        <i class='fa fa-home'></i>
+        Home
+      </a>
+
+      <a href="/about/" class="link">
+        <i class='fa fa-code'></i>
+        Blog
+      </a>
+
+      <a href="/categories/" class="link">
+        <i class='fa fa-bars'></i>
+        Categories
+      </a>
+
+      <a href="/archive/" class="link">
+        <i class='fa fa-archive'></i>
+        Archive
+      </a>
+
+
+    <!-- <menu id="site-nav-menu" class="flyout-menu">
       {{ range .Site.Menus.main }}
         {{ if and (gt (len (findRE "fa[rsb]( fa-([a-z-]+))+" .Identifier)) 0) (not .Pre) }}
           {{/* Old syntax: use '.Identifier' for icon rendering */}}
@@ -51,7 +80,7 @@
             <a href="{{ .URL | relLangURL }}" class="link">{{ .Name }}</a>
           {{ end }}
         {{ end }}
-      {{ end }}
+      {{ end }} -->
       {{ if .Site.Params.header.shareMenu }}<a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>{{ end }}
       {{ if .Site.Params.header.searchMenu }}{{ partial "search-menu" . }}{{ end }}
     </menu>

@@ -8,7 +8,7 @@ date: "2021-06-24"
 modified: "2021-06-24"
 published: true
 title: Solved - AWS LoadBalancer Controller Cannot Gracefully Rolling Update
-images: ["https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg"]
+images: ["https://live.staticflickr.com/65535/51268129541_fa946b0e30_o.png"]
 ---
 
 ## Introduction
@@ -32,18 +32,26 @@ images: ["https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg"]
 
 [![original](https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg)](https://live.staticflickr.com/65535/51268683244_4b8e448a96_k.jpg)
 
-明顯的，問題就是 Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。  
+
+有兩個問題：
+
+- 明顯的，Pod-a1 在 Pod-a2 ready 前就已經開始 draining，如果 Pod 的數量多並且 rolling update 的速度比較慢或許不容易察覺，但是當 Pod 的數量只有 1 或是 rolling update 是一次把所有 Pods 全部替換掉的時候就很明顯了，ALB 就直接給你個 502。 
+
+> 原因就是因為 `如果沒有任何 healthy targets 在 Target Group，那 ALB 就還是會將 Traffic 送到 Unhealthy 或是正在啟動的 Pod`，那想當然 ALB 就會將 traffic 送到你正在啟動 healthcheck 的 Pod 了。
 
 
-原因就是因為 `如果沒有任何 healthy targets 在 Target Group，那 ALB 就還是會將 Traffic 送到 Unhealthy 或是正在啟動的 Pod`，那想當然 ALB 就會將 traffic 送到你正在啟動 healthcheck 的 Pod 了。
+- Application 還在處理事情就 Pod 直接被 Terminated。
+
+> 要調整 Pod Lifecycle Termination 的時間，也就是可以等待 Application 做完事情再 Terminate Pod。
 
 <br />
 
 ## Solution
 ---
 
-要解決的問題是:  
-- 讓 Target 通過 HealthCheck 後再接受流量
+綜合兩個問題要解決的是:  
+- 讓 New Target 通過 HealthCheck 後再接受流量
+- 不要一開始就 Draining Old Target
 
 
 **那這個問題換言之就是要讓 `先讓新的 Pod Ready 再去 Draining 舊的 Pod` 。**
@@ -53,14 +61,15 @@ images: ["https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg"]
 這是什麼？ 簡單來說這是可以讓 Pod 狀態跟 Target Group 連動的一個 feature。
 
 
-> 如果啟用了 Reaniness Gate，舊的 Pod 會等到新的 Pod 在 Target Group 是 healthy 的狀態再去 Draining & Terminating 舊的 Pod。
+> 如果啟用了 Readniness Gate，舊的 Pod 會等到新的 Pod 在 Target Group 是 healthy 的狀態再去 Draining & Terminating 舊的 Pod。
 
 
-[![readinessProbe](https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg)](https://live.staticflickr.com/65535/51267999161_1afe86d4d8_z.jpg)
+[![readinessProbe](https://live.staticflickr.com/65535/51267999161_4852c5c6da_o.png)](https://live.staticflickr.com/65535/51267999161_4852c5c6da_o.png)
 
 
 那整個過程就很平滑了，當 Release 觸發的時候 Pod 不會立即接受到 `SIGTERM` ，而是會等到新的 Pod Healthy 再去發送 SIGTERM。
 
+<br />
 
 **如何使用？**  
 使用方式很簡單，在目標 Namespace 加上一個 Label 就啟用了。
@@ -81,7 +90,7 @@ metadata:
 ## Issue Solved?
 ---
 
-上面的解法聽起來很完美，但是有注意到嗎？ `Pod Terminated 的比 Draining 還要早`，如果我們有一些還沒有處理完的任務，這樣一搞就直接中斷了，還是會有 502 的機率。  
+上面的解法聽起來很完美，但是有注意到嗎？ `Pod Terminated 的比 Draining 還要早`，如果我們有一些還沒有處理完的任務，這樣一搞就直接中斷了，還是會有 502 的機率。
 因為 `一旦新 Pod Healthy 之後馬上會送 SIGTERM 到舊的 Pod，舊的 Pod 接收到就立即執行 Terminate`。
 
 
@@ -112,11 +121,14 @@ lifecycle:
 
 
 整體來說設定要是這樣的:  
-> terminationGracePeriodSeconds > preStop sleep time > Application KeepAlive time > ALB deregistration delay
+> terminationGracePeriodSeconds > preStop sleep time > ALB deregistration delay > Application KeepAlive time > ALB Idle Timeout
 
 
 最後的流程應該是像這樣的
-[![final](https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg)](https://live.staticflickr.com/65535/51268214173_8bbd7a3200_z.jpg)
+
+
+[![final](https://live.staticflickr.com/65535/51268129541_fa946b0e30_o.png)](https://live.staticflickr.com/65535/51268129541_fa946b0e30_o.png)
+
 
 
 <br />
@@ -128,7 +140,8 @@ lifecycle:
 - 使用 Readiness Gate (在 Namespace 加上 Label 去啟用)
 - 加上 preStop lifecycle hook
 - 加上 terminationGracePeriodSeconds
-- terminationGracePeriodSeconds > preStop sleep time > Application KeepAlive time > ALB deregistration delay
+- 配置好 health check 時間以及 Deregistration Delay 還有 Idle Timeout
+- terminationGracePeriodSeconds > preStop sleep time > ALB deregistration delay > Application KeepAlive time > ALB Idle Timeout
 
 
 <br />
